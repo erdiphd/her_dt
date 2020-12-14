@@ -1,5 +1,5 @@
-# A two-level optimization techniques for interpretable reinforcement learning with Decision Trees
-This repo hosts the code of the paper from Custode & Iacca: A Two-level optimization technique for interpretable reinforcement learning with decision trees.
+# Evolutionary learning of interpretable decision trees 
+This repo hosts the code of the paper from Custode & Iacca: Evolutionary learning of interpretable decision trees.
 
 ## Summary of the files
 ### simple_test_orthogonal.py
