@@ -26,10 +26,10 @@ def string_to_dict(x):
     for i in items:
         key, value = i.split("-")
         try:
-            result[key] = int(value)
+            result[key] = float(value)
         except:
             try:
-                result[key] = float(value)
+                result[key] = int(value)
             except:
                 result[key] = value
 
