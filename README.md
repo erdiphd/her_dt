@@ -10,6 +10,10 @@ This repo hosts the code of the paper [L. L. Custode and G. Iacca, Evolutionary 
       primaryClass={cs.LG}
 }``
 
+## Installation
+This implementation uses the [DEAP](https://github.com/DEAP/deap) library.
+To install all the requirements use `pip install -r requirements.txt`
+
 ## Summary of the files
 ### simple_test_orthogonal.py
 This file contains the implementation used to evolve the agents for the CartPole-v1 and MountainCar-v0 environments with the orthogonal grammar.
