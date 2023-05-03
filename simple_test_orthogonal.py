@@ -1,4 +1,6 @@
 import os
+from random import randrange
+
 import gym
 import json
 import string
@@ -7,10 +9,10 @@ import argparse
 import subprocess
 import numpy as np
 from time import time, sleep
+import random
 from numpy import random
 from dt import EpsGreedyLeaf, PythonDT, RandomlyInitializedEpsGreedyLeaf
 from grammatical_evolution import GrammaticalEvolutionTranslator, grammatical_evolution, differential_evolution
-
 
 def string_to_dict(x):
     """
@@ -35,17 +37,19 @@ def string_to_dict(x):
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--jobs", default=1, type=int, help="The number of jobs to use for the evolution")
-parser.add_argument("--seed", default=0, type=int, help="Random seed")
-parser.add_argument("--environment_name", default="LunarLander-v2", help="The name of the environment in the OpenAI Gym framework")
-parser.add_argument("--n_actions", default=4, type=int, help="The number of action that the agent can perform in the environment")
+parser.add_argument("--seed", default=5, type=int, help="Random seed")
+parser.add_argument("--environment_name", default="gym_examples:gym_examples/GridWorld-v0", help="The name of the environment in the OpenAI Gym framework")
+# parser.add_argument("--environment_name", default="FetchPushDense-v1", help="The name of the environment in the OpenAI Gym framework")
+# parser.add_argument("--environment_name", default="CartPole-v1", help="The name of the environment in the OpenAI Gym framework")
+parser.add_argument("--n_actions", default=6, type=int, help="The number of action that the agent can perform in the environment")
 parser.add_argument("--learning_rate", default="auto", help="The learning rate to be used for Q-learning. Default is: 'auto' (1/k)")
 parser.add_argument("--df", default=0.9, type=float, help="The discount factor used for Q-learning")
 parser.add_argument("--eps", default=0.05, type=float, help="Epsilon parameter for the epsilon greedy Q-learning")
-parser.add_argument("--input_space", default=8, type=int, help="Number of inputs given to the agent")
+parser.add_argument("--input_space", default=3, type=int, help="Number of inputs given to the agent")
 parser.add_argument("--episodes", default=50, type=int, help="Number of episodes that the agent faces in the fitness evaluation phase")
-parser.add_argument("--episode_len", default=1000, type=int, help="The max length of an episode in timesteps")
-parser.add_argument("--lambda_", default=30, type=int, help="Population size")
-parser.add_argument("--generations", default=1000, type=int, help="Number of generations")
+parser.add_argument("--episode_len", default=100, type=int, help="The max length of an episode in timesteps")
+parser.add_argument("--lambda_", default=50, type=int, help="Population size")
+parser.add_argument("--generations", default=200, type=int, help="Number of generations")
 parser.add_argument("--cxp", default=0.5, type=float, help="Crossover probability")
 parser.add_argument("--mp", default=0.5, type=float, help="Mutation probability")
 parser.add_argument("--mutation", default="function-tools.mutUniformInt#low-0#up-40000#indpb-0.1", type=string_to_dict, help="Mutation operator. String in the format function-value#function_param_-value_1... The operators from the DEAP library can be used by setting the function to 'function-tools.<operator_name>'. Default: Uniform Int Mutation")
@@ -55,7 +59,7 @@ parser.add_argument("--selection", default="function-tools.selTournament#tournsi
 parser.add_argument("--genotype_len", default=100, type=int, help="Length of the fixed-length genotype")
 parser.add_argument("--low", default=-10, type=float, help="Lower bound for the random initialization of the leaves")
 parser.add_argument("--up", default=10, type=float, help="Upper bound for the random initialization of the leaves")
-parser.add_argument("--types", default=None, type=str, help="This string must contain the range of constants for each variable in the format '#min_0,max_0,step_0,divisor_0;...;min_n,max_n,step_n,divisor_n'. All the numbers must be integers.")
+parser.add_argument("--types", default="#0,5,1,1;0,5,1,1;0,5,1,1", type=str, help="This string must contain the range of constants for each variable in the format '#min_0,max_0,step_0,divisor_0;...;min_n,max_n,step_n,divisor_n'. All the numbers must be integers.")
 
 
 # Setup of the logging
@@ -128,22 +132,53 @@ def fitness(x, episodes=args.episodes):
     random.seed(args.seed)
     np.random.seed(args.seed)
     global_cumulative_rewards = []
-    e = gym.make(args.environment_name)
+    # define parameters
+    grid_size = 5
+    dimensions = 3
+    # change n_actions, input_space and types arguments according to dimension number!
+    reward_type = "dense"
+
+    start = [0, 0, 0]
+    goal = [3, 3, 3]
+    # limit max constant range to goal coordinates
+    environment_name = "gym_examples:gym_examples/GridWorld-v0"
+    e = gym.make(environment_name, size=grid_size, agent_location=start, target_location=goal,
+                 dimensions=dimensions, reward_type=reward_type)
+
     try:
         for iteration in range(episodes):
-            e.seed(iteration)
-            obs = e.reset()
+            # e.seed(iteration)
+            obs = e.reset()[0]
             x.new_episode()
             cum_rew = 0
-            action = 0
             previous = None
-
             for t in range(args.episode_len):
-                action = x(obs)
+                action = x(obs['agent'])
+                # print(obs['agent'])
+                # print(action)
+                # print("------------------------------------")
+                # print("Before Step:")
+                # print("Action:")
+                # print(action)
+                # print("Agent: ")
+                # print(obs['agent'])
+                # print("Target: ")
+                # print(obs['target'])
 
-                previous = obs[:]
+                obs, rew, done, truncated, info = e.step(action)
 
-                obs, rew, done, info = e.step(action)
+                # print("After Step:")
+                # print("Action:")
+                # print(action)
+                # print("Agent: ")
+                # print(obs['agent'])
+                # print("Target: ")
+                # print(obs['target'])
+                # print("------------------------------------")
+                # if done is True:
+                #     print("Done!")
+                #     print(obs)
+                #     print(info)
 
                 # e.render()
                 x.set_reward(rew)
@@ -155,9 +190,11 @@ def fitness(x, episodes=args.episodes):
 
             x.set_reward(rew)
 
-            x(obs)
+            x(obs['agent'])
+            # x(obs['observation'])
             global_cumulative_rewards.append(cum_rew)
     except Exception as ex:
+        # print(ex)
         if len(global_cumulative_rewards) == 0:
             global_cumulative_rewards = -1000
     e.close()
@@ -165,8 +202,7 @@ def fitness(x, episodes=args.episodes):
     fitness = np.mean(global_cumulative_rewards),
     return fitness, x.leaves
 
-
-if __name__ == '__main__':
+def run_simple_test():
     import collections
     from joblib import parallel_backend
 
@@ -174,20 +210,20 @@ if __name__ == '__main__':
         return evaluate_fitness(fitness, CLeaf, x)
 
     with parallel_backend("multiprocessing"):
-        pop, log, hof, best_leaves = grammatical_evolution(fit_fcn, inputs=input_space_size, leaf=CLeaf, individuals=args.lambda_, generations=args.generations, jobs=args.jobs, cx_prob=args.cxp, m_prob=args.mp, logfile=logfile, seed=args.seed, mutation=args.mutation, crossover=args.crossover, initial_len=args.genotype_len, selection=args.selection)
-
+        pop, log, hof, best_leaves, individuals = grammatical_evolution(fit_fcn, inputs=input_space_size, leaf=CLeaf, individuals=args.lambda_, generations=args.generations, jobs=args.jobs, cx_prob=args.cxp, m_prob=args.mp, logfile=logfile, seed=args.seed, mutation=args.mutation, crossover=args.crossover, initial_len=args.genotype_len, selection=args.selection)
+        # returning evolved structure of decision tree
 
     # Log best individual
 
     with open(logfile, "a") as log_:
         phenotype, _ = GrammaticalEvolutionTranslator(grammar).genotype_to_str(hof[0])
-        phenotype = phenotype.replace('leaf="_leaf"', '')
+        phenotype = phenotype.replace('leaf="_leaf"', '') # phenotype : decision tree, genotype: selecting rules from grammar
 
         for k in range(50000):  # Iterate over all possible leaves
             key = "leaf_{}".format(k)
             if key in best_leaves:
                 v = best_leaves[key].q
-                phenotype = phenotype.replace("out=_leaf", "out={}".format(np.argmax(v)), 1)
+                phenotype = phenotype.replace("out=_leaf", "out={}".format(np.argmax(v)), 1) # choose best action from best_leaves
             else:
                 break
 
@@ -197,4 +233,101 @@ if __name__ == '__main__':
         log_.write("best_fitness: {}".format(hof[0].fitness.values[0]))
     with open(os.path.join(logdir, "fitness.tsv"), "w") as f:
         f.write(str(log))
+
+import ast
+import copy
+
+def convertExpr2Expression(Expr):
+    Expr.lineno = 0
+    Expr.col_offset = 0
+    result = ast.Expression(Expr.value, lineno=0, col_offset=0)
+
+    return result
+
+def exec_with_return(code, variables):
+    code_ast = ast.parse(code)
+
+    init_ast = copy.deepcopy(code_ast)
+    init_ast.body = code_ast.body[:-1]
+
+    last_ast = copy.deepcopy(code_ast)
+    last_ast.body = code_ast.body[-1:]
+
+    exec(compile(init_ast, "<ast>", "exec"), variables)
+    if type(last_ast.body[0]) == ast.Expr:
+        return eval(compile(convertExpr2Expression(last_ast.body[0]), "<ast>", "eval"), variables)
+    else:
+        exec(compile(last_ast, "<ast>", "exec"), variables)
+
+def get_next_action(updated_phenotype_with_indents, input):
+    variables = {}  # {"out": None, "leaf": None}
+    for idx, i in enumerate(input):
+        variables["_in_{}".format(idx)] = i
+
+        # print(variables)
+        # position = [0, 0, 0]
+        # variables = {'_in_0' : 0, '_in_1' : 2, '_in_2' : 0}
+        # print("def func(): \n" + phenotype + "\n    return out \nfunc()")
+
+    return exec_with_return("def func(): \n" + updated_phenotype_with_indents + "    return out \nfunc()", variables)
+
+def phenotype_test():
+
+
+    phenotype = """if _in_2 < 1.0:
+    if _in_1 < 1.0:
+        out=2
+        
+    else:
+        out=3
+        
+    
+else:
+    if _in_2 < 4.0:
+        if _in_1 < 1.0:
+            if _in_2 < 1.0:
+                out=5
+                
+            else:
+                out=1
+                
+            
+        else:
+            if _in_1 < 2.0:
+                if _in_2 < 4.0:
+                    out=5
+                    
+                else:
+                    if _in_1 < 0.0:
+                        out=1
+                        
+                    else:
+                        out=4
+                        
+                    
+                
+            else:
+                out=2
+                
+            
+        
+    else:
+        out=4
+        """
+
+
+    print("Next action: ")
+    updated_phenotype_with_indents = ""
+    for line in phenotype.split('\n'):
+        updated_phenotype_with_indents = updated_phenotype_with_indents + "    " + line + "\n"
+    # print("def func(): \n" + updated_phenotype_with_indents + "    return out \nfunc()")
+    print(get_next_action(updated_phenotype_with_indents, [-3, 0, 0]))
+
+if __name__ == '__main__':
+    run_simple_test()
+    # phenotype_test()
+
+
+# https://stackoverflow.com/questions/33409207/how-to-return-value-from-exec-in-function
+
 
