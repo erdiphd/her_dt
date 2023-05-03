@@ -1,0 +1,48 @@
+__name__: __main__
+__doc__: None
+__package__: None
+__loader__: <_frozen_importlib_external.SourceFileLoader object at 0x7f7cbe8c54c0>
+__spec__: None
+__annotations__: {}
+__builtins__: <module 'builtins' (built-in)>
+__file__: /home/vlaffo/Desktop/ge_q_dts/simple_test_orthogonal.py
+__cached__: None
+os: <module 'os' from '/usr/lib/python3.8/os.py'>
+randrange: <bound method Random.randrange of <random.Random object at 0x228f780>>
+gym: <module 'gym' from '/home/vlaffo/Desktop/ge_q_dts/venv/lib/python3.8/site-packages/gym/__init__.py'>
+json: <module 'json' from '/usr/lib/python3.8/json/__init__.py'>
+string: <module 'string' from '/usr/lib/python3.8/string.py'>
+datetime: <module 'datetime' from '/usr/lib/python3.8/datetime.py'>
+argparse: <module 'argparse' from '/usr/lib/python3.8/argparse.py'>
+subprocess: <module 'subprocess' from '/usr/lib/python3.8/subprocess.py'>
+np: <module 'numpy' from '/home/vlaffo/Desktop/ge_q_dts/venv/lib/python3.8/site-packages/numpy/__init__.py'>
+time: <built-in function time>
+sleep: <built-in function sleep>
+random: <module 'numpy.random' from '/home/vlaffo/Desktop/ge_q_dts/venv/lib/python3.8/site-packages/numpy/random/__init__.py'>
+EpsGreedyLeaf: <class 'dt.decision_tree.EpsGreedyLeaf'>
+PythonDT: <class 'dt.python_decision_tree.PythonDT'>
+RandomlyInitializedEpsGreedyLeaf: <class 'dt.decision_tree.RandomlyInitializedEpsGreedyLeaf'>
+GrammaticalEvolutionTranslator: <class 'grammatical_evolution.GrammaticalEvolutionTranslator'>
+grammatical_evolution: <function grammatical_evolution at 0x7f7ca3553940>
+differential_evolution: <function differential_evolution at 0x7f7ca3553af0>
+string_to_dict: <function string_to_dict at 0x7f7cbe6c6700>
+parser: ArgumentParser(prog='simple_test_orthogonal.py', usage=None, description=None, formatter_class=<class 'argparse.HelpFormatter'>, conflict_handler='error', add_help=True)
+date: 2023-04-30_15-37-57
+logdir: logs/gym/2023-04-30_15-37-57_vifoyzxy
+logfile: logs/gym/2023-04-30_15-37-57_vifoyzxy/log.txt
+args: Namespace(crossover={'function': 'tools.cxOnePoint'}, cxp=0.5, df=0.9, environment_name='gym_examples:gym_examples/GridWorld-v0', episode_len=100, episodes=50, eps=0.05, generations=100, genotype_len=100, input_space=2, jobs=1, lambda_=500, learning_rate='auto', low=-10, mp=0.5, mutation={'function': 'tools.mutUniformInt', 'low': 0, 'up': 40000, 'indpb': 0.1}, n_actions=4, seed=5, selection={'function': 'tools.selTournament', 'tournsize': 2}, types='#0,3,1,1;0,3,1,1', up=10)
+best: None
+input_space_size: 2
+lr: auto
+CLeaf: <class '__main__.CLeaf'>
+grammar: {'bt': ['<if>'], 'if': ['if <condition>:{<action>}else:{<action>}'], 'condition': ['_in_0<comp_op><const_type_0>', '_in_1<comp_op><const_type_1>'], 'action': ['out=_leaf;leaf="_leaf"', '<if>'], 'comp_op': [' < ', ' > '], 'const_type_0': ['0.0', '1.0', '2.0'], 'const_type_1': ['0.0', '1.0', '2.0']}
+types: 0,3,1,1;0,3,1,1
+index: 1
+type_: 0,3,1,1
+rng: ['0', '3', '1', '1']
+start: 0
+stop: 3
+step: 1
+divisor: 1
+consts_: ['0.0', '1.0', '2.0']
+f: <_io.TextIOWrapper name='logs/gym/2023-04-30_15-37-57_vifoyzxy/log.txt' mode='a' encoding='UTF-8'>

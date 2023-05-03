@@ -1,0 +1,64 @@
+__name__: __main__
+__doc__: None
+__package__: None
+__loader__: <_frozen_importlib_external.SourceFileLoader object at 0x7f28464af4c0>
+__spec__: None
+__annotations__: {}
+__builtins__: <module 'builtins' (built-in)>
+__file__: /home/vlaffo/Desktop/ge_q_dts/simple_test_orthogonal.py
+__cached__: None
+os: <module 'os' from '/usr/lib/python3.8/os.py'>
+randrange: <bound method Random.randrange of <random.Random object at 0x138c270>>
+gym: <module 'gym' from '/home/vlaffo/Desktop/ge_q_dts/venv/lib/python3.8/site-packages/gym/__init__.py'>
+json: <module 'json' from '/usr/lib/python3.8/json/__init__.py'>
+string: <module 'string' from '/usr/lib/python3.8/string.py'>
+datetime: <module 'datetime' from '/usr/lib/python3.8/datetime.py'>
+argparse: <module 'argparse' from '/usr/lib/python3.8/argparse.py'>
+subprocess: <module 'subprocess' from '/usr/lib/python3.8/subprocess.py'>
+np: <module 'numpy' from '/home/vlaffo/Desktop/ge_q_dts/venv/lib/python3.8/site-packages/numpy/__init__.py'>
+time: <built-in function time>
+sleep: <built-in function sleep>
+random: <module 'numpy.random' from '/home/vlaffo/Desktop/ge_q_dts/venv/lib/python3.8/site-packages/numpy/random/__init__.py'>
+EpsGreedyLeaf: <class 'dt.decision_tree.EpsGreedyLeaf'>
+PythonDT: <class 'dt.python_decision_tree.PythonDT'>
+RandomlyInitializedEpsGreedyLeaf: <class 'dt.decision_tree.RandomlyInitializedEpsGreedyLeaf'>
+GrammaticalEvolutionTranslator: <class 'grammatical_evolution.GrammaticalEvolutionTranslator'>
+grammatical_evolution: <function grammatical_evolution at 0x7f282b13e9d0>
+differential_evolution: <function differential_evolution at 0x7f282b13eb80>
+string_to_dict: <function string_to_dict at 0x7f28462b0820>
+parser: ArgumentParser(prog='simple_test_orthogonal.py', usage=None, description=None, formatter_class=<class 'argparse.HelpFormatter'>, conflict_handler='error', add_help=True)
+date: 2023-05-02_16-38-02
+logdir: logs/gym/2023-05-02_16-38-02_gkfbysaj
+logfile: logs/gym/2023-05-02_16-38-02_gkfbysaj/log.txt
+args: Namespace(crossover={'function': 'tools.cxOnePoint'}, cxp=0.5, df=0.9, environment_name='gym_examples:gym_examples/GridWorld-v0', episode_len=100, episodes=50, eps=0.05, generations=200, genotype_len=100, input_space=3, jobs=1, lambda_=50, learning_rate='auto', low=-10, mp=0.5, mutation={'function': 'tools.mutUniformInt', 'low': 0, 'up': 40000, 'indpb': 0.1}, n_actions=6, seed=5, selection={'function': 'tools.selTournament', 'tournsize': 2}, types='#0,5,1,1;0,5,1,1;0,5,1,1', up=10)
+best: None
+input_space_size: 3
+lr: auto
+CLeaf: <class '__main__.CLeaf'>
+grammar: {'bt': ['<if>'], 'if': ['if <condition>:{<action>}else:{<action>}'], 'condition': ['_in_0<comp_op><const_type_0>', '_in_1<comp_op><const_type_1>', '_in_2<comp_op><const_type_2>'], 'action': ['out=_leaf;leaf="_leaf"', '<if>'], 'comp_op': [' < ', ' > '], 'const_type_0': ['0.0', '1.0', '2.0', '3.0', '4.0'], 'const_type_1': ['0.0', '1.0', '2.0', '3.0', '4.0'], 'const_type_2': ['0.0', '1.0', '2.0', '3.0', '4.0']}
+types: 0,5,1,1;0,5,1,1;0,5,1,1
+index: 2
+type_: 0,5,1,1
+rng: ['0', '5', '1', '1']
+start: 0
+stop: 5
+step: 1
+divisor: 1
+consts_: ['0.0', '1.0', '2.0', '3.0', '4.0']
+f: <_io.TextIOWrapper name='logs/gym/2023-05-02_16-38-02_gkfbysaj/log.txt' mode='a' encoding='UTF-8'>
+[2023-05-02 16:38:12.058362] New best at generation 0 with fitness (488.5158163916921,)
+[16740, 23496, 34736, 1900, 30515, 16321, 3398, 10279, 7419, 24365, 30740, 16159, 24953, 35635, 6682, 37613, 16340, 859, 14203, 26748, 18316, 11932, 25522, 10459, 4714, 9094, 29152, 8303, 8666, 116, 348, 13726, 14121, 10869, 10910, 18959, 20555, 13034, 35338, 13420, 11905, 12902, 25114, 19581, 1413, 23670, 27191, 10876, 9548, 17289, 4268, 21748, 19749, 39525, 38413, 221, 39058, 22144, 4326, 20313, 23288, 20058, 31506, 20695, 12109, 31537, 30968, 11542, 3735, 16789, 1498, 23438, 26495, 1184, 35983, 27448, 23998, 24665, 37913, 594, 29676, 3062, 11856, 12879, 7800, 16127, 30291, 22569, 33586, 23251, 34386, 16442, 30333, 7081, 38650, 24071, 19389, 2400, 28375, 5975]
+Leaves
+{'leaf_0': -5.56, 7.41, -5.87, 8.37, -0.23, 2.23, 'leaf_1': 5.32, 0.37, -4.06, -6.25, -8.39, 4.77, 'leaf_2': -1.17, -6.83, 7.60, -4.52, -1.72, -4.08, 'leaf_3': 2.58, 1.60, 2.00, -4.68, -4.31, -4.93, 'leaf_4': -3.45, -7.12, -6.69, 9.28, 9.20, -6.23, 'leaf_5': 28.71, 28.81, 29.90, 30.20, 28.70, 29.63}
+[2023-05-02 16:38:12.058524] New best at generation 0 with fitness (489.51326810759014,)
+[36981, 24631, 28128, 28290, 14833, 32336, 19103, 31429, 24889, 25158, 10422, 39047, 38925, 17027, 19713, 32525, 16454, 27229, 1289, 20915, 20151, 32227, 18769, 9390, 31256, 1558, 7987, 29063, 16089, 19208, 2619, 8941, 25715, 865, 31476, 34902, 36720, 17942, 15956, 31082, 2409, 16099, 32120, 17543, 10142, 18725, 19214, 32261, 39848, 31105, 33962, 39574, 7744, 1059, 8259, 19706, 18503, 34963, 22028, 19452, 34725, 1744, 30430, 22922, 23661, 38718, 8682, 2387, 185, 16542, 36256, 29859, 7051, 35755, 12529, 954, 28158, 28031, 38986, 37725, 31580, 25262, 31176, 25681, 12875, 19428, 30479, 4328, 19900, 211, 28365, 38149, 18766, 30962, 20378, 9350, 10842, 31353, 35985, 32616]
+Leaves
+{'leaf_0': 29.21, 29.32, 30.46, 29.76, 29.36, 30.04, 'leaf_1': -9.27, 3.68, -7.43, 2.63, 7.13, 6.00, 'leaf_2': -3.69, -9.54, -6.87, -5.80, 3.54, 6.05, 'leaf_3': -9.11, 3.91, 0.96, -6.08, -1.59, -3.40, 'leaf_4': -4.23, 6.67, -0.75, 5.56, -6.10, 6.69, 'leaf_5': -6.14, 7.00, 1.38, 4.89, 2.57, -9.79, 'leaf_6': 0.58, -5.22, 4.67, 6.46, 6.88, -3.53, 'leaf_7': -8.84, -0.88, 1.11, -8.37, -4.59, -9.80, 'leaf_8': -4.02, -7.43, -8.81, -5.39, -2.53, -6.40, 'leaf_9': -0.03, -6.50, 2.28, -8.76, -6.38, 5.35, 'leaf_10': 5.02, -7.26, -1.25, 8.62, 9.26, -1.92, 'leaf_11': -8.33, 0.56, -3.14, -9.13, -1.71, -2.65}
+[2023-05-02 16:38:12.058664] New best at generation 0 with fitness (493.8318468789099,)
+[20063, 3511, 30539, 20080, 29044, 36235, 37616, 32779, 16764, 18621, 10880, 16792, 29929, 30836, 26473, 39640, 6444, 8794, 39056, 13285, 29959, 6725, 29177, 15335, 8741, 16366, 10990, 5880, 29254, 16844, 30406, 10693, 31576, 6895, 19526, 38035, 16507, 23348, 3440, 35554, 36403, 8014, 13543, 1554, 22050, 37854, 38778, 31540, 32028, 34164, 39575, 18485, 39674, 21875, 3792, 18915, 8704, 34335, 27529, 19282, 27174, 24276, 8404, 18995, 12758, 2151, 68, 31947, 10460, 20476, 27360, 18488, 27578, 38761, 30208, 22272, 34355, 33105, 21485, 931, 10440, 37809, 32410, 79, 35325, 31637, 30519, 24456, 2829, 14900, 35077, 135, 31365, 7831, 13275, 11074, 11197, 33246, 15609, 26175]
+Leaves
+{'leaf_0': 29.66, 26.58, 30.80, 30.01, 29.20, 30.28, 'leaf_1': 6.99, 17.48, 15.49, 30.60, 17.62, 6.00, 'leaf_2': 5.58, 7.34, -6.87, 5.73, 12.98, 17.70, 'leaf_3': -9.11, 3.91, 0.96, -6.08, -1.59, -3.40}
+[2023-05-02 16:38:30.552434] New best at generation 2 with fitness (502.2635583320283,)
+[20063, 3511, 30539, 20080, 29044, 36235, 37616, 32779, 16764, 18621, 10880, 16792, 29929, 30836, 26473, 39640, 20282, 8794, 39056, 25244, 29959, 39441, 29177, 15335, 8741, 16366, 6136, 5880, 29254, 16844, 30406, 10693, 12652, 6895, 15433, 26329, 16507, 19341, 3440, 35554, 36403, 8014, 13543, 1554, 22050, 37854, 38778, 19267, 32028, 34164, 39575, 1696, 39674, 21875, 3792, 18915, 8704, 34335, 27529, 19282, 27174, 24276, 8404, 18995, 12758, 16298, 68, 31947, 10460, 20476, 27360, 18488, 27578, 38761, 30208, 22272, 34355, 27814, 21485, 931, 36279, 37809, 32410, 79, 35325, 31637, 30519, 24456, 2829, 14900, 4270, 36607, 31365, 7831, 13275, 11074, 11197, 33246, 15609, 26175]
+Leaves
+{'leaf_0': 29.86, 27.66, 30.92, 30.09, 29.48, 30.43, 'leaf_1': 1.51, 17.54, 13.72, 30.69, 14.79, 6.00, 'leaf_2': -3.69, -1.35, -6.87, 5.63, 10.39, 15.68, 'leaf_3': 0.20, 9.74, 0.96, -6.08, -1.59, -3.40}
