@@ -14,7 +14,7 @@ if __name__=='__main__':
 		num_dim = 2 # adjust --input_space, n_actions, types arguments in simple_test
 	else:
 		num_dim = 3
-	phenotype, upscaled_arm_position, upscaled_goal, third_coordinate = learner.get_phenotype(args, num_dim)
+	list_of_phenotypes, list_of_arm, list_of_goal, list_of_third_coordinate = learner.get_phenotype(args, num_dim)
 
 	# print("Phenotype: ")
 	# print(str(phenotype))
@@ -49,7 +49,7 @@ if __name__=='__main__':
 			start_time = time.time()
 
 			# learner.learn(args, env, env_test, agent, buffer)
-			learner.learn(args, env, env_test, agent, buffer, phenotype, upscaled_arm_position, upscaled_goal, num_dim, third_coordinate)
+			learner.learn(args, env, env_test, agent, buffer, list_of_phenotypes, list_of_arm, list_of_goal, num_dim, list_of_third_coordinate)
 			tester.cycle_summary()
 
 			# plot
