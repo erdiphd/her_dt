@@ -1,22 +1,26 @@
-import math
-
 import gym
 from gym import spaces
 import numpy as np
 
-
 class GridWorldEnv(gym.Env):
     metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 4}
 
-    def __init__(self, size, agent_location, target_location, dimensions, reward_type, render_mode=None):
+    def __init__(self, render_mode=None, size=5, agent_location=None, target_location=None, dimensions=2, reward_type="dense"):
         self.dimensions = dimensions
         self.reward_type = reward_type
+
+        if dimensions == 2 and (len(agent_location) == 3 or len(target_location) == 3):
+            raise ValueError("dimensions == 2 but list size == 3")
+        if dimensions == 3 and (len(agent_location) == 2 or len(target_location) == 2):
+            raise ValueError("dimensions == 3 but list size == 2")
+
+        # default locations
         # if dimensions == 2:
         #     if target_location is None:
         #         target_location = [3, 3]
         #     if agent_location is None:
         #         agent_location = [3, 0]
-
+        #
         # if dimensions == 3:
         #     if target_location is None:
         #         target_location = [3, 3, 0]
@@ -80,6 +84,17 @@ class GridWorldEnv(gym.Env):
                 5: np.array([0, 0, -1]),
             }
 
+        # assert render_mode is None or render_mode in self.metadata["render_modes"]
+        # self.render_mode = render_mode
+
+        """
+        If human-rendering is used, `self.window` will be a reference
+        to the window that we draw to. `self.clock` will be a clock that is used
+        to ensure that the environment is rendered at the correct framerate in
+        human-mode. They will remain `None` until human-mode is used for the
+        first time.
+        """
+
     def _get_obs(self):
         return {"agent": self._agent_location, "target": self._target_location}
 
@@ -98,25 +113,28 @@ class GridWorldEnv(gym.Env):
 
     def reset(self, seed=None, options=None):
         # We need the following line to seed self.np_random
-        super().reset(seed=seed)
-
+        # super().reset(seed=seed) # TODO: why does it work for ge_q_ts but not here?
+        super().seed(seed)
         # reset locations to default
         self._agent_location = self.start
         self._target_location = self.goal
 
         # Choose the agent's location uniformly at random
         # self._agent_location = self.np_random.integers(0, self.size, size=2, dtype=int)
-        # self._agent_location = np.random.randint(0, self.size, size=3, dtype=int)
+        # self._agent_location = np.random.randint(0, self.size, size=2, dtype=int)
 
         # We will sample the target's location randomly until it does not coincide with the agent's location
         # self._target_location = self._agent_location
         # while np.array_equal(self._target_location, self._agent_location):
         #     self._target_location = np.random.randint(
-        #         0, self.size, size=3, dtype=int
+        #         0, self.size, size=2, dtype=int
         #     )
 
         observation = self._get_obs()
         info = self._get_info()
+
+        # if self.render_mode == "human":
+        #     self._render_frame()
 
         return observation, info
 
@@ -142,24 +160,19 @@ class GridWorldEnv(gym.Env):
         # Dense rewards
         elif self.reward_type == "dense":
             if self.dimensions == 2:
-                if terminated:
-                    reward = self.size*self.size
-                else:
-                    reward = self.size*self.size - (((self._agent_location[0] - self._target_location[0])**2
-                                     + (self._agent_location[1] - self._target_location[1])**2)**0.5)
+                reward = (-1) * (((self._agent_location[0] - self._target_location[0]) ** 2
+                                  + (self._agent_location[1] - self._target_location[1]) ** 2) ** 0.5)
 
             if self.dimensions == 3:
 
-                # reward = self.size*self.size*self.size - (((self._agent_location[0] - self._target_location[0])**2
-                #                  + (self._agent_location[1] - self._target_location[1])**2
-                #                  + (self._agent_location[2] - self._target_location[2])**2)**0.5)
-
-                reward = (((self._agent_location[0] - self._target_location[0])**2
-                                 + (self._agent_location[1] - self._target_location[1])**2
-                                 + (self._agent_location[2] - self._target_location[2])**2)**0.5) * (-1)
+                reward = (-1) * (((self._agent_location[0] - self._target_location[0]) ** 2
+                                  + (self._agent_location[1] - self._target_location[1]) ** 2
+                                  + (self._agent_location[2] - self._target_location[2]) ** 2) ** 0.5)
 
         observation = self._get_obs()
         info = self._get_info()
 
-        return observation, reward, terminated, False, info
+        # if self.render_mode == "human":
+        #     self._render_frame()
 
+        return observation, reward, terminated, False, info

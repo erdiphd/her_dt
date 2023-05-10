@@ -1,0 +1,95 @@
+__name__: ge_q_dts.simple_test_orthogonal
+__doc__: None
+__package__: ge_q_dts
+__loader__: <_frozen_importlib_external.SourceFileLoader object at 0x7f6ba4719f60>
+__spec__: ModuleSpec(name='ge_q_dts.simple_test_orthogonal', loader=<_frozen_importlib_external.SourceFileLoader object at 0x7f6ba4719f60>, origin='/home/vlaffo/Desktop/Hindsight-Goal-Generation/ge_q_dts/simple_test_orthogonal.py')
+__file__: /home/vlaffo/Desktop/Hindsight-Goal-Generation/ge_q_dts/simple_test_orthogonal.py
+__cached__: /home/vlaffo/Desktop/Hindsight-Goal-Generation/ge_q_dts/__pycache__/simple_test_orthogonal.cpython-37.pyc
+__builtins__: {'__name__': 'builtins', '__doc__': "Built-in functions, exceptions, and other objects.\n\nNoteworthy: None is the `nil' object; Ellipsis represents `...' in slices.", '__package__': '', '__loader__': <class '_frozen_importlib.BuiltinImporter'>, '__spec__': ModuleSpec(name='builtins', loader=<class '_frozen_importlib.BuiltinImporter'>), '__build_class__': <built-in function __build_class__>, '__import__': <built-in function __import__>, 'abs': <built-in function abs>, 'all': <built-in function all>, 'any': <built-in function any>, 'ascii': <built-in function ascii>, 'bin': <built-in function bin>, 'breakpoint': <built-in function breakpoint>, 'callable': <built-in function callable>, 'chr': <built-in function chr>, 'compile': <built-in function compile>, 'delattr': <built-in function delattr>, 'dir': <built-in function dir>, 'divmod': <built-in function divmod>, 'eval': <built-in function eval>, 'exec': <built-in function exec>, 'format': <built-in function format>, 'getattr': <built-in function getattr>, 'globals': <built-in function globals>, 'hasattr': <built-in function hasattr>, 'hash': <built-in function hash>, 'hex': <built-in function hex>, 'id': <built-in function id>, 'input': <built-in function input>, 'isinstance': <built-in function isinstance>, 'issubclass': <built-in function issubclass>, 'iter': <built-in function iter>, 'len': <built-in function len>, 'locals': <built-in function locals>, 'max': <built-in function max>, 'min': <built-in function min>, 'next': <built-in function next>, 'oct': <built-in function oct>, 'ord': <built-in function ord>, 'pow': <built-in function pow>, 'print': <built-in function print>, 'repr': <built-in function repr>, 'round': <built-in function round>, 'setattr': <built-in function setattr>, 'sorted': <built-in function sorted>, 'sum': <built-in function sum>, 'vars': <built-in function vars>, 'None': None, 'Ellipsis': Ellipsis, 'NotImplemented': NotImplemented, 'False': False, 'True': True, 'bool': <class 'bool'>, 'memoryview': <class 'memoryview'>, 'bytearray': <class 'bytearray'>, 'bytes': <class 'bytes'>, 'classmethod': <class 'classmethod'>, 'complex': <class 'complex'>, 'dict': <class 'dict'>, 'enumerate': <class 'enumerate'>, 'filter': <class 'filter'>, 'float': <class 'float'>, 'frozenset': <class 'frozenset'>, 'property': <class 'property'>, 'int': <class 'int'>, 'list': <class 'list'>, 'map': <class 'map'>, 'object': <class 'object'>, 'range': <class 'range'>, 'reversed': <class 'reversed'>, 'set': <class 'set'>, 'slice': <class 'slice'>, 'staticmethod': <class 'staticmethod'>, 'str': <class 'str'>, 'super': <class 'super'>, 'tuple': <class 'tuple'>, 'type': <class 'type'>, 'zip': <class 'zip'>, '__debug__': True, 'BaseException': <class 'BaseException'>, 'Exception': <class 'Exception'>, 'TypeError': <class 'TypeError'>, 'StopAsyncIteration': <class 'StopAsyncIteration'>, 'StopIteration': <class 'StopIteration'>, 'GeneratorExit': <class 'GeneratorExit'>, 'SystemExit': <class 'SystemExit'>, 'KeyboardInterrupt': <class 'KeyboardInterrupt'>, 'ImportError': <class 'ImportError'>, 'ModuleNotFoundError': <class 'ModuleNotFoundError'>, 'OSError': <class 'OSError'>, 'EnvironmentError': <class 'OSError'>, 'IOError': <class 'OSError'>, 'EOFError': <class 'EOFError'>, 'RuntimeError': <class 'RuntimeError'>, 'RecursionError': <class 'RecursionError'>, 'NotImplementedError': <class 'NotImplementedError'>, 'NameError': <class 'NameError'>, 'UnboundLocalError': <class 'UnboundLocalError'>, 'AttributeError': <class 'AttributeError'>, 'SyntaxError': <class 'SyntaxError'>, 'IndentationError': <class 'IndentationError'>, 'TabError': <class 'TabError'>, 'LookupError': <class 'LookupError'>, 'IndexError': <class 'IndexError'>, 'KeyError': <class 'KeyError'>, 'ValueError': <class 'ValueError'>, 'UnicodeError': <class 'UnicodeError'>, 'UnicodeEncodeError': <class 'UnicodeEncodeError'>, 'UnicodeDecodeError': <class 'UnicodeDecodeError'>, 'UnicodeTranslateError': <class 'UnicodeTranslateError'>, 'AssertionError': <class 'AssertionError'>, 'ArithmeticError': <class 'ArithmeticError'>, 'FloatingPointError': <class 'FloatingPointError'>, 'OverflowError': <class 'OverflowError'>, 'ZeroDivisionError': <class 'ZeroDivisionError'>, 'SystemError': <class 'SystemError'>, 'ReferenceError': <class 'ReferenceError'>, 'MemoryError': <class 'MemoryError'>, 'BufferError': <class 'BufferError'>, 'Warning': <class 'Warning'>, 'UserWarning': <class 'UserWarning'>, 'DeprecationWarning': <class 'DeprecationWarning'>, 'PendingDeprecationWarning': <class 'PendingDeprecationWarning'>, 'SyntaxWarning': <class 'SyntaxWarning'>, 'RuntimeWarning': <class 'RuntimeWarning'>, 'FutureWarning': <class 'FutureWarning'>, 'ImportWarning': <class 'ImportWarning'>, 'UnicodeWarning': <class 'UnicodeWarning'>, 'BytesWarning': <class 'BytesWarning'>, 'ResourceWarning': <class 'ResourceWarning'>, 'ConnectionError': <class 'ConnectionError'>, 'BlockingIOError': <class 'BlockingIOError'>, 'BrokenPipeError': <class 'BrokenPipeError'>, 'ChildProcessError': <class 'ChildProcessError'>, 'ConnectionAbortedError': <class 'ConnectionAbortedError'>, 'ConnectionRefusedError': <class 'ConnectionRefusedError'>, 'ConnectionResetError': <class 'ConnectionResetError'>, 'FileExistsError': <class 'FileExistsError'>, 'FileNotFoundError': <class 'FileNotFoundError'>, 'IsADirectoryError': <class 'IsADirectoryError'>, 'NotADirectoryError': <class 'NotADirectoryError'>, 'InterruptedError': <class 'InterruptedError'>, 'PermissionError': <class 'PermissionError'>, 'ProcessLookupError': <class 'ProcessLookupError'>, 'TimeoutError': <class 'TimeoutError'>, 'open': <built-in function open>, 'quit': Use quit() or Ctrl-D (i.e. EOF) to exit, 'exit': Use exit() or Ctrl-D (i.e. EOF) to exit, 'copyright': Copyright (c) 2001-2018 Python Software Foundation.
+All Rights Reserved.
+
+Copyright (c) 2000 BeOpen.com.
+All Rights Reserved.
+
+Copyright (c) 1995-2001 Corporation for National Research Initiatives.
+All Rights Reserved.
+
+Copyright (c) 1991-1995 Stichting Mathematisch Centrum, Amsterdam.
+All Rights Reserved., 'credits':     Thanks to CWI, CNRI, BeOpen.com, Zope Corporation and a cast of thousands
+    for supporting Python development.  See www.python.org for more information., 'license': Type license() to see the full license text, 'help': Type help() for interactive help, or help(object) for help about object.}
+os: <module 'os' from '/usr/local/lib/python3.7/os.py'>
+randrange: <bound method Random.randrange of <random.Random object at 0x55e400b1e2a8>>
+gym: <module 'gym' from '/home/vlaffo/.local/lib/python3.7/site-packages/gym/__init__.py'>
+json: <module 'json' from '/usr/local/lib/python3.7/json/__init__.py'>
+string: <module 'string' from '/usr/local/lib/python3.7/string.py'>
+datetime: <module 'datetime' from '/usr/local/lib/python3.7/datetime.py'>
+argparse: <module 'argparse' from '/usr/local/lib/python3.7/argparse.py'>
+subprocess: <module 'subprocess' from '/usr/local/lib/python3.7/subprocess.py'>
+np: <module 'numpy' from '/home/vlaffo/.local/lib/python3.7/site-packages/numpy/__init__.py'>
+time: <built-in function time>
+sleep: <built-in function sleep>
+random: <module 'numpy.random' from '/home/vlaffo/.local/lib/python3.7/site-packages/numpy/random/__init__.py'>
+EpsGreedyLeaf: <class 'ge_q_dts.dt.decision_tree.EpsGreedyLeaf'>
+PythonDT: <class 'ge_q_dts.dt.python_decision_tree.PythonDT'>
+RandomlyInitializedEpsGreedyLeaf: <class 'ge_q_dts.dt.decision_tree.RandomlyInitializedEpsGreedyLeaf'>
+GrammaticalEvolutionTranslator: <class 'ge_q_dts.grammatical_evolution.GrammaticalEvolutionTranslator'>
+grammatical_evolution: <function grammatical_evolution at 0x7f6ba11957b8>
+differential_evolution: <function differential_evolution at 0x7f6ba1195950>
+gym_examples: <module 'gym_examples' from '/home/vlaffo/Desktop/Hindsight-Goal-Generation/gym-examples/gym_examples/__init__.py'>
+string_to_dict: <function string_to_dict at 0x7f6ba472a378>
+parser: ArgumentParser(prog='train.py', usage=None, description=None, formatter_class=<class 'argparse.HelpFormatter'>, conflict_handler='error', add_help=True)
+date: 2023-04-11_15-51-02
+logdir: logs/gym/2023-04-11_15-51-02_gpcenmmv
+logfile: logs/gym/2023-04-11_15-51-02_gpcenmmv/log.txt
+args: Namespace(crossover={'function': 'tools.cxOnePoint'}, cxp=0.5, df=0.9, environment_name='gym_examples:gym_examples/GridWorld-v0', episode_len=1000, episodes=50, eps=0.05, generations=10, genotype_len=100, input_space=8, jobs=1, lambda_=30, learning_rate='auto', low=-10, mp=0.5, mutation={'function': 'tools.mutUniformInt', 'low': 0, 'up': 40000, 'indpb': 0.1}, n_actions=4, seed=0, selection={'function': 'tools.selTournament', 'tournsize': 2}, types=None, up=10)
+best: None
+input_space_size: 8
+lr: auto
+CLeaf: <class 'ge_q_dts.simple_test_orthogonal.CLeaf'>
+grammar: {'bt': ['<if>'], 'if': ['if <condition>:{<action>}else:{<action>}'], 'condition': ['_in_0<comp_op><const_type_0>', '_in_1<comp_op><const_type_1>', '_in_2<comp_op><const_type_2>', '_in_3<comp_op><const_type_3>', '_in_4<comp_op><const_type_4>', '_in_5<comp_op><const_type_5>', '_in_6<comp_op><const_type_6>', '_in_7<comp_op><const_type_7>'], 'action': ['out=_leaf;leaf="_leaf"', '<if>'], 'comp_op': [' < ', ' > '], 'const_type_0': ['0.0', '0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9'], 'const_type_1': ['0.0', '0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9'], 'const_type_2': ['0.0', '0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9'], 'const_type_3': ['0.0', '0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9'], 'const_type_4': ['0.0', '0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9'], 'const_type_5': ['0.0', '0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9'], 'const_type_6': ['0.0', '0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9'], 'const_type_7': ['0.0', '0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9']}
+types: 0,10,1,10;0,10,1,10;0,10,1,10;0,10,1,10;0,10,1,10;0,10,1,10;0,10,1,10;0,10,1,10
+index: 7
+type_: 0,10,1,10
+rng: ['0', '10', '1', '10']
+start: 0
+stop: 10
+step: 1
+divisor: 10
+consts_: ['0.0', '0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9']
+f: <_io.TextIOWrapper name='logs/gym/2023-04-11_15-51-02_gpcenmmv/log.txt' mode='a' encoding='UTF-8'>
+[2023-04-11 15:51:16.791340] New best at generation 0 with fitness (-1000.0,)
+[25247, 27562, 2653, 16968, 33506, 31845, 26537, 19877, 31234, 23465, 38232, 14315, 33075, 9127, 18470, 9158, 6214, 16417, 34902, 39446, 9631, 20325, 6472, 4832, 21639, 30942, 36687, 6599, 23186, 28453, 20722, 13400, 36210, 31261, 29012, 34167, 17071, 4081, 35959, 920, 6112, 26137, 74, 32347, 21832, 15984, 21312, 4127, 12521, 37192, 14529, 15637, 9338, 35585, 29358, 5977, 5272, 20975, 33288, 32065, 7147, 19755, 36127, 19076, 8179, 35877, 21807, 35408, 13317, 39530, 35863, 38510, 18851, 29162, 6005, 39078, 25224, 20777, 37725, 15866, 19027, 12050, 12411, 12237, 2160, 17043, 31229, 4527, 5886, 8534, 9800, 2532, 5259, 35428, 25643, 34378, 18063, 34196, 15433, 14103]
+Leaves
+{}
+[2023-04-11 15:51:16.791428] New best at generation 0 with fitness (121283.5392432602,)
+[5182, 22014, 2994, 35672, 18407, 8836, 15737, 31577, 23083, 39985, 18866, 23540, 38684, 8673, 20335, 25429, 27159, 5290, 99, 38966, 12603, 21915, 10490, 15690, 14620, 29368, 24815, 37234, 27158, 2067, 26362, 37189, 27408, 3065, 10857, 29186, 4186, 16988, 10334, 29252, 34575, 31933, 36792, 39582, 4, 2550, 32412, 21361, 20451, 30598, 3267, 27206, 12320, 35950, 5470, 8553, 965, 26333, 27360, 20720, 222, 13993, 936, 154, 34625, 6408, 12481, 7792, 39869, 13009, 19819, 18348, 11942, 6565, 31169, 25997, 5331, 1431, 18003, 29686, 7587, 16809, 8743, 34135, 22744, 7543, 10121, 18245, 1217, 2772, 2664, 13483, 17017, 36592, 20625, 24044, 37189, 2752, 39819, 32406]
+Leaves
+{'leaf_0': 928.64, 697.53, 903.73, 904.90, 'leaf_1': -1.53, 2.92, -1.25, 7.84, 'leaf_2': 9.27, -2.33, 5.83, 0.58}
+[2023-04-11 15:51:16.791527] New best at generation 0 with fitness (121521.29078277602,)
+[38103, 11010, 16249, 34341, 19620, 1378, 30204, 13093, 4087, 27003, 10997, 24970, 33130, 25421, 13925, 25218, 34944, 34480, 32321, 6752, 8308, 5633, 34918, 763, 5357, 691, 15927, 25943, 29516, 18074, 27030, 22629, 25971, 16924, 5022, 10336, 38406, 15903, 13755, 2971, 3516, 33506, 4393, 29245, 16317, 29531, 8813, 39309, 33402, 18950, 884, 39214, 9682, 23016, 23460, 24053, 19487, 32882, 16613, 8756, 1474, 31421, 13081, 39882, 26011, 22241, 31033, 19753, 28860, 9130, 31158, 19392, 21749, 22872, 39524, 24949, 25943, 37929, 26297, 32867, 19523, 37008, 15416, 12373, 28267, 14181, 17377, 33709, 10971, 33400, 9192, 39148, 33907, 34847, 33181, 31185, 22394, 16972, 28404, 19769]
+Leaves
+{'leaf_0': 931.54, 705.61, 897.77, 889.28, 'leaf_1': 637.82, 918.06, 581.36, 575.92}
+[2023-04-11 15:51:23.753572] New best at generation 1 with fitness (121548.25818179914,)
+[38103, 11010, 16249, 34341, 19620, 1378, 30204, 13093, 4087, 27003, 10997, 24970, 33130, 25421, 3213, 25218, 34944, 34480, 32321, 6752, 8308, 5633, 34918, 763, 5357, 691, 15927, 25943, 29516, 18074, 27030, 22629, 25971, 16924, 9818, 10336, 38406, 15903, 13755, 2971, 3516, 33506, 4393, 23970, 11784, 22341, 17646, 31853, 31663, 27465, 85, 15476, 31287, 22561, 10532, 2863, 31472, 34466, 10806, 29501, 18860, 6347, 31699, 13961, 1788, 29768, 39307, 11364, 28945, 20660, 37905, 21480, 28176, 37216, 9442, 38078, 28149, 25653, 15546, 24158, 24968, 19347, 15769, 8194, 36459, 15846, 35157, 38479, 24383, 29853, 15608, 39277, 22133, 9598, 21106, 30201, 9432, 16823, 36070, 11336]
+Leaves
+{'leaf_0': 930.80, 699.13, 905.76, 897.48, 'leaf_1': 772.17, 919.23, 605.19, 600.87}
+gen	nevals	avg    	std    	min   	max   
+0  	30    	15283.8	41515.9	-1000 	121521
+1  	21    	31602.1	54064.7	-1000 	121548
+2  	21    	76446.4	58928.2	-1000 	121548
+3  	26    	109150 	36717  	-1000 	121548
+4  	25    	121489 	57.6682	121284	121548
+5  	23    	121510 	18.6753	121489	121548
+6  	27    	121512 	19.4319	121489	121548
+7  	24    	121514 	18.4891	121489	121548
+8  	25    	121520 	16.4412	121489	121548
+9  	21    	121525 	14.2868	121489	121548
+10 	23    	121530 	11.3863	121521	121548
+[38103, 11010, 16249, 34341, 19620, 1378, 30204, 13093, 4087, 27003, 10997, 24970, 33130, 25421, 3213, 25218, 34944, 34480, 32321, 6752, 8308, 5633, 34918, 763, 5357, 691, 15927, 25943, 29516, 18074, 27030, 22629, 25971, 16924, 9818, 10336, 38406, 15903, 13755, 2971, 3516, 33506, 4393, 23970, 11784, 22341, 17646, 31853, 31663, 27465, 85, 15476, 31287, 22561, 10532, 2863, 31472, 34466, 10806, 29501, 18860, 6347, 31699, 13961, 1788, 29768, 39307, 11364, 28945, 20660, 37905, 21480, 28176, 37216, 9442, 38078, 28149, 25653, 15546, 24158, 24968, 19347, 15769, 8194, 36459, 15846, 35157, 38479, 24383, 29853, 15608, 39277, 22133, 9598, 21106, 30201, 9432, 16823, 36070, 11336]
+if _in_1 > 0.0:
+    out=0
+    
+else:
+    out=1
+    
+best_fitness: 121548.25818179914

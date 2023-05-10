@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="75825a11-a60f-49d4-92a7-fc8efd337172" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/algorithm/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/algorithm/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/algorithm/ddpg/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/algorithm/ddpg/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/algorithm/ddpg/ddpg.py" beforeDir="false" afterPath="$PROJECT_DIR$/algorithm/ddpg/ddpg.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/algorithm/replay_buffer.py" beforeDir="false" afterPath="$PROJECT_DIR$/algorithm/replay_buffer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/common.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/envs/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/fetch/push_obstacle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/fetch/push_obstacle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/fetch/robot.xml" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/fetch/robot.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/fetch/shared.xml" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/fetch/shared.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/.get" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/.get" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/fetch/base_link_collision.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/fetch/base_link_collision.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/fetch/bellows_link_collision.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/fetch/bellows_link_collision.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/fetch/elbow_flex_link_collision.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/fetch/elbow_flex_link_collision.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/fetch/estop_link.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/fetch/estop_link.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/fetch/forearm_roll_link_collision.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/fetch/forearm_roll_link_collision.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/fetch/gripper_link.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/fetch/gripper_link.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/fetch/head_pan_link_collision.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/fetch/head_pan_link_collision.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/fetch/head_tilt_link_collision.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/fetch/head_tilt_link_collision.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/fetch/l_wheel_link_collision.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/fetch/l_wheel_link_collision.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/fetch/laser_link.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/fetch/laser_link.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/fetch/r_wheel_link_collision.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/fetch/r_wheel_link_collision.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/fetch/shoulder_lift_link_collision.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/fetch/shoulder_lift_link_collision.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/fetch/shoulder_pan_link_collision.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/fetch/shoulder_pan_link_collision.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/fetch/torso_fixed_link.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/fetch/torso_fixed_link.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/fetch/torso_lift_link_collision.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/fetch/torso_lift_link_collision.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/fetch/upperarm_roll_link_collision.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/fetch/upperarm_roll_link_collision.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/fetch/wrist_flex_link_collision.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/fetch/wrist_flex_link_collision.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/fetch/wrist_roll_link_collision.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/fetch/wrist_roll_link_collision.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/hand/F1.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/hand/F1.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/hand/F2.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/hand/F2.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/hand/F3.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/hand/F3.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/hand/TH1_z.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/hand/TH1_z.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/hand/TH2_z.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/hand/TH2_z.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/hand/TH3_z.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/hand/TH3_z.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/hand/forearm_electric.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/hand/forearm_electric.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/hand/forearm_electric_cvx.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/hand/forearm_electric_cvx.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/hand/knuckle.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/hand/knuckle.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/hand/lfmetacarpal.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/hand/lfmetacarpal.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/hand/palm.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/hand/palm.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/stls/hand/wrist.stl" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/stls/hand/wrist.stl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/textures/block.png" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/textures/block.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/assets/textures/block_hidden.png" beforeDir="false" afterPath="$PROJECT_DIR$/envs/assets/textures/block_hidden.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/fetch/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/envs/fetch/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/fetch/fixobj.py" beforeDir="false" afterPath="$PROJECT_DIR$/envs/fetch/fixobj.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/fetch/interval.py" beforeDir="false" afterPath="$PROJECT_DIR$/envs/fetch/interval.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/fetch/obstacle.py" beforeDir="false" afterPath="$PROJECT_DIR$/envs/fetch/obstacle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/fetch/vanilla.py" beforeDir="false" afterPath="$PROJECT_DIR$/envs/fetch/vanilla.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/hand/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/envs/hand/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/hand/fixobj.py" beforeDir="false" afterPath="$PROJECT_DIR$/envs/hand/fixobj.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/hand/interval.py" beforeDir="false" afterPath="$PROJECT_DIR$/envs/hand/interval.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/hand/reach.py" beforeDir="false" afterPath="$PROJECT_DIR$/envs/hand/reach.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/hand/vanilla.py" beforeDir="false" afterPath="$PROJECT_DIR$/envs/hand/vanilla.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/envs/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/envs/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ge_q_dts/advanced_test_oblique.py" beforeDir="false" afterPath="$PROJECT_DIR$/ge_q_dts/advanced_test_oblique.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ge_q_dts/dt/decision_tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/ge_q_dts/dt/decision_tree.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ge_q_dts/dt/python_decision_tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/ge_q_dts/dt/python_decision_tree.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ge_q_dts/grammatical_evolution.py" beforeDir="false" afterPath="$PROJECT_DIR$/ge_q_dts/grammatical_evolution.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ge_q_dts/gym_evaluation.py" beforeDir="false" afterPath="$PROJECT_DIR$/ge_q_dts/gym_evaluation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ge_q_dts/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ge_q_dts/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ge_q_dts/simple_test_orthogonal.py" beforeDir="false" afterPath="$PROJECT_DIR$/ge_q_dts/simple_test_orthogonal.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym-examples/gym_examples/envs/grid_world.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym-examples/gym_examples/envs/grid_world.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym-examples/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym-examples/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learner/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/learner/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learner/hgg.py" beforeDir="false" afterPath="$PROJECT_DIR$/learner/hgg.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learner/normal.py" beforeDir="false" afterPath="$PROJECT_DIR$/learner/normal.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/gcc_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/gcc_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/os_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/os_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/tf_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tf_utils.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2N3SQpJ6iwpOoydfANe3R1dPMVW" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "/home/vlaffo/Desktop/Hindsight-Goal-Generation",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/learner" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.plotly_debug_animation">
+    <configuration name="hgg_DT" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Hindsight-Goal-Generation" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/learner" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/learner/hgg_DT.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="plotly_debug_animation" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="Hindsight-Goal-Generation" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/.local/lib/python3.7/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/plotly_debug_animation.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="train" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="Hindsight-Goal-Generation" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/.local/lib/python3.7/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/train.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for test.Tester.test_acc" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="Hindsight-Goal-Generation" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test.Tester.test_acc&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.plotly_debug_animation" />
+      <item itemvalue="Python.train" />
+      <item itemvalue="Python.hgg_DT" />
+      <item itemvalue="Python tests.Python tests for test.Tester.test_acc" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python tests.Python tests for test.Tester.test_acc" />
+        <item itemvalue="Python.hgg_DT" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="75825a11-a60f-49d4-92a7-fc8efd337172" name="Changes" comment="" />
+      <created>1678891259475</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1678891259475</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/learner/hgg.py</url>
+          <line>116</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plotly_debug_animation.py</url>
+          <line>114</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
