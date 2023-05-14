@@ -54,7 +54,7 @@ if __name__ == '__main__':
 			for j in range(len(initial_goals[i])):
 				current_arm_position.append(math.ceil(initial_goals[i][j] * 10) / 10)
 			list_of_current_arm_position.append(current_arm_position)
-	to_be_downscaled_and_appended_3rd_coordinate = True
+	append_3rd_coordinate = True
 	# coordinates are not upscaled. Only DT is working with upscaled coordinates
 	"""
 	Arm position:
@@ -72,10 +72,10 @@ if __name__ == '__main__':
 			start_time = time.time()
 
 			# learner.learn(args, env, env_test, agent, buffer)
-			list_of_current_arm_position = learner.learn(args, env, env_test, agent, buffer, list_of_phenotypes, list_of_arm, list_of_goal, num_dim, list_of_third_coordinate, list_of_current_arm_position, to_be_downscaled_and_appended_3rd_coordinate)
+			list_of_current_arm_position = learner.learn(args, env, env_test, agent, buffer, list_of_phenotypes, list_of_arm, list_of_goal, num_dim, list_of_third_coordinate, list_of_current_arm_position, append_3rd_coordinate)
 			tester.cycle_summary()
-			# Downscale only initial coordinate
-			to_be_downscaled_and_appended_3rd_coordinate = False
+			# append 3rd coordinate only once at first run
+			append_3rd_coordinate = False
 
 			# plot
 			np.save('container/initial_goals_ep_'+str(epoch) + '_cycle' + str(cycle) + '.npy', learner.initial_goals_tmp)

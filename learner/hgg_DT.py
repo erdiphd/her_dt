@@ -206,7 +206,7 @@ class HGGLearner_DT:
         return self.exec_with_return("def func(): \n" + phenotype + "    return out \nfunc()", variables)
 
     def get_intermediate_goal(self, phenotype, current_arm_position, num_dim, third_coordinate,
-                              to_be_downscaled_and_appended_3rd_coordinate):
+                              append_3rd_coordinate):
 
         # compute intermediate goal
 
@@ -253,7 +253,7 @@ class HGGLearner_DT:
         if num_dim == 2 and third_coordinate is None:
             raise ValueError("num_dim == 2 but no 3rd coordinate given")
 
-        if to_be_downscaled_and_appended_3rd_coordinate is True:
+        if append_3rd_coordinate is True:
             if num_dim == 2:
                 temp_list = next_intermediate_goal.copy()
                 temp_list.append(float(f'{third_coordinate:.2f}'))
@@ -319,7 +319,7 @@ class HGGLearner_DT:
         return list_of_phenotypes, list_of_arm, list_of_goal, list_of_third_coordinate, initial_goals
 
     def learn(self, args, env, env_test, agent, buffer, list_of_phenotypes, list_of_arm, list_of_goal, num_dim,
-              list_of_third_coordinate, list_of_current_arm_position, to_be_downscaled_and_appended_3rd_coordinate):
+              list_of_third_coordinate, list_of_current_arm_position, append_3rd_coordinate):
         initial_goals = []
         desired_goals = []
         for i in range(args.episodes):
@@ -358,7 +358,7 @@ class HGGLearner_DT:
                 intermediate_goal = np.array(self.get_intermediate_goal(list_of_phenotypes[i],
                                                                         list_of_current_arm_position[i].copy(), num_dim,
                                                                         list_of_third_coordinate[i].copy(),
-                                                                        to_be_downscaled_and_appended_3rd_coordinate))
+                                                                        append_3rd_coordinate))
             self.env_List[i].goal = intermediate_goal.copy()
             # make the intermediate goal move
             list_of_current_arm_position[i] = intermediate_goal.copy()
