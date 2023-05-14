@@ -1,0 +1,36 @@
+if _in_1 > 13.0:
+    if _in_0 > 3.0:
+        if _in_0 < 3.0:
+            if _in_1 < 6.0:
+                out=0
+                
+            else:
+                if _in_1 < 7.0:
+                    out=1
+                    
+                else:
+                    out=3
+                    
+                
+            
+        else:
+            out=0
+            
+        
+    else:
+        out=3
+        
+    
+else:
+    if _in_0 < 12.0:
+        out=2
+        
+    else:
+        if _in_1 > 8.0:
+            out=2
+            
+        else:
+            out=1
+            
+        
+    

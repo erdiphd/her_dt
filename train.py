@@ -4,8 +4,7 @@ import time
 import math
 from common import get_args,experiment_setup
 
-if __name__=='__main__':
-
+if __name__ == '__main__':
 
 	args = get_args()
 	env, env_test, agent, buffer, learner, tester = experiment_setup(args)
@@ -16,6 +15,13 @@ if __name__=='__main__':
 	else:
 		num_dim = 3
 	list_of_phenotypes, list_of_arm, list_of_goal, list_of_third_coordinate, initial_goals = learner.get_phenotype(args, num_dim)
+
+	# log phenotypes for debugging
+	for i in range(len(list_of_phenotypes)):
+		with open('log/phenotypes/HGG_phenotype_2.txt', 'w') as f:
+			f.write(str(list_of_phenotypes[i]) + "\n" + "-------------------------")
+
+	print(list_of_phenotypes)
 
 	args.logger.summary_init(agent.graph, agent.sess)
 
@@ -34,21 +40,28 @@ if __name__=='__main__':
 	for key in tester.info:
 		args.logger.add_item(key, 'scalar')
 
-	# at first initialize current position with start for all start-goal pairs
+	# at first initialize current position with initial_goal for all start-goal pairs
 	list_of_current_arm_position = []
 	if num_dim == 2:
 		for i in range(args.episodes):
 			current_arm_position = []
 			for j in range(len(initial_goals[i][:2])):
-				current_arm_position.append(math.ceil(initial_goals[i][j] * 10))
+				current_arm_position.append(math.ceil(initial_goals[i][j] * 10) / 10)
 			list_of_current_arm_position.append(current_arm_position)
 	if num_dim == 3:
 		for i in range(args.episodes):
 			current_arm_position = []
 			for j in range(len(initial_goals[i])):
-				current_arm_position.append(math.ceil(initial_goals[i][j] * 10))
+				current_arm_position.append(math.ceil(initial_goals[i][j] * 10) / 10)
 			list_of_current_arm_position.append(current_arm_position)
-	to_be_downscaled_and_appended_3rd_coordinate = False
+	to_be_downscaled_and_appended_3rd_coordinate = True
+	# coordinates are not upscaled. Only DT is working with upscaled coordinates
+	"""
+	Arm position:
+	[1.5, 0.6, 0.4]
+	Goal:
+	[1.5, 0.9, 0.4]
+	"""
 
 	args.logger.summary_setup()
 
@@ -62,7 +75,7 @@ if __name__=='__main__':
 			list_of_current_arm_position = learner.learn(args, env, env_test, agent, buffer, list_of_phenotypes, list_of_arm, list_of_goal, num_dim, list_of_third_coordinate, list_of_current_arm_position, to_be_downscaled_and_appended_3rd_coordinate)
 			tester.cycle_summary()
 			# Downscale only initial coordinate
-			to_be_downscaled_and_appended_3rd_coordinate = True
+			to_be_downscaled_and_appended_3rd_coordinate = False
 
 			# plot
 			np.save('container/initial_goals_ep_'+str(epoch) + '_cycle' + str(cycle) + '.npy', learner.initial_goals_tmp)

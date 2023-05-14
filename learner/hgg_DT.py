@@ -207,61 +207,59 @@ class HGGLearner_DT:
 
     def get_intermediate_goal(self, phenotype, current_arm_position, num_dim, third_coordinate,
                               to_be_downscaled_and_appended_3rd_coordinate):
-        # --------------------------------------------------------------------------------
-        """
-        Arm position:
-        [14, 6, 4]
-        Goal:
-        [14, 9, 4]
-        """
 
         # compute intermediate goal
-        # shift every line in phenotype by 4 spaces (1 indent)
 
+        """
+        Arm position:
+        [1.5, 0.6, 0.4]
+        Goal:
+        [1.5, 0.9, 0.4]
+        """
+        # pass to DT upscaled arm position, because it only works with upscaled
+        upscaled_arm_position = np.array(current_arm_position) * 10
+
+        # shift every line in phenotype by 4 spaces (1 indent)
         updated_phenotype_with_indents = ""
         for line in phenotype.split('\n'):
             updated_phenotype_with_indents = updated_phenotype_with_indents + "    " + line + "\n"
         # input current position to get next action
-        action = self.get_next_action(updated_phenotype_with_indents, current_arm_position.copy())
+        action = self.get_next_action(updated_phenotype_with_indents, np.copy(upscaled_arm_position))
         # credit to https://stackoverflow.com/questions/33409207/how-to-return-value-from-exec-in-function
 
         # print("Action: " + str(action))
 
         next_intermediate_goal = current_arm_position.copy()
 
-        # apply action
+        # apply action. Only DT is working with 10X upscaling and actions with "1" steps.
+        # No need to upscale and downscale every goal in HGG.
+        # When applying, action step will just be 0.1 instead of 1
         if action == 0:
-            next_intermediate_goal[0] = next_intermediate_goal[0] + 1
+            next_intermediate_goal[0] = next_intermediate_goal[0] + 0.1
         if action == 1:
-            next_intermediate_goal[1] = next_intermediate_goal[1] + 1
+            next_intermediate_goal[1] = next_intermediate_goal[1] + 0.1
         if action == 2:
-            next_intermediate_goal[0] = next_intermediate_goal[0] - 1
+            next_intermediate_goal[0] = next_intermediate_goal[0] - 0.1
         if action == 3:
-            next_intermediate_goal[1] = next_intermediate_goal[1] - 1
+            next_intermediate_goal[1] = next_intermediate_goal[1] - 0.1
 
         if num_dim == 3:
             if action == 4:
-                next_intermediate_goal[2] = next_intermediate_goal[2] + 1
+                next_intermediate_goal[2] = next_intermediate_goal[2] + 0.1
             if action == 5:
-                next_intermediate_goal[2] = next_intermediate_goal[2] - 1
+                next_intermediate_goal[2] = next_intermediate_goal[2] - 0.1
 
-        # print("Intermediate goal before downscale:")
-        # print(next_intermediate_goal)
-
-        # Downscale only initial coordinate
-        if to_be_downscaled_and_appended_3rd_coordinate is False:
-            next_intermediate_goal = np.array(next_intermediate_goal) / 10
-        # Append third coordinate for FetchPush
+        # Append third coordinate for FetchPush, because it stays the same
         if num_dim == 2 and third_coordinate is None:
             raise ValueError("num_dim == 2 but no 3rd coordinate given")
 
-        if to_be_downscaled_and_appended_3rd_coordinate is False:
+        if to_be_downscaled_and_appended_3rd_coordinate is True:
             if num_dim == 2:
-                list = next_intermediate_goal.tolist()
-                list.append(float(f'{third_coordinate:.2f}'))
-                next_intermediate_goal = np.array(list)
+                temp_list = next_intermediate_goal.copy()
+                temp_list.append(float(f'{third_coordinate:.2f}'))
+                next_intermediate_goal = np.array(temp_list)
 
-        # print("Intermediate goal after downscale:")
+        # print("Intermediate goal:")
         # print(next_intermediate_goal)
 
         return next_intermediate_goal
@@ -336,13 +334,7 @@ class HGGLearner_DT:
         achieved_trajectories = []
         achieved_init_states = []
 
-        """
-        Arm position:
-        [15, 6, 4]
-        Goal:
-        [15, 9, 4]
-        """
-
+        # TODO: check if all start-goal pairs are being processed
         for i in range(args.episodes):
             obs = self.env_List[i].get_obs()
             init_state = obs['observation'].copy()
@@ -363,7 +355,7 @@ class HGGLearner_DT:
             if goal_reached is False:
                 # pass dt and current arm position to get next intermediate goal
                 # return 1 intermediate goal for every start-goal pair
-                intermediate_goal = np.array(self.get_intermediate_goal(list_of_phenotypes[i].copy(),
+                intermediate_goal = np.array(self.get_intermediate_goal(list_of_phenotypes[i],
                                                                         list_of_current_arm_position[i].copy(), num_dim,
                                                                         list_of_third_coordinate[i].copy(),
                                                                         to_be_downscaled_and_appended_3rd_coordinate))
