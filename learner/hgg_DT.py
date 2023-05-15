@@ -218,13 +218,17 @@ class HGGLearner_DT:
         """
         # pass to DT upscaled arm position, because it only works with upscaled
         upscaled_arm_position = np.array(current_arm_position) * 10
-
+        action = 0
         # shift every line in phenotype by 4 spaces (1 indent)
         updated_phenotype_with_indents = ""
         for line in phenotype.split('\n'):
             updated_phenotype_with_indents = updated_phenotype_with_indents + "    " + line + "\n"
-        # input current position to get next action
-        action = self.get_next_action(updated_phenotype_with_indents, np.copy(upscaled_arm_position))
+        # intermediate goal is always 3D but DT is optimized for 2D (FetchPush) => crop current position
+        if num_dim == 2 and len(upscaled_arm_position) == 3:
+            # input current position to get next action
+            action = self.get_next_action(updated_phenotype_with_indents, np.copy(upscaled_arm_position[:2]))
+        else:
+            action = self.get_next_action(updated_phenotype_with_indents, np.copy(upscaled_arm_position))
         # credit to https://stackoverflow.com/questions/33409207/how-to-return-value-from-exec-in-function
 
         # print("Action: " + str(action))
