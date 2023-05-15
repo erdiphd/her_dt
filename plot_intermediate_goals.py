@@ -20,7 +20,7 @@ def plotly_intermediate_goals(achieved_init_states,achieved_trajectories,desired
     fig.add_trace(go.Scatter3d(x=initial_goals[:, 0], y=initial_goals[:, 1], z=initial_goals[:, 2], name='init',mode='markers', marker=dict(size=8,color='blue',opacity=0.8)), row=1, col=1)
     fig.add_trace(go.Scatter3d(x=desired_goals[:, 0], y=desired_goals[:, 1], z=desired_goals[:, 2], name='init',mode='markers', marker=dict(size=8,color='red',opacity=0.8)), row=1, col=1)
     pool_goals = pool_goals_container[0]
-    fig.add_trace(go.Scatter3d(x=[pool_goals[:, 0]], y=[pool_goals[:, 1]],z=[pool_goals[:, 2]], name='pool',mode='markers', marker=dict(size=8,color=plotly.colors.DEFAULT_PLOTLY_COLORS[0],opacity=0.8)), row=1, col=1)
+    fig.add_trace(go.Scatter3d(x=pool_goals[:, 0], y=pool_goals[:, 1],z=pool_goals[:, 2], name='pool',mode='markers', marker=dict(size=8,color=plotly.colors.DEFAULT_PLOTLY_COLORS[0],opacity=0.8)), row=1, col=1)
     # fig.add_trace(go.Scatter3d(x=achieved_init_states[:, 0], y=achieved_init_states[:, 1], z=achieved_init_states[:, 2], name='ac_in',mode='markers', marker=dict(size=8,color='pink',opacity=0.8)), row=1, col=1)
     # pool_goals = pool_goals_container[:,0]
     # fig.add_trace(go.Scatter3d(x=pool_goals[:, 0], y=pool_goals[:, 1], z=pool_goals[:, 2], name='pool',mode='markers', marker=dict(size=8,color=plotly.colors.DEFAULT_PLOTLY_COLORS[0],opacity=0.8)), row=1, col=1)
@@ -28,9 +28,9 @@ def plotly_intermediate_goals(achieved_init_states,achieved_trajectories,desired
     #     fig.add_trace(go.Scatter3d(x=pool_goals[:, 0], y=pool_goals[:, 1], z=pool_goals[:, 2], name='pool',mode='markers', marker=dict(size=8,color=plotly.colors.DEFAULT_PLOTLY_COLORS[i],opacity=0.8)), row=1, col=1)
 
     # Frames
-    frames = [go.Frame(data= [go.Scatter3d(x=[pool_goals[:, 0]],
-y=[pool_goals[:, 1]],
-z=[pool_goals[:, 2]])],
+    frames = [go.Frame(data= [go.Scatter3d(x=pool_goals[:, 0],
+y=pool_goals[:, 1],
+z=pool_goals[:, 2])],
                     traces= [2],
                     name=f'frame{k}'      
                     )for k,pool_goals in  enumerate(pool_goals_container)]
@@ -96,15 +96,15 @@ z=[pool_goals[:, 2]])],
 epoch=0
 cycle=1
 pool_goals_container = []
-achieved_init_states = np.load(f"container/achieved_init_states_{epoch}_cycle{cycle}.npy")
-achieved_trajectories = np.load(f"container/achieved_trajectories_{epoch}_cycle{cycle}.npy")
-desired_goals = np.load(f"container/desired_goals_ep_{epoch}_cycle{cycle}.npy")
-initial_goals = np.load(f"container/initial_goals_ep_{epoch}_cycle{cycle}.npy")
+achieved_init_states = np.load(f"/home/erdi/Desktop/Storage/Publications/vlad_thesis/container/achieved_init_states_{epoch}_cycle{cycle}.npy")
+achieved_trajectories = np.load(f"/home/erdi/Desktop/Storage/Publications/vlad_thesis/container/achieved_trajectories_{epoch}_cycle{cycle}.npy")
+desired_goals = np.load(f"/home/erdi/Desktop/Storage/Publications/vlad_thesis/container/desired_goals_ep_{epoch}_cycle{cycle}.npy")
+initial_goals = np.load(f"/home/erdi/Desktop/Storage/Publications/vlad_thesis/container/initial_goals_ep_{epoch}_cycle{cycle}.npy")
 
-for epoch in range(0,15):
-    for cycle in range(1,5,1):
+for epoch in range(0,20):
+    for cycle in range(1,20,5):
         
-        pool_goals = np.load(f"container/pool_goals_ep_{epoch}_cycle{cycle}.npy")
+        pool_goals = np.load(f"/home/erdi/Desktop/Storage/Publications/vlad_thesis/container/pool_goals_ep_{epoch}_cycle{cycle}.npy")
         # pool_goals = np.load(f"container/diffusion_model/d_goal{epoch}_cycle_{cycle}.npy")
         pool_goals_container.append(pool_goals)
 
