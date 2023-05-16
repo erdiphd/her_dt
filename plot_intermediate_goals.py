@@ -94,17 +94,17 @@ z=pool_goals[:, 2])],
 
 
 epoch=0
-cycle=1
+cycle=0
 pool_goals_container = []
-achieved_init_states = np.load(f"/home/erdi/Desktop/Storage/Publications/vlad_thesis/container/achieved_init_states_{epoch}_cycle{cycle}.npy")
-achieved_trajectories = np.load(f"/home/erdi/Desktop/Storage/Publications/vlad_thesis/container/achieved_trajectories_{epoch}_cycle{cycle}.npy")
-desired_goals = np.load(f"/home/erdi/Desktop/Storage/Publications/vlad_thesis/container/desired_goals_ep_{epoch}_cycle{cycle}.npy")
-initial_goals = np.load(f"/home/erdi/Desktop/Storage/Publications/vlad_thesis/container/initial_goals_ep_{epoch}_cycle{cycle}.npy")
+achieved_init_states = np.load(f"container/achieved_init_states_{epoch}_cycle{cycle}.npy")
+achieved_trajectories = np.load(f"container/achieved_trajectories_{epoch}_cycle{cycle}.npy")
+desired_goals = np.load(f"container/desired_goals_ep_{epoch}_cycle{cycle}.npy")
+initial_goals = np.load(f"container/initial_goals_ep_{epoch}_cycle{cycle}.npy")
 
 for epoch in range(0,20):
-    for cycle in range(1,20,5):
+    for cycle in range(0,20):
         
-        pool_goals = np.load(f"/home/erdi/Desktop/Storage/Publications/vlad_thesis/container/pool_goals_ep_{epoch}_cycle{cycle}.npy")
+        pool_goals = np.load(f"container/pool_goals_ep_{epoch}_cycle{cycle}.npy")
         # pool_goals = np.load(f"container/diffusion_model/d_goal{epoch}_cycle_{cycle}.npy")
         pool_goals_container.append(pool_goals)
 

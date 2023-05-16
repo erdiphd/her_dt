@@ -311,7 +311,6 @@ class HGGLearner_DT:
             # print("Number of dimensions: " + str(num_dim))
 
             # generate current DT only once for every start-goal pair
-            # TODO: increase precision by upscaling * 100?
             phenotype = dt.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
                                 dimensions=num_dim,
                                 reward_type="dense")
@@ -338,23 +337,30 @@ class HGGLearner_DT:
         achieved_trajectories = []
         achieved_init_states = []
 
-        # TODO: check if all start-goal pairs are being processed
         for i in range(args.episodes):
             obs = self.env_List[i].get_obs()
             init_state = obs['observation'].copy()
             explore_goal = self.sampler.sample(i)
             intermediate_goal = []
+            # create a goal to compare intermediate goal to
+            current_goal = list_of_goal[i].copy()
+            current_goal = np.array(current_goal) / 10
+            current_goal = current_goal.tolist()
+            if num_dim == 2:
+                current_goal.append(float(f'{list_of_third_coordinate[i]:.2f}'))
 
             goal_reached = False
+            # preparation for equality check
+            tmp_arm = []
+            tmp_goal = []
+            for j in range(len(list_of_current_arm_position[i])):
+                tmp_arm.append(round(list_of_current_arm_position[i][j], 2))
+                tmp_goal.append(round(current_goal[j], 2))
+
             # check point so the intermediate goal won't run away from the desired goal.
-            if num_dim == 2:
-                if np.array_equal(list_of_current_arm_position[i].copy()[:2], list_of_goal[i]):
-                    goal_reached = True
-                    intermediate_goal = list_of_current_arm_position[i].copy().copy()
-            elif num_dim == 3:
-                if np.array_equal(list_of_current_arm_position[i].copy(), list_of_goal[i]):
-                    goal_reached = True
-                    intermediate_goal = list_of_current_arm_position[i].copy()
+            if np.array_equal(tmp_goal, tmp_arm):
+                goal_reached = True
+                intermediate_goal = list_of_current_arm_position[i].copy()
 
             if goal_reached is False:
                 # pass dt and current arm position to get next intermediate goal
@@ -403,6 +409,8 @@ class HGGLearner_DT:
         self.desired_goals_tmp = desired_goals
         # pass list of intermediate goals
         self.sampler.pool = list_of_current_arm_position
+        # print("List of current arm: ")
+        # print(list_of_current_arm_position)
 
         selection_trajectory_idx = {}
         for i in range(self.args.episodes):

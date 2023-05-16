@@ -17,11 +17,11 @@ if __name__ == '__main__':
 	list_of_phenotypes, list_of_arm, list_of_goal, list_of_third_coordinate, initial_goals = learner.get_phenotype(args, num_dim)
 
 	# log phenotypes for debugging
-	for i in range(len(list_of_phenotypes)):
-		with open('log/phenotypes/HGG_phenotype_2.txt', 'w') as f:
-			f.write(str(list_of_phenotypes[i]) + "\n" + "-------------------------")
+	# for i in range(len(list_of_phenotypes)):
+	# 	with open('log/phenotypes/HGG_phenotype_2.txt', 'w') as f:
+	# 		f.write(str(list_of_phenotypes[i]) + "\n" + "-------------------------")
 
-	print(list_of_phenotypes)
+	# print(list_of_phenotypes)
 
 	args.logger.summary_init(agent.graph, agent.sess)
 
@@ -55,6 +55,43 @@ if __name__ == '__main__':
 				current_arm_position.append(math.ceil(initial_goals[i][j] * 10) / 10)
 			list_of_current_arm_position.append(current_arm_position)
 	append_3rd_coordinate = True
+
+# 	list_of_phenotypes = []
+# 	for i in range(args.episodes):
+# 		list_of_phenotypes.append("""if _in_1 > 13.0:
+#     if _in_0 > 3.0:
+#         if _in_0 < 3.0:
+#             if _in_1 < 6.0:
+#                 out=0
+#
+#             else:
+#                 if _in_1 < 7.0:
+#                     out=1
+#
+#                 else:
+#                     out=3
+#
+#
+#
+#         else:
+#             out=0
+#
+#
+#     else:
+#         out=3
+#
+#
+# else:
+#     if _in_0 < 12.0:
+#         out=2
+#
+#     else:
+#         if _in_1 > 8.0:
+#             out=2
+#
+#         else:
+#             out=1""")
+
 	# coordinates are not upscaled. Only DT is working with upscaled coordinates
 	"""
 	Arm position:
@@ -80,7 +117,8 @@ if __name__ == '__main__':
 			# plot
 			np.save('container/initial_goals_ep_'+str(epoch) + '_cycle' + str(cycle) + '.npy', learner.initial_goals_tmp)
 			np.save('container/desired_goals_ep_'+str(epoch) + '_cycle' + str(cycle) + '.npy', learner.desired_goals_tmp)
-			np.save('container/pool_goals_ep_'+str(epoch) + '_cycle' + str(cycle) + '.npy', learner.sampler.pool)
+			# TODO: check, changed saving here
+			np.save('container/pool_goals_ep_'+str(epoch) + '_cycle' + str(cycle) + '.npy', list_of_current_arm_position)
 			np.save('container/achieved_trajectories_'+str(epoch) + '_cycle' + str(cycle) + '.npy', learner.achieved_trajectories_by_robot)
 			np.save('container/achieved_init_states_'+str(epoch) + '_cycle' + str(cycle) + '.npy', learner.achieved_init_state_by_robot)
 			np.save('container/diffusion_model/d_goal'+str(epoch) + '_cycle' + str(cycle) + '.npy', learner.diffusion_goal)
