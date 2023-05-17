@@ -1,5 +1,5 @@
 import math
-
+import random
 import numpy as np
 from envs import make_env
 from envs.utils import get_goal_distance
@@ -205,7 +205,7 @@ class HGGLearner_DT:
 
         return self.exec_with_return("def func(): \n" + phenotype + "    return out \nfunc()", variables)
 
-    def get_intermediate_goal(self, phenotype, current_arm_position, num_dim, third_coordinate,
+    def get_intermediate_goal(self, args, phenotype, current_arm_position, num_dim, third_coordinate,
                               append_3rd_coordinate):
 
         # compute intermediate goal
@@ -218,6 +218,10 @@ class HGGLearner_DT:
         """
         # pass to DT upscaled arm position, because it only works with upscaled
         upscaled_arm_position = np.array(current_arm_position) * 10
+        # pretending than the coordinate is 8 instead of 8.25. This is needed for the 0.025 step size
+        for i in range(len(upscaled_arm_position)):
+            upscaled_arm_position[i] = math.trunc(upscaled_arm_position[i])
+
         action = 0
         # shift every line in phenotype by 4 spaces (1 indent)
         updated_phenotype_with_indents = ""
@@ -238,20 +242,21 @@ class HGGLearner_DT:
         # apply action. Only DT is working with 10X upscaling and actions with "1" steps.
         # No need to upscale and downscale every goal in HGG.
         # When applying, action step will just be 0.1 instead of 1
+        # Dynamic step size: 0.1 -> 2 goals, 0.025 -> 8, 0.0005 -> 400
         if action == 0:
-            next_intermediate_goal[0] = next_intermediate_goal[0] + 0.1
+            next_intermediate_goal[0] = next_intermediate_goal[0] + args.hgg_dt_step_size
         if action == 1:
-            next_intermediate_goal[1] = next_intermediate_goal[1] + 0.1
+            next_intermediate_goal[1] = next_intermediate_goal[1] + args.hgg_dt_step_size
         if action == 2:
-            next_intermediate_goal[0] = next_intermediate_goal[0] - 0.1
+            next_intermediate_goal[0] = next_intermediate_goal[0] - args.hgg_dt_step_size
         if action == 3:
-            next_intermediate_goal[1] = next_intermediate_goal[1] - 0.1
+            next_intermediate_goal[1] = next_intermediate_goal[1] - args.hgg_dt_step_size
 
         if num_dim == 3:
             if action == 4:
-                next_intermediate_goal[2] = next_intermediate_goal[2] + 0.1
+                next_intermediate_goal[2] = next_intermediate_goal[2] + args.hgg_dt_step_size
             if action == 5:
-                next_intermediate_goal[2] = next_intermediate_goal[2] - 0.1
+                next_intermediate_goal[2] = next_intermediate_goal[2] - args.hgg_dt_step_size
 
         # Append third coordinate for FetchPush, because it stays the same
         if num_dim == 2 and third_coordinate is None:
@@ -266,7 +271,7 @@ class HGGLearner_DT:
         # print("Intermediate goal:")
         # print(next_intermediate_goal)
 
-        return next_intermediate_goal
+        return next_intermediate_goal.copy()
 
     def get_phenotype(self, args, num_dim):
         initial_goals = []
@@ -336,6 +341,7 @@ class HGGLearner_DT:
 
         achieved_trajectories = []
         achieved_init_states = []
+        pre_goal = []
 
         for i in range(args.episodes):
             obs = self.env_List[i].get_obs()
@@ -354,10 +360,17 @@ class HGGLearner_DT:
             tmp_arm = []
             tmp_goal = []
             for j in range(len(list_of_current_arm_position[i])):
-                tmp_arm.append(round(list_of_current_arm_position[i][j], 2))
+                # round, to prevent phantom decimal points like 0.7000000000000001
+                tmp_arm.append(round(list_of_current_arm_position[i][j], 10))
+                # here: 0.899999999999999
                 tmp_goal.append(round(current_goal[j], 2))
 
-            # check point so the intermediate goal won't run away from the desired goal.
+            # print("Temp arm: ")
+            # print(tmp_arm)
+            # print("Temp goal: ")
+            # print(tmp_goal)
+
+            # check point so the intermediate goal won't run away from the desired goal
             if np.array_equal(tmp_goal, tmp_arm):
                 goal_reached = True
                 intermediate_goal = list_of_current_arm_position[i].copy()
@@ -365,14 +378,27 @@ class HGGLearner_DT:
             if goal_reached is False:
                 # pass dt and current arm position to get next intermediate goal
                 # return 1 intermediate goal for every start-goal pair
-                intermediate_goal = np.array(self.get_intermediate_goal(list_of_phenotypes[i],
+                intermediate_goal = np.array(self.get_intermediate_goal(args, list_of_phenotypes[i],
                                                                         list_of_current_arm_position[i].copy(), num_dim,
                                                                         list_of_third_coordinate[i].copy(),
                                                                         append_3rd_coordinate))
-            self.env_List[i].goal = intermediate_goal.copy()
+            pre_goal.append(intermediate_goal)
+        # interrupt loop to add noise to pre_goal x-coordinate. Dont touch y-coordinate, its moving in DT
+        if args.env == "FetchPush-v1":
+            for i in range(args.episodes):
+                pre_goal[i][0] = round(random.uniform((pre_goal[i][0]) - 0.05, (pre_goal[i][0]) + 0.05), 2)
+                # pre_goal[i][1] = round(random.uniform((pre_goal[i][1]), (pre_goal[i][1]) + 0.09), 2)
+                # pre_goal[i][2] = round(random.uniform((pre_goal[i][2]), (pre_goal[i][2]) + 0.09), 2)
+
+        # continue with noised goals
+        for i in range(args.episodes):
+            obs = self.env_List[i].get_obs()
+            init_state = obs['observation'].copy()
+            explore_goal = self.sampler.sample(i)
+
+            self.env_List[i].goal = pre_goal[i].copy()
             # make the intermediate goal move
-            list_of_current_arm_position[i] = intermediate_goal.copy()
-            # TODO: check if the goal is moving until it reaches the goal
+            list_of_current_arm_position[i] = pre_goal[i].copy()
 
             # print("Upscaled arm position: ")
             # print(list_of_current_arm_position[i])

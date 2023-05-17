@@ -16,13 +16,6 @@ if __name__ == '__main__':
 		num_dim = 3
 	list_of_phenotypes, list_of_arm, list_of_goal, list_of_third_coordinate, initial_goals = learner.get_phenotype(args, num_dim)
 
-	# log phenotypes for debugging
-	# for i in range(len(list_of_phenotypes)):
-	# 	with open('log/phenotypes/HGG_phenotype_2.txt', 'w') as f:
-	# 		f.write(str(list_of_phenotypes[i]) + "\n" + "-------------------------")
-
-	# print(list_of_phenotypes)
-
 	args.logger.summary_init(agent.graph, agent.sess)
 
 	# Progress info
@@ -92,13 +85,13 @@ if __name__ == '__main__':
 #         else:
 #             out=1""")
 
-	# coordinates are not upscaled. Only DT is working with upscaled coordinates
 	"""
 	Arm position:
 	[1.5, 0.6, 0.4]
 	Goal:
 	[1.5, 0.9, 0.4]
 	"""
+	# coordinates are not upscaled. Only DT is working with upscaled coordinates
 
 	args.logger.summary_setup()
 
@@ -117,7 +110,6 @@ if __name__ == '__main__':
 			# plot
 			np.save('container/initial_goals_ep_'+str(epoch) + '_cycle' + str(cycle) + '.npy', learner.initial_goals_tmp)
 			np.save('container/desired_goals_ep_'+str(epoch) + '_cycle' + str(cycle) + '.npy', learner.desired_goals_tmp)
-			# TODO: check, changed saving here
 			np.save('container/pool_goals_ep_'+str(epoch) + '_cycle' + str(cycle) + '.npy', list_of_current_arm_position)
 			np.save('container/achieved_trajectories_'+str(epoch) + '_cycle' + str(cycle) + '.npy', learner.achieved_trajectories_by_robot)
 			np.save('container/achieved_init_states_'+str(epoch) + '_cycle' + str(cycle) + '.npy', learner.achieved_init_state_by_robot)
