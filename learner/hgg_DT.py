@@ -267,7 +267,7 @@ class HGGLearner_DT:
         if append_3rd_coordinate is True:
             if num_dim == 2:
                 temp_list = next_intermediate_goal.copy()
-                temp_list.append(float(f'{third_coordinate:.2f}'))
+                temp_list.append(float(f'{third_coordinate:.5f}'))
                 next_intermediate_goal = np.array(temp_list)
 
         # print("Intermediate goal:")
@@ -355,7 +355,7 @@ class HGGLearner_DT:
             current_goal = np.array(current_goal) / 10
             current_goal = current_goal.tolist()
             if num_dim == 2:
-                current_goal.append(float(f'{list_of_third_coordinate[i]:.2f}'))
+                current_goal.append(float(f'{list_of_third_coordinate[i]:.5f}'))
 
             goal_reached = False
             # preparation for equality check
@@ -387,24 +387,21 @@ class HGGLearner_DT:
             pre_goal.append(intermediate_goal)
         # interrupt loop to add noise to x-coordinate
         # TODO: this may conflict with DT
-        if args.env == "FetchPush-v1":
-            # use initial goals here, otherwise np.clip will clip the movement. This way it stays between min and max
-            indexes_of_min_goal = np.argmin(initial_goals, axis=0)
-            indexes_of_max_goal = np.argmax(desired_goals, axis=0)
-            min_desired_goal = np.array(
-                [initial_goals[indexes_of_min_goal[0]][0], initial_goals[indexes_of_min_goal[1]][1],
-                 initial_goals[indexes_of_min_goal[2]][2]])
-            max_desired_goal = np.array(
-                [desired_goals[indexes_of_max_goal[0]][0], desired_goals[indexes_of_max_goal[1]][1],
-                 desired_goals[indexes_of_max_goal[2]][2]])
-            # print("Min goal: ")
-            # print(min_desired_goal)
-            # print("Max goal: ")
-            # print(max_desired_goal)
-            for i in range(args.episodes):
-                dim = 2 if self.args.env[:5] == 'Fetch' else self.dim
-                pre_goal[i][0] += np.random.normal(0, self.delta, size=dim)[0]
-                pre_goal[i] = np.clip(pre_goal[i], min_desired_goal, max_desired_goal)
+        # if args.env == "FetchPush-v1":
+        #     # use initial goals here, otherwise np.clip will clip the movement. This way it stays between min and max
+    #     indexes_of_min_goal = np.argmin(initial_goals, axis=0)
+    #     indexes_of_max_goal = np.argmax(desired_goals, axis=0)
+    #     min_desired_goal = np.array(
+    #         [initial_goals[indexes_of_min_goal[0]][0], initial_goals[indexes_of_min_goal[1]][1],
+    #          initial_goals[indexes_of_min_goal[2]][2]])
+    #     max_desired_goal = np.array(
+    #         [desired_goals[indexes_of_max_goal[0]][0], desired_goals[indexes_of_max_goal[1]][1],
+    #          desired_goals[indexes_of_max_goal[2]][2]])
+    #
+    #     for i in range(args.episodes):
+    #         dim = 2 if self.args.env[:5] == 'Fetch' else self.dim
+    #         pre_goal[i][0] += np.random.normal(0, self.delta, size=dim)[0]
+    #         pre_goal[i] = np.clip(pre_goal[i], min_desired_goal, max_desired_goal)
 
         # continue with noised goals
         for i in range(args.episodes):
