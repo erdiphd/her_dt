@@ -155,6 +155,8 @@ class HGGLearner_DT:
         self.env = make_env(args)
         self.env_test = make_env(args)
         self.goal_distance = get_goal_distance(args)
+        self.delta = self.env.distance_threshold
+        self.dim = np.prod(self.env.reset()['achieved_goal'].shape)
 
         # save arrays
         self.initial_goals_tmp = []
@@ -242,7 +244,7 @@ class HGGLearner_DT:
         # apply action. Only DT is working with 10X upscaling and actions with "1" steps.
         # No need to upscale and downscale every goal in HGG.
         # When applying, action step will just be 0.1 instead of 1
-        # Dynamic step size: 0.1 -> 2 goals, 0.025 -> 8, 0.0005 -> 400
+        # Dynamic step size: 0.1 -> 2 goals, 0.025 -> 8, 0.00075 -> 400
         if action == 0:
             next_intermediate_goal[0] = next_intermediate_goal[0] + args.hgg_dt_step_size
         if action == 1:
@@ -383,12 +385,26 @@ class HGGLearner_DT:
                                                                         list_of_third_coordinate[i].copy(),
                                                                         append_3rd_coordinate))
             pre_goal.append(intermediate_goal)
-        # interrupt loop to add noise to pre_goal x-coordinate. Dont touch y-coordinate, its moving in DT
+        # interrupt loop to add noise to x-coordinate
+        # TODO: this may conflict with DT
         if args.env == "FetchPush-v1":
+            # use initial goals here, otherwise np.clip will clip the movement. This way it stays between min and max
+            indexes_of_min_goal = np.argmin(initial_goals, axis=0)
+            indexes_of_max_goal = np.argmax(desired_goals, axis=0)
+            min_desired_goal = np.array(
+                [initial_goals[indexes_of_min_goal[0]][0], initial_goals[indexes_of_min_goal[1]][1],
+                 initial_goals[indexes_of_min_goal[2]][2]])
+            max_desired_goal = np.array(
+                [desired_goals[indexes_of_max_goal[0]][0], desired_goals[indexes_of_max_goal[1]][1],
+                 desired_goals[indexes_of_max_goal[2]][2]])
+            # print("Min goal: ")
+            # print(min_desired_goal)
+            # print("Max goal: ")
+            # print(max_desired_goal)
             for i in range(args.episodes):
-                pre_goal[i][0] = round(random.uniform((pre_goal[i][0]) - 0.05, (pre_goal[i][0]) + 0.05), 2)
-                # pre_goal[i][1] = round(random.uniform((pre_goal[i][1]), (pre_goal[i][1]) + 0.09), 2)
-                # pre_goal[i][2] = round(random.uniform((pre_goal[i][2]), (pre_goal[i][2]) + 0.09), 2)
+                dim = 2 if self.args.env[:5] == 'Fetch' else self.dim
+                pre_goal[i][0] += np.random.normal(0, self.delta, size=dim)[0]
+                pre_goal[i] = np.clip(pre_goal[i], min_desired_goal, max_desired_goal)
 
         # continue with noised goals
         for i in range(args.episodes):
