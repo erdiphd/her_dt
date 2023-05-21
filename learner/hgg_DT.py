@@ -207,8 +207,7 @@ class HGGLearner_DT:
 
         return self.exec_with_return("def func(): \n" + phenotype + "    return out \nfunc()", variables)
 
-    def get_intermediate_goal(self, args, phenotype, current_arm_position, num_dim, third_coordinate,
-                              append_3rd_coordinate):
+    def get_intermediate_goal(self, args, phenotype, current_arm_position, num_dim, third_coordinate):
 
         # compute intermediate goal
 
@@ -264,8 +263,7 @@ class HGGLearner_DT:
         if num_dim == 2 and third_coordinate is None:
             raise ValueError("num_dim == 2 but no 3rd coordinate given")
 
-        if append_3rd_coordinate is True:
-            if num_dim == 2:
+        if len(current_arm_position) == 2 and num_dim == 2:
                 temp_list = next_intermediate_goal.copy()
                 temp_list.append(float(f'{third_coordinate:.5f}'))
                 next_intermediate_goal = np.array(temp_list)
@@ -329,7 +327,7 @@ class HGGLearner_DT:
         return list_of_phenotypes, list_of_arm, list_of_goal, list_of_third_coordinate, initial_goals
 
     def learn(self, args, env, env_test, agent, buffer, list_of_phenotypes, list_of_arm, list_of_goal, num_dim,
-              list_of_third_coordinate, list_of_current_arm_position, append_3rd_coordinate):
+              list_of_third_coordinate, list_of_current_arm_position):
         initial_goals = []
         desired_goals = []
         for i in range(args.episodes):
@@ -343,13 +341,10 @@ class HGGLearner_DT:
 
         achieved_trajectories = []
         achieved_init_states = []
-        pre_goal = []
-
+        # pre_goal = []
+        goal_reached = False
+        # check if at least one goal has reached destination
         for i in range(args.episodes):
-            obs = self.env_List[i].get_obs()
-            init_state = obs['observation'].copy()
-            explore_goal = self.sampler.sample(i)
-            intermediate_goal = []
             # create a goal to compare intermediate goal to
             current_goal = list_of_goal[i].copy()
             current_goal = np.array(current_goal) / 10
@@ -357,61 +352,52 @@ class HGGLearner_DT:
             if num_dim == 2:
                 current_goal.append(float(f'{list_of_third_coordinate[i]:.5f}'))
 
-            goal_reached = False
             # preparation for equality check
             tmp_arm = []
             tmp_goal = []
             for j in range(len(list_of_current_arm_position[i])):
                 # round, to prevent phantom decimal points like 0.7000000000000001
                 tmp_arm.append(round(list_of_current_arm_position[i][j], 10))
-                # here: 0.899999999999999
-                tmp_goal.append(round(current_goal[j], 2))
+                tmp_goal.append(current_goal[j])
 
+            # check point so the intermediate goal won't run away from the desired goal
+            if np.array_equal(tmp_goal, tmp_arm):
+                # list_of_goal_reached[i] = True
+                goal_reached = True
+
+        for i in range(args.episodes):
+            obs = self.env_List[i].get_obs()
+            init_state = obs['observation'].copy()
+            explore_goal = self.sampler.sample(i)
+            intermediate_goal = []
+
+            # print("-----------------------------------")
+            # print("initial goals: ")
+            # print(initial_goals[i])
+            # print("desired goals: ")
+            # print(desired_goals[i])
             # print("Temp arm: ")
             # print(tmp_arm)
             # print("Temp goal: ")
             # print(tmp_goal)
 
             # check point so the intermediate goal won't run away from the desired goal
-            if np.array_equal(tmp_goal, tmp_arm):
-                goal_reached = True
-                intermediate_goal = list_of_current_arm_position[i].copy()
-
+            if goal_reached is True:
+                intermediate_goal = np.array(list_of_current_arm_position[i].copy())
             if goal_reached is False:
                 # pass dt and current arm position to get next intermediate goal
                 # return 1 intermediate goal for every start-goal pair
+
                 intermediate_goal = np.array(self.get_intermediate_goal(args, list_of_phenotypes[i],
                                                                         list_of_current_arm_position[i].copy(), num_dim,
-                                                                        list_of_third_coordinate[i].copy(),
-                                                                        append_3rd_coordinate))
-            pre_goal.append(intermediate_goal)
-        # interrupt loop to add noise to x-coordinate
-        # TODO: this may conflict with DT
-        # if args.env == "FetchPush-v1":
-        #     # use initial goals here, otherwise np.clip will clip the movement. This way it stays between min and max
-    #     indexes_of_min_goal = np.argmin(initial_goals, axis=0)
-    #     indexes_of_max_goal = np.argmax(desired_goals, axis=0)
-    #     min_desired_goal = np.array(
-    #         [initial_goals[indexes_of_min_goal[0]][0], initial_goals[indexes_of_min_goal[1]][1],
-    #          initial_goals[indexes_of_min_goal[2]][2]])
-    #     max_desired_goal = np.array(
-    #         [desired_goals[indexes_of_max_goal[0]][0], desired_goals[indexes_of_max_goal[1]][1],
-    #          desired_goals[indexes_of_max_goal[2]][2]])
-    #
-    #     for i in range(args.episodes):
-    #         dim = 2 if self.args.env[:5] == 'Fetch' else self.dim
-    #         pre_goal[i][0] += np.random.normal(0, self.delta, size=dim)[0]
-    #         pre_goal[i] = np.clip(pre_goal[i], min_desired_goal, max_desired_goal)
+                                                                        list_of_third_coordinate[i].copy()))
+            # print("Intermediate goal: ")
+            # print(intermediate_goal)
+            # print("-----------------------------------")
 
-        # continue with noised goals
-        for i in range(args.episodes):
-            obs = self.env_List[i].get_obs()
-            init_state = obs['observation'].copy()
-            explore_goal = self.sampler.sample(i)
-
-            self.env_List[i].goal = pre_goal[i].copy()
+            self.env_List[i].goal = np.array(intermediate_goal.copy())
             # make the intermediate goal move
-            list_of_current_arm_position[i] = pre_goal[i].copy()
+            list_of_current_arm_position[i] = np.array(intermediate_goal.copy())
 
             # print("Upscaled arm position: ")
             # print(list_of_current_arm_position[i])
