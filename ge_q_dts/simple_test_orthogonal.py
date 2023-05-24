@@ -48,7 +48,7 @@ parser.add_argument("--input_space", default=2, type=int, help="Number of inputs
 parser.add_argument("--episodes", default=50, type=int, help="Number of episodes that the agent faces in the fitness evaluation phase")
 parser.add_argument("--episode_len", default=100, type=int, help="The max length of an episode in timesteps")
 parser.add_argument("--lambda_", default=50, type=int, help="Population size")
-parser.add_argument("--generations", default=150, type=int, help="Number of generations")
+parser.add_argument("--generations", default=100, type=int, help="Number of generations")
 parser.add_argument("--cxp", default=0.5, type=float, help="Crossover probability")
 parser.add_argument("--mp", default=0.5, type=float, help="Mutation probability")
 parser.add_argument("--mutation", default="function-tools.mutUniformInt#low-0#up-40000#indpb-0.1", type=string_to_dict, help="Mutation operator. String in the format function-value#function_param_-value_1... The operators from the DEAP library can be used by setting the function to 'function-tools.<operator_name>'. Default: Uniform Int Mutation")
@@ -176,6 +176,18 @@ def main(grid_size, agent_start, agent_goal, dimensions, reward_type):
 
     import collections
     from joblib import parallel_backend
+
+    # TODO: check and uncomment
+    # if dimensions == 3:
+    #     for action in parser._actions:
+    #         # print(action.dest)
+    #         if action.dest == "input_space":
+    #             action.default = 3
+    #         if action.dest == "n_actions":
+    #             action.default = 6
+    #         if action.dest == "types":
+    #             action.default = "#0,20,1,1;0,20,1,1;0,20,1,1"
+    # args = parser.parse_args()
 
     def fit_fcn(x):
         return evaluate_fitness(fitness, CLeaf, x, grid_size, agent_start, agent_goal, dimensions, reward_type)

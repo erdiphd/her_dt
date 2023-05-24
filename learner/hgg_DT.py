@@ -207,7 +207,7 @@ class HGGLearner_DT:
 
         return self.exec_with_return("def func(): \n" + phenotype + "    return out \nfunc()", variables)
 
-    def get_intermediate_goal(self, args, phenotype, current_arm_position, num_dim, third_coordinate):
+    def get_intermediate_goal(self, args, phenotype, current_arm_position, num_dim, third_coordinate, result):
 
         # compute intermediate goal
 
@@ -245,28 +245,28 @@ class HGGLearner_DT:
         # When applying, action step will just be 0.1 instead of 1
         # Dynamic step size: 0.1 -> 2 goals, 0.025 -> 8, 0.00075 -> 400
         if action == 0:
-            next_intermediate_goal[0] = next_intermediate_goal[0] + args.hgg_dt_step_size
+            next_intermediate_goal[0] = next_intermediate_goal[0] + args.hgg_dt_step_size * result
         if action == 1:
-            next_intermediate_goal[1] = next_intermediate_goal[1] + args.hgg_dt_step_size
+            next_intermediate_goal[1] = next_intermediate_goal[1] + args.hgg_dt_step_size * result
         if action == 2:
-            next_intermediate_goal[0] = next_intermediate_goal[0] - args.hgg_dt_step_size
+            next_intermediate_goal[0] = next_intermediate_goal[0] - args.hgg_dt_step_size * result
         if action == 3:
-            next_intermediate_goal[1] = next_intermediate_goal[1] - args.hgg_dt_step_size
+            next_intermediate_goal[1] = next_intermediate_goal[1] - args.hgg_dt_step_size * result
 
         if num_dim == 3:
             if action == 4:
-                next_intermediate_goal[2] = next_intermediate_goal[2] + args.hgg_dt_step_size
+                next_intermediate_goal[2] = next_intermediate_goal[2] + args.hgg_dt_step_size * result
             if action == 5:
-                next_intermediate_goal[2] = next_intermediate_goal[2] - args.hgg_dt_step_size
+                next_intermediate_goal[2] = next_intermediate_goal[2] - args.hgg_dt_step_size * result
 
-        # Append third coordinate for FetchPush, because it stays the same
         if num_dim == 2 and third_coordinate is None:
             raise ValueError("num_dim == 2 but no 3rd coordinate given")
 
+        # Append third coordinate for FetchPush, because it stays the same
         if len(current_arm_position) == 2 and num_dim == 2:
-                temp_list = next_intermediate_goal.copy()
-                temp_list.append(float(f'{third_coordinate:.5f}'))
-                next_intermediate_goal = np.array(temp_list)
+            temp_list = next_intermediate_goal.copy()
+            temp_list.append(float(f'{third_coordinate:.5f}'))
+            next_intermediate_goal = np.array(temp_list)
 
         # print("Intermediate goal:")
         # print(next_intermediate_goal)
@@ -299,7 +299,6 @@ class HGGLearner_DT:
             third_coordinate = None
             if num_dim == 3:
                 for i in range(len(initial_goals[j])):
-                    # TODO: trunc or round or ceil?
                     # use 10 X upscaling
                     upscaled_arm_position.append(math.ceil(initial_goals[j][i] * 10))
                     upscaled_goal.append(math.ceil(desired_goals[j][i] * 10))
@@ -309,11 +308,10 @@ class HGGLearner_DT:
                     upscaled_goal.append(math.ceil(desired_goals[j][i] * 10))
                 third_coordinate = initial_goals[j][2]
 
-            # print("Upscaled Arm position: ")
-            # print(upscaled_arm_position)
-            # print("Upscaled Goal: ")
-            # print(upscaled_goal)
-            # print("Number of dimensions: " + str(num_dim))
+            # print("Initial goals: ")
+            # print(initial_goals[j])
+            # print("Desired goals: ")
+            # print(desired_goals[j])
 
             # generate current DT only once for every start-goal pair
             phenotype = dt.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
@@ -326,8 +324,14 @@ class HGGLearner_DT:
             list_of_third_coordinate.append(third_coordinate)
         return list_of_phenotypes, list_of_arm, list_of_goal, list_of_third_coordinate, initial_goals
 
+    def clip(self, value, min_value, max_value):
+        if value < min_value:
+            return min_value
+        if value > max_value:
+            return max_value
+        return value
     def learn(self, args, env, env_test, agent, buffer, list_of_phenotypes, list_of_arm, list_of_goal, num_dim,
-              list_of_third_coordinate, list_of_current_arm_position):
+              list_of_third_coordinate, list_of_current_arm_position, epoch, cycle):
         initial_goals = []
         desired_goals = []
         for i in range(args.episodes):
@@ -341,9 +345,26 @@ class HGGLearner_DT:
 
         achieved_trajectories = []
         achieved_init_states = []
-        # pre_goal = []
         goal_reached = False
-        # check if at least one goal has reached destination
+
+        # Q function values
+        achieved_value = []
+        if self.achieved_trajectory_pool.counter != 0:
+            achieved_pool, achieved_pool_init_state = self.achieved_trajectory_pool.pad()
+            # print(achieved_pool)
+            # print(achieved_pool_init_state)
+            agent = self.args.agent
+            for i in range(len(achieved_pool)):
+                obs = [goal_concat(achieved_pool_init_state[i], achieved_pool[i][j]) for j in
+                       range(achieved_pool[i].shape[0])]
+                feed_dict = {
+                    agent.raw_obs_ph: obs
+                }
+                value = agent.sess.run(agent.q_pi, feed_dict)[:, 0]
+                # value = np.clip(value, -1.0 / (1.0 - self.args.gamma), 0)
+                achieved_value.append(value.copy())
+
+        # check if at least one goal has reached destination. goal_reached is set here
         for i in range(args.episodes):
             # create a goal to compare intermediate goal to
             current_goal = list_of_goal[i].copy()
@@ -360,41 +381,97 @@ class HGGLearner_DT:
                 tmp_arm.append(round(list_of_current_arm_position[i][j], 10))
                 tmp_goal.append(current_goal[j])
 
-            # check point so the intermediate goal won't run away from the desired goal
-            if np.array_equal(tmp_goal, tmp_arm):
-                # list_of_goal_reached[i] = True
-                goal_reached = True
-
-        for i in range(args.episodes):
-            obs = self.env_List[i].get_obs()
-            init_state = obs['observation'].copy()
-            explore_goal = self.sampler.sample(i)
-            intermediate_goal = []
-
-            # print("-----------------------------------")
-            # print("initial goals: ")
-            # print(initial_goals[i])
-            # print("desired goals: ")
-            # print(desired_goals[i])
             # print("Temp arm: ")
             # print(tmp_arm)
             # print("Temp goal: ")
             # print(tmp_goal)
 
             # check point so the intermediate goal won't run away from the desired goal
+            if len(tmp_arm) == 2:
+                if np.array_equal(tmp_goal, np.clip(tmp_arm, [0, 0], tmp_goal)):
+                    list_of_current_arm_position[i] = np.clip(tmp_arm, [0, 0], tmp_goal)
+                    goal_reached = True
+            elif len(tmp_arm) == 3:
+                if np.array_equal(tmp_goal, np.clip(tmp_arm, [0, 0, 0], tmp_goal)):
+                    goal_reached = True
+        sum_q_vector_1 = 0
+        # check if at least one mean_q is small enough. feedback_positive is set here
+        for i in range(args.episodes):
+            # learner feedback basing on Q function values
+            if len(achieved_value) != 0:
+                q_vector = achieved_value[i]
+                sum_q_vector_2 = 0
+                for j in q_vector:
+                    sum_q_vector_2 += j
+                # print("Mean Q single: " + str(sum_q_vector_2 / len(q_vector)))
+                sum_q_vector_1 += sum_q_vector_2
+
+        # calculate mean over all vectors and episodes
+        # sum / len(args.episodes) / len(q_vector)
+        mean_q = sum_q_vector_1 / 50 / 51
+        print("Mean Q over all episodes: " + str(mean_q))
+        # If mean of all Q values is close enough to 0
+        # -> learner feedback is positive. This synchronizes the steps
+        result = abs(args.c - self.clip(mean_q, -1, 0))
+        print("Result: " + str(result))
+
+        for i in range(args.episodes):
+            obs = self.env_List[i].get_obs()
+            init_state = obs['observation'].copy()
+            explore_goal = self.sampler.sample(i)
+            intermediate_goal = []
+            # if goal is reached, then it would be automatically clipped.
+            # Clipping is now necessary because of dynamic step size
+            current_goal = list_of_goal[i].copy()
+            current_goal = np.array(current_goal) / 10
+            current_goal = current_goal.tolist()
+            if num_dim == 2:
+                current_goal.append(float(f'{list_of_third_coordinate[i]:.5f}'))
+
+            # preparation for equality check
+            tmp_goal = []
+            for j in range(len(current_goal)):
+                tmp_goal.append(current_goal[j])
+
+            # check point so the intermediate goal won't run away from the desired goal
             if goal_reached is True:
+                # Clipping because of dynamic goals
+                # print("goal reached")
+                list_of_current_arm_position[i] = np.clip(list_of_current_arm_position[i].copy(), [0, 0, 0], tmp_goal)
                 intermediate_goal = np.array(list_of_current_arm_position[i].copy())
             if goal_reached is False:
                 # pass dt and current arm position to get next intermediate goal
                 # return 1 intermediate goal for every start-goal pair
-
-                intermediate_goal = np.array(self.get_intermediate_goal(args, list_of_phenotypes[i],
+                intermediate_goal_1 = np.array(self.get_intermediate_goal(args, list_of_phenotypes[i],
                                                                         list_of_current_arm_position[i].copy(), num_dim,
-                                                                        list_of_third_coordinate[i].copy()))
-            # print("Intermediate goal: ")
-            # print(intermediate_goal)
-            # print("-----------------------------------")
+                                                                        list_of_third_coordinate[i].copy(), 1-result))
+                intermediate_goal_2 = np.array(self.get_intermediate_goal(args, list_of_phenotypes[i],
+                                                                        intermediate_goal_1.copy(), num_dim,
+                                                                        list_of_third_coordinate[i].copy(), result))
+                intermediate_goal_2_before_clip = intermediate_goal_2.copy()
+                # print("Before clip: ")
+                # print(intermediate_goal_2_before_clip)
+                intermediate_goal_2 = np.clip(intermediate_goal_2, [0, 0, 0], tmp_goal)
+                intermediate_goal_2_after_clip = intermediate_goal_2.copy()
+                # print("After clip: ")
+                # print(intermediate_goal_2_after_clip)
+                if np.array_equal(intermediate_goal_2_before_clip, intermediate_goal_2_after_clip) is False:
+                    # this means that intermediate_goal_2 went too far and was clipped -> use only intermediate_goal_1
+                    # CAREFUL: While testing with 1 DT this "if" can be triggered if wrong action is executed
+                    # => clipping => inter_1 == inter_2 => average is getting left behind
+                    intermediate_goal_2 = intermediate_goal_1.copy()
 
+                intermediate_goal = (intermediate_goal_1.copy() + intermediate_goal_2.copy()) / 2
+                # print("Inter 1: ")
+                # print(intermediate_goal_1)
+                # print("Inter 2: ")
+                # print(intermediate_goal_2)
+                # print("Average: ")
+                # print(intermediate_goal)
+                # Clipping because of dynamic goals
+                intermediate_goal = np.clip(intermediate_goal, [0, 0, 0], tmp_goal)
+
+            # write the intermediate goal
             self.env_List[i].goal = np.array(intermediate_goal.copy())
             # make the intermediate goal move
             list_of_current_arm_position[i] = np.array(intermediate_goal.copy())
@@ -434,7 +511,7 @@ class HGGLearner_DT:
         self.desired_goals_tmp = desired_goals
         # pass list of intermediate goals
         self.sampler.pool = list_of_current_arm_position
-        # print("List of current arm: ")
+        # print("Intermediate goals: ")
         # print(list_of_current_arm_position)
 
         selection_trajectory_idx = {}
