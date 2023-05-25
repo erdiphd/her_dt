@@ -38,13 +38,13 @@ def string_to_dict(x):
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--jobs", default=1, type=int, help="The number of jobs to use for the evolution")
-parser.add_argument("--seed", default=5, type=int, help="Random seed")
+parser.add_argument("--seed", default=0, type=int, help="Random seed")
 parser.add_argument("--environment_name", default="gym_examples:gym_examples/GridWorld-v0", help="The name of the environment in the OpenAI Gym framework")
-parser.add_argument("--n_actions", default=6, type=int, help="The number of action that the agent can perform in the environment")
+parser.add_argument("--n_actions", default=4, type=int, help="The number of action that the agent can perform in the environment")
 parser.add_argument("--learning_rate", default="auto", help="The learning rate to be used for Q-learning. Default is: 'auto' (1/k)")
 parser.add_argument("--df", default=0.9, type=float, help="The discount factor used for Q-learning")
 parser.add_argument("--eps", default=0.05, type=float, help="Epsilon parameter for the epsilon greedy Q-learning")
-parser.add_argument("--input_space", default=3, type=int, help="Number of inputs given to the agent")
+parser.add_argument("--input_space", default=2, type=int, help="Number of inputs given to the agent")
 parser.add_argument("--episodes", default=50, type=int, help="Number of episodes that the agent faces in the fitness evaluation phase")
 parser.add_argument("--episode_len", default=100, type=int, help="The max length of an episode in timesteps")
 parser.add_argument("--lambda_", default=50, type=int, help="Population size")
@@ -58,7 +58,7 @@ parser.add_argument("--selection", default="function-tools.selTournament#tournsi
 parser.add_argument("--genotype_len", default=100, type=int, help="Length of the fixed-length genotype")
 parser.add_argument("--low", default=-10, type=float, help="Lower bound for the random initialization of the leaves")
 parser.add_argument("--up", default=10, type=float, help="Upper bound for the random initialization of the leaves")
-parser.add_argument("--types", default="#0,20,1,1;0,20,1,1;0,20,1,1", type=str, help="This string must contain the range of constants for each variable in the format '#min_0,max_0,step_0,divisor_0;...;min_n,max_n,step_n,divisor_n'. All the numbers must be integers.")
+parser.add_argument("--types", default="#0,20,1,1;0,20,1,1", type=str, help="This string must contain the range of constants for each variable in the format '#min_0,max_0,step_0,divisor_0;...;min_n,max_n,step_n,divisor_n'. All the numbers must be integers.")
 
 
 # Setup of the logging

@@ -11,13 +11,7 @@ if __name__ == '__main__':
 
     if args.learn == "hgg_dt":
         # generate DT only once
-        num_dim = 0
-        if args.env == "FetchPush-v1":
-            num_dim = 2  # adjust --input_space, n_actions, types arguments in simple_test
-        else:
-            num_dim = 3
-        list_of_phenotypes, list_of_arm, list_of_goal, list_of_third_coordinate, initial_goals = learner.get_phenotype(
-            args, num_dim)
+        list_of_phenotypes, list_of_arm, list_of_goal, list_of_third_coordinate, initial_goals, list_of_goal_first_part, list_of_arm_first_part, list_of_phenotypes_first_part, list_of_arm_second_part, list_of_goal_second_part, list_of_phenotypes_second_part = learner.get_phenotype(args)
 
         args.logger.summary_init(agent.graph, agent.sess)
 
@@ -38,54 +32,27 @@ if __name__ == '__main__':
 
         # at first initialize current position with initial_goal for all start-goal pairs
         list_of_current_arm_position = []
-        if num_dim == 2:
-            for i in range(args.episodes):
-                current_arm_position = []
-                for j in range(len(initial_goals[i][:2])):
-                    current_arm_position.append(math.ceil(initial_goals[i][j] * 10) / 10)
-                list_of_current_arm_position.append(current_arm_position)
-        if num_dim == 3:
-            for i in range(args.episodes):
-                current_arm_position = []
-                for j in range(len(initial_goals[i])):
-                    current_arm_position.append(math.ceil(initial_goals[i][j] * 10) / 10)
-                list_of_current_arm_position.append(current_arm_position)
+        for i in range(args.episodes):
+            current_arm_position = []
+            for j in range(len(initial_goals[i])):
+                current_arm_position.append(math.ceil(initial_goals[i][j] * 10) / 10)
+            list_of_current_arm_position.append(current_arm_position)
 
-#         list_of_phenotypes = []
-#         for i in range(args.episodes):
-#             list_of_phenotypes.append("""if _in_1 > 13.0:
-#     if _in_0 > 3.0:
-#         if _in_0 < 3.0:
-#             if _in_1 < 6.0:
-#                 out=0
-#
-#             else:
-#                 if _in_1 < 7.0:
-#                     out=1
-#
-#                 else:
-#                     out=3
-#
-#
-#
-#         else:
-#             out=0
-#
-#
-#     else:
-#         out=3
-#
-#
-# else:
-#     if _in_0 < 12.0:
-#         out=2
-#
-#     else:
-#         if _in_1 > 8.0:
-#             out=2
-#
-#         else:
-#             out=1""")
+        list_of_phenotypes_first_part = []
+        for i in range(args.episodes):
+            list_of_phenotypes_first_part.append("""if _in_1 < 9.0:
+    out=1
+
+else:
+    out=2""")
+
+        list_of_phenotypes_second_part = []
+        for i in range(args.episodes):
+            list_of_phenotypes_second_part.append("""if _in_2 < 9.0:
+    out=4
+
+else:
+    out=0""")
 
         """
         Arm position:
@@ -106,10 +73,11 @@ if __name__ == '__main__':
                 # learner.learn(args, env, env_test, agent, buffer)
                 list_of_current_arm_position = learner.learn(args, env, env_test, agent, buffer,
                                                                                    list_of_phenotypes, list_of_arm,
-                                                                                   list_of_goal, num_dim,
+                                                                                   list_of_goal,
                                                                                    list_of_third_coordinate,
                                                                                    list_of_current_arm_position,
-                                                                                   epoch, cycle)
+                                                                                   list_of_goal_first_part,
+                                                                                   list_of_arm_first_part, list_of_phenotypes_first_part, list_of_arm_second_part, list_of_goal_second_part, list_of_phenotypes_second_part)
                 tester.cycle_summary()
 
                 # plot
