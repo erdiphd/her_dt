@@ -258,7 +258,10 @@ class HGGLearner_DT:
             next_intermediate_goal[2] = float(f'{third_coordinate:.5f}')
         # Append third coordinate for the first part of the FetchPickAndPlace or FetchReach
         if third_coordinate is not None:
-            next_intermediate_goal[2] = float(f'{third_coordinate:.1f}')
+            if len(next_intermediate_goal) == 2:
+                next_intermediate_goal.append(float(f'{third_coordinate:.1f}'))
+            else:
+                next_intermediate_goal[2] = float(f'{third_coordinate:.1f}')
 
         # print("Intermediate goal:")
         # print(next_intermediate_goal)
@@ -330,7 +333,7 @@ class HGGLearner_DT:
                     upscaled_arm_position.append(math.ceil(initial_goals[j][i] * 10))
                     upscaled_goal.append(math.ceil(desired_goals[j][i] * 10))
                 # first DT is 2d, so remember third coordinate to append it later
-                third_coordinate = initial_goals[j][2]
+                third_coordinate = math.ceil(initial_goals[j][2] * 10) / 10
 
                 print("initial pos:")
                 print(initial_goals[j])
@@ -589,6 +592,10 @@ class HGGLearner_DT:
                 current_goal_1 = list_of_goal_first_part[i].copy()
                 current_goal_1 = np.array(current_goal_1) / 10
                 current_goal_1 = current_goal_1.tolist()
+                if len(current_goal_1) == 2:
+                    current_goal_1.append(float(f'{list_of_third_coordinate[i]:.1f}'))
+                else:
+                    current_goal_1[2] = float(f'{list_of_third_coordinate[i]:.1f}')
 
                 current_goal_2 = list_of_goal_second_part[i].copy()
                 current_goal_2 = np.array(current_goal_2) / 10
