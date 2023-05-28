@@ -248,6 +248,7 @@ class HGGLearner_DT:
             next_intermediate_goal[0] = next_intermediate_goal[0] - args.hgg_dt_step_size * result
         if action == 3:
             next_intermediate_goal[1] = next_intermediate_goal[1] - args.hgg_dt_step_size * result
+        # action 4 and 5 can only be called with 3D DT
         if action == 4:
             next_intermediate_goal[2] = next_intermediate_goal[2] + args.hgg_dt_step_size * result
         if action == 5:
@@ -255,7 +256,11 @@ class HGGLearner_DT:
 
         # Append third coordinate for FetchPush and FetchSlide, because it stays the same
         if args.env == "FetchPush-v1" or args.env == "FetchSlide-v1":
-            next_intermediate_goal[2] = float(f'{third_coordinate:.5f}')
+            # if third coordinate was not appended yet
+            if len(next_intermediate_goal) == 2:
+                next_intermediate_goal.append(float(f'{third_coordinate:.5f}'))
+            else:
+                next_intermediate_goal[2] = float(f'{third_coordinate:.5f}')
         # Append third coordinate for the first part of the FetchPickAndPlace or FetchReach
         if third_coordinate is not None:
             if len(next_intermediate_goal) == 2:
@@ -298,7 +303,7 @@ class HGGLearner_DT:
                 # rewrite coordinates and put them into big list
                 upscaled_arm_position = []
                 upscaled_goal = []
-                for i in range(len(initial_goals[j])):
+                for i in range(2):
                     # use 10 X upscaling to work with DT
                     upscaled_arm_position.append(math.ceil(initial_goals[j][i] * 10))
                     upscaled_goal.append(math.ceil(desired_goals[j][i] * 10))
@@ -310,9 +315,9 @@ class HGGLearner_DT:
                 # print(desired_goals[j])
 
                 # generate current DT only once for every start-goal pair
-                # DT is always working with 3 dimensions, even for FetchPush and FetchSlide
-                phenotype = dt.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
-                                    dimensions=3,
+                # working here with 2D DT
+                phenotype = dt_2.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
+                                    dimensions=2,
                                     reward_type="dense")
                 print("Phenotype number " + str(j) + " generated")
                 list_of_phenotypes.append(phenotype)
@@ -323,7 +328,7 @@ class HGGLearner_DT:
             # generate 2 dt for each start-goal pair -> first one with 2 dim, second one only for third dim
             # this is done because DT cannot generate a DT for 3 dim where start and goal are too far away
 
-            # first part: first 2 coordinates
+            # first part: x,y coordinates
             for j in range(args.episodes):
                 # rewrite coordinates and put them into big list
                 upscaled_arm_position = []
@@ -335,28 +340,27 @@ class HGGLearner_DT:
                 # first DT is 2d, so remember third coordinate to append it later
                 third_coordinate = math.ceil(initial_goals[j][2] * 10) / 10
 
-                print("initial pos:")
-                print(initial_goals[j])
-                print("desired goal: ")
-                print(desired_goals[j])
-
-                print("First part: arm: ")
-                print(upscaled_arm_position)
-                print("First part: goal: ")
-                print(upscaled_goal)
+                # print("initial pos:")
+                # print(initial_goals[j])
+                # print("desired goal: ")
+                # print(desired_goals[j])
+                # print("First part: arm: ")
+                # print(upscaled_arm_position)
+                # print("First part: goal: ")
+                # print(upscaled_goal)
 
                 # generate current DT only once for every start-goal pair
-                # DT is always working with 3 dimensions, even for FetchPush and FetchSlide
-                # phenotype = dt_2.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
-                #                     dimensions=2,
-                #                     reward_type="dense")
+                # working here with 2D DT
+                phenotype = dt_2.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
+                                    dimensions=2,
+                                    reward_type="dense")
                 print("Phenotype part 1 number " + str(j) + " generated")
-                # list_of_phenotypes_first_part.append(phenotype)
+                list_of_phenotypes_first_part.append(phenotype)
                 list_of_arm_first_part.append(upscaled_arm_position)
                 list_of_goal_first_part.append(upscaled_goal)
                 list_of_third_coordinate.append(third_coordinate)
 
-            # second part: only third coordinate
+            # second part: only z coordinate
             for j in range(args.episodes):
                 # rewrite coordinates and put them into big list
                 upscaled_arm_position = []
@@ -370,18 +374,19 @@ class HGGLearner_DT:
                 upscaled_arm_position.append(math.ceil(initial_goals[j][2] * 10))
                 upscaled_goal.append(math.ceil(desired_goals[j][2] * 10))
 
-                print("Second part: arm: ")
-                print(upscaled_arm_position)
-                print("Second part: goal: ")
-                print(upscaled_goal)
+                # print("Second part: arm: ")
+                # print(upscaled_arm_position)
+                # print("Second part: goal: ")
+                # print(upscaled_goal)
 
                 # generate current DT only once for every start-goal pair
                 # DT is always working with 3 dimensions, even for FetchPush and FetchSlide
-                # phenotype = dt.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
-                #                     dimensions=3,
-                #                     reward_type="dense")
+                # working here with 3D DT
+                phenotype = dt.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
+                                    dimensions=3,
+                                    reward_type="dense")
                 print("Phenotype part 2 number " + str(j) + " generated")
-                # list_of_phenotypes_second_part.append(phenotype)
+                list_of_phenotypes_second_part.append(phenotype)
                 list_of_arm_second_part.append(upscaled_arm_position)
                 list_of_goal_second_part.append(upscaled_goal)
 
@@ -414,7 +419,6 @@ class HGGLearner_DT:
         second_part_reached = False
 
         if args.env == "FetchPush-v1" or args.env == "FetchSlide-v1":
-
             # Q function values
             achieved_value = []
             if self.achieved_trajectory_pool.counter != 0:
@@ -439,7 +443,11 @@ class HGGLearner_DT:
                 current_goal = np.array(current_goal) / 10
                 current_goal = current_goal.tolist()
                 if args.env == "FetchPush-v1" or "FetchSlide-v1":
-                    current_goal[2] = float(f'{list_of_third_coordinate[i]:.5f}')
+                    # if third coordinate was not appended yet
+                    if len(current_goal) == 2:
+                        current_goal.append(float(f'{list_of_third_coordinate[i]:.5f}'))
+                    else:
+                        current_goal[2] = float(f'{list_of_third_coordinate[i]:.5f}')
 
                 # preparation for equality check
                 tmp_arm = []
@@ -620,10 +628,10 @@ class HGGLearner_DT:
                 # Additionally this is needed to switch from calling first DT to second DT
 
                 if np.array_equal(tmp_goal_1[:2], tmp_arm[:2]):
-                    print("First part completed")
+                    # print("First part completed")
                     first_part_reached = True
                 if tmp_goal_2[2] == tmp_arm[2]:
-                    print("Second part completed")
+                    # print("Second part completed")
                     second_part_reached = True
             sum_q_vector_1 = 0
             # check if at least one mean_q is small enough. feedback_positive is set here
@@ -820,8 +828,8 @@ class HGGLearner_DT:
         self.desired_goals_tmp = desired_goals
         # pass list of intermediate goals
         self.sampler.pool = list_of_current_arm_position
-        print("Intermediate goals: ")
-        print(list_of_current_arm_position)
+        # print("Intermediate goals: ")
+        # print(list_of_current_arm_position)
 
         selection_trajectory_idx = {}
         for i in range(self.args.episodes):

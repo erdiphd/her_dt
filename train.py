@@ -38,21 +38,21 @@ if __name__ == '__main__':
                 current_arm_position.append(math.ceil(initial_goals[i][j] * 10) / 10)
             list_of_current_arm_position.append(current_arm_position)
 
-        list_of_phenotypes_first_part = []
-        for i in range(args.episodes):
-            list_of_phenotypes_first_part.append("""if _in_1 < 9.0:
-    out=1
-
-else:
-    out=2""")
-
-        list_of_phenotypes_second_part = []
-        for i in range(args.episodes):
-            list_of_phenotypes_second_part.append("""if _in_2 < 9.0:
-    out=4
-
-else:
-    out=0""")
+#         list_of_phenotypes_first_part = []
+#         for i in range(args.episodes):
+#             list_of_phenotypes_first_part.append("""if _in_1 < 9.0:
+#     out=1
+#
+# else:
+#     out=2""")
+#
+#         list_of_phenotypes_second_part = []
+#         for i in range(args.episodes):
+#             list_of_phenotypes_second_part.append("""if _in_2 < 9.0:
+#     out=4
+#
+# else:
+#     out=0""")
 
         """
         Arm position:
