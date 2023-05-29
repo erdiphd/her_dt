@@ -497,7 +497,11 @@ class HGGLearner_DT:
                 current_goal = np.array(current_goal) / 10
                 current_goal = current_goal.tolist()
                 if args.env == "FetchPush-v1" or "FetchSlide-v1":
-                    current_goal[2] = float(f'{list_of_third_coordinate[i]:.5f}')
+                    # if third coordinate was not appended yet
+                    if len(current_goal) == 2:
+                        current_goal.append(float(f'{list_of_third_coordinate[i]:.5f}'))
+                    else:
+                        current_goal[2] = float(f'{list_of_third_coordinate[i]:.5f}')
 
                 # preparation for equality check
                 tmp_goal = []
@@ -819,7 +823,6 @@ class HGGLearner_DT:
                         info = agent.train(buffer.sample_batch())
                         args.logger.add_dict(info)
                     agent.target_update()
-
 
         # edit for plotting
         self.achieved_trajectories_by_robot = achieved_trajectories
