@@ -14,7 +14,6 @@ from ge_q_dts.dt import EpsGreedyLeaf, PythonDT, RandomlyInitializedEpsGreedyLea
 from ge_q_dts.grammatical_evolution import GrammaticalEvolutionTranslator, grammatical_evolution, differential_evolution
 import gym_examples
 
-
 def string_to_dict(x):
     """
     This function splits a string into a dict.

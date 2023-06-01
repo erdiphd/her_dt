@@ -31,6 +31,7 @@ if __name__ == '__main__':
             args.logger.add_item(key, 'scalar')
 
         # at first initialize current position with initial_goal for all start-goal pairs
+        # coordinates are not upscaled. Only DT is working with upscaled coordinates
         list_of_current_arm_position = []
         for i in range(args.episodes):
             current_arm_position = []
@@ -60,8 +61,6 @@ if __name__ == '__main__':
         Goal:
         [1.5, 0.9, 0.4]
         """
-        # coordinates are not upscaled. Only DT is working with upscaled coordinates
-
         args.logger.summary_setup()
 
         for epoch in range(args.epochs):
