@@ -620,18 +620,21 @@ class HGGLearner_DT:
                 # Additionally this is needed to switch from calling first DT to second DT
                 if np.array_equal(tmp_goal_2[:2], tmp_arm[:2]):
                     # checking for xy coordinates to match
+                    print("------------------------")
+                    print("xy is done")
+                    print("------------------------")
                     xy_is_done = True
                 if tmp_goal_2[2] == tmp_arm[2]:
                     # checking for z coordinate to match
-                    # print("------------------------")
-                    # print("Third coordinate is done")
-                    # print("------------------------")
+                    print("------------------------")
+                    print("Third coordinate is done")
+                    print("------------------------")
                     third_coordinate_is_done = True
                 if np.array_equal(tmp_goal_2, tmp_arm):
                     # checking for the end goal to be reached
-                    # print("------------------------")
-                    # print("goal reached")
-                    # print("------------------------")
+                    print("------------------------")
+                    print("goal reached")
+                    print("------------------------")
                     goal_reached = True
             sum_q_vector_1 = 0
             # check if at least one mean_q is small enough. feedback_positive is set here
@@ -691,14 +694,17 @@ class HGGLearner_DT:
                                                                                   1 - feedback))
                         # print("intermediate_goal_1_z: ")
                         # print(intermediate_goal_1_z)
-                        # combine xy and z goals to get the goal moving diagonally
+                    # combine xy and z goals to get the goal moving diagonally
+                    # this if block is here to avoid referencing before assignment
+                    if xy_is_done is False and third_coordinate_is_done is False:
                         intermediate_goal_1 = np.array([intermediate_goal_1_xy[0], intermediate_goal_1_xy[1], intermediate_goal_1_z[2]])
-
-                    if third_coordinate_is_done is True and xy_is_done is True:
-                        # this won't be triggered anyway, bc then goal_reached is True. Is here just for safety
-                        intermediate_goal_1 = intermediate_goal_1_xy.copy()
+                    if xy_is_done is True and third_coordinate_is_done is False:
+                        intermediate_goal_1 = np.array([list_of_current_arm_position[0], list_of_current_arm_position[1], intermediate_goal_1_z[2]])
                     # if third coordinate is done before xy; fixate third, so it doesn't run away
-                    if third_coordinate_is_done is True and xy_is_done is False:
+                    if xy_is_done is True and third_coordinate_is_done is True:
+                        # this should not be triggered anyway, just for safety
+                        intermediate_goal_1 = np.array([list_of_current_arm_position[0], list_of_current_arm_position[1], list_of_current_arm_position[2]])
+                    if xy_is_done is False and third_coordinate_is_done is True:
                         intermediate_goal_1 = np.array([intermediate_goal_1_xy[0], intermediate_goal_1_xy[1], intermediate_goal_1_xy[2]])
 
                     # print("intermediate_goal_1: ")
@@ -719,12 +725,23 @@ class HGGLearner_DT:
                                                                                   feedback))
                         # print("intermediate_goal_2_z: ")
                         # print(intermediate_goal_2_z)
-                        intermediate_goal_2 = np.array([intermediate_goal_2_xy[0], intermediate_goal_2_xy[1], intermediate_goal_2_z[2]])
-                    if third_coordinate_is_done is True and xy_is_done is True:
-                        intermediate_goal_2 = intermediate_goal_2_xy.copy()
+                        # combine xy and z goals to get the goal moving diagonally
+                    if xy_is_done is False and third_coordinate_is_done is False:
+                        intermediate_goal_2 = np.array(
+                            [intermediate_goal_2_xy[0], intermediate_goal_2_xy[1], intermediate_goal_2_z[2]])
+                    if xy_is_done is True and third_coordinate_is_done is False:
+                        intermediate_goal_2 = np.array(
+                            [list_of_current_arm_position[0], list_of_current_arm_position[1],
+                             intermediate_goal_2_z[2]])
                     # if third coordinate is done before xy; fixate third, so it doesn't run away
-                    if third_coordinate_is_done is True and xy_is_done is False:
-                        intermediate_goal_2 = np.array([intermediate_goal_2_xy[0], intermediate_goal_2_xy[1], intermediate_goal_1.copy()[2]])
+                    if xy_is_done is True and third_coordinate_is_done is True:
+                        # this should not be triggered anyway, just for safety
+                        intermediate_goal_2 = np.array(
+                            [list_of_current_arm_position[0], list_of_current_arm_position[1],
+                             list_of_current_arm_position[2]])
+                    if xy_is_done is False and third_coordinate_is_done is True:
+                        intermediate_goal_2 = np.array(
+                            [intermediate_goal_2_xy[0], intermediate_goal_2_xy[1], intermediate_goal_2_xy[2]])
 
                     # print("intermediate_goal_2: ")
                     # print(intermediate_goal_2)
