@@ -14,13 +14,17 @@ def plot_graphs(file_list, color='r'):
         logs = open(file_list[file_number])
         logs.seek(0)
         log_file = logs.read()
+        # if file_list[0] == "/home/vlaffo/Desktop/ddpg-FetchPush-v1-hgg_dt-obstacle.log":
         success_rates = [(m.start(0), m.end(0)) for m in re.finditer('Success/interval', log_file)]
+        # else:
+        #     success_rates = [(m.start(0), m.end(0)) for m in re.finditer('Success/obstacle', log_file)]
+
         # print(success_rates)
 
         success_result_array_tmp = []
         for start_pos, end_pose in success_rates:
             # print(float(log_file[end_pose+1: end_pose+7]))
-            success_result_array_tmp.append(float(log_file[end_pose + 3: end_pose + 7]))
+            success_result_array_tmp.append(float(log_file[end_pose + 2: end_pose + 7]))
 
         success_result_array.append(success_result_array_tmp)
 
@@ -51,14 +55,13 @@ xdata = 200 * np.arange(100)
 
 neural_network_option = 'compare_nn'
 
-file_list = [ "/home/erdi/Desktop/ddpg-FetchPush-v1-hgg_dt-3.log",
-             "/home/erdi/Desktop/ddpg-FetchPush-v1-hgg_dt_4.log",
+file_list = [ "/home/vlaffo/Desktop/ddpg-FetchPush-v1-hgg_dt.log",
               ]
 plot_graphs(file_list, 'red')
 
 
 file_list = [ 
-             "/home/erdi/Desktop/ddpg-FetchPush-v1-hgg_dt_5.log"
+             "/home/vlaffo/Desktop/ddpg-FetchPush-v1-hgg.log",
               ]
 plot_graphs(file_list, 'blue')
 
@@ -69,7 +72,7 @@ sns.tsplot(time=xdata, data=np.ones(len(xdata)), color="b", linestyle="-")
 plt.ylabel("Success Rate", fontsize=15)
 plt.xlabel("Episode ", fontsize=15, labelpad=4)
 
-plt.legend(labels=["HGG-DT","HGG"],
+plt.legend(labels=["HGG_DT","HGG"],
            loc='lower left', )
 # plt.legend(labels=legend_list)
 plt.show()

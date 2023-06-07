@@ -342,14 +342,14 @@ class HGGLearner_DT:
                 # first DT is 2d, so remember third coordinate to append it later
                 third_coordinate = math.ceil(initial_goals[j][2] * 10) / 10
 
-                # print("initial pos:")
-                # print(initial_goals[j])
-                # print("desired goal: ")
-                # print(desired_goals[j])
-                # print("First part: arm: ")
-                # print(upscaled_arm_position)
-                # print("First part: goal: ")
-                # print(upscaled_goal)
+                print("initial pos:")
+                print(initial_goals[j])
+                print("desired goal: ")
+                print(desired_goals[j])
+                print("First part: arm: ")
+                print(upscaled_arm_position)
+                print("First part: goal: ")
+                print(upscaled_goal)
 
                 # generate current DT only once for every start-goal pair
                 # working here with 2D DT, use sparse reward
@@ -416,6 +416,7 @@ class HGGLearner_DT:
 
         achieved_trajectories = []
         achieved_init_states = []
+        # all start-goal pairs have 1 stop switch
         goal_reached = False
         third_coordinate_is_done = False
         xy_is_done = False
@@ -427,7 +428,6 @@ class HGGLearner_DT:
             goal_reached_1.append(False)
             third_coordinate_is_done_1.append(False)
             xy_is_done_1.append(False)
-
 
         if args.env == "FetchPush-v1" or args.env == "FetchSlide-v1":
             # Q function values
@@ -778,19 +778,19 @@ class HGGLearner_DT:
                     # print("------------------------")
                     # print("xy is done")
                     # print("------------------------")
-                    xy_is_done = True
+                    xy_is_done_1[i] = True
                 if tmp_goal_2[2] == tmp_arm[2]:
                     # checking for z coordinate to match
                     # print("------------------------")
                     # print("Third coordinate is done")
                     # print("------------------------")
-                    third_coordinate_is_done = True
+                    third_coordinate_is_done_1[i] = True
                 if np.array_equal(tmp_goal_2, tmp_arm):
                     # checking for the end goal to be reached
-                    # print("------------------------")
-                    # print("goal reached")
-                    # print("------------------------")
-                    goal_reached = True
+                    print("------------------------")
+                    print("goal reached")
+                    print("------------------------")
+                    goal_reached_1[i] = True
             sum_q_vector_1 = 0
             # check if at least one mean_q is small enough. feedback_positive is set here
             for i in range(args.episodes):
@@ -831,9 +831,9 @@ class HGGLearner_DT:
                 # if the end-goal isn't reached => call get_intermediate_goal
                 intermediate_goal_1 = []
                 intermediate_goal_2 = []
-                if goal_reached is False:
+                if goal_reached_1[i] is False:
                     # check for xy is done and z is done separately, because they can be done not simultaneously
-                    if xy_is_done is False:
+                    if xy_is_done_1[i] is False:
                         # pass dt and current arm position to get next intermediate goal
                         # return 1 intermediate goal for every start-goal pair
                         intermediate_goal_1_xy = np.array(self.get_intermediate_goal(args, list_of_phenotypes_first_part[i],
@@ -842,7 +842,7 @@ class HGGLearner_DT:
                                                                                   1 - feedback))
                         # print("intermediate_goal_1_xy: ")
                         # print(intermediate_goal_1_xy)
-                    if third_coordinate_is_done is False:
+                    if third_coordinate_is_done_1[i] is False:
                         intermediate_goal_1_z = np.array(self.get_intermediate_goal(args, list_of_phenotypes_second_part[i],
                                                                                   list_of_current_arm_position[i].copy(),
                                                                                   list_of_third_coordinate[i],
@@ -851,20 +851,20 @@ class HGGLearner_DT:
                         # print(intermediate_goal_1_z)
                     # combine xy and z goals to get the goal moving diagonally
                     # this if block is here to avoid referencing before assignment
-                    if xy_is_done is False and third_coordinate_is_done is False:
+                    if xy_is_done_1[i] is False and third_coordinate_is_done_1[i] is False:
                         intermediate_goal_1 = np.array([intermediate_goal_1_xy[0], intermediate_goal_1_xy[1], intermediate_goal_1_z[2]])
-                    if xy_is_done is True and third_coordinate_is_done is False:
+                    if xy_is_done_1[i] is True and third_coordinate_is_done_1[i] is False:
                         intermediate_goal_1 = np.array([list_of_current_arm_position[i][0], list_of_current_arm_position[i][1], intermediate_goal_1_z[2]])
                     # if third coordinate is done before xy; fixate third, so it doesn't run away
-                    if xy_is_done is True and third_coordinate_is_done is True:
+                    if xy_is_done_1[i] is True and third_coordinate_is_done_1[i] is True:
                         # this should not be triggered anyway, just for safety
                         intermediate_goal_1 = np.array([list_of_current_arm_position[i][0], list_of_current_arm_position[i][1], list_of_current_arm_position[i][2]])
-                    if xy_is_done is False and third_coordinate_is_done is True:
+                    if xy_is_done_1[i] is False and third_coordinate_is_done_1[i] is True:
                         intermediate_goal_1 = np.array([intermediate_goal_1_xy[0], intermediate_goal_1_xy[1], intermediate_goal_1_xy[2]])
 
                     # print("intermediate_goal_1: ")
                     # print(intermediate_goal_1)
-                    if xy_is_done is False:
+                    if xy_is_done_1[i] is False:
                         # same stuff for second intermediate goal for t+1.
                         # Is used later to create average from intermediate_goal_1 {t} and intermediate_goal_2 {t+1}
                         intermediate_goal_2_xy = np.array(self.get_intermediate_goal(args, list_of_phenotypes_first_part[i],
@@ -873,7 +873,7 @@ class HGGLearner_DT:
                                                                                   feedback))
                         # print("intermediate_goal_2_xy: ")
                         # print(intermediate_goal_2_xy)
-                    if third_coordinate_is_done is False:
+                    if third_coordinate_is_done_1[i] is False:
                         intermediate_goal_2_z = np.array(self.get_intermediate_goal(args, list_of_phenotypes_second_part[i],
                                                                                   intermediate_goal_1.copy(),
                                                                                   list_of_third_coordinate[i],
@@ -881,20 +881,20 @@ class HGGLearner_DT:
                         # print("intermediate_goal_2_z: ")
                         # print(intermediate_goal_2_z)
                         # combine xy and z goals to get the goal moving diagonally
-                    if xy_is_done is False and third_coordinate_is_done is False:
+                    if xy_is_done_1[i] is False and third_coordinate_is_done_1[i] is False:
                         intermediate_goal_2 = np.array(
                             [intermediate_goal_2_xy[0], intermediate_goal_2_xy[1], intermediate_goal_2_z[2]])
-                    if xy_is_done is True and third_coordinate_is_done is False:
+                    if xy_is_done_1[i] is True and third_coordinate_is_done_1[i] is False:
                         intermediate_goal_2 = np.array(
                             [list_of_current_arm_position[i][0], list_of_current_arm_position[i][1],
                              intermediate_goal_2_z[2]])
                     # if third coordinate is done before xy; fixate third, so it doesn't run away
-                    if xy_is_done is True and third_coordinate_is_done is True:
+                    if xy_is_done_1[i] is True and third_coordinate_is_done_1[i] is True:
                         # this should not be triggered anyway, just for safety
                         intermediate_goal_2 = np.array(
                             [list_of_current_arm_position[i][0], list_of_current_arm_position[i][1],
                              list_of_current_arm_position[i][2]])
-                    if xy_is_done is False and third_coordinate_is_done is True:
+                    if xy_is_done_1[i] is False and third_coordinate_is_done_1[i] is True:
                         intermediate_goal_2 = np.array(
                             [intermediate_goal_2_xy[0], intermediate_goal_2_xy[1], intermediate_goal_2_xy[2]])
 
@@ -920,8 +920,9 @@ class HGGLearner_DT:
                     # max_arr = np.clip(max_arr.copy(), [0, 0, 0], tmp_goal)
                     # max_arr = np.clip(max_arr.copy(), [0, 0, 0], tmp_goal)
                     # intermediate_goal_2 = np.clip(intermediate_goal_2.copy(), min_arr, max_arr)
-                    intermediate_goal_2 = np.clip(intermediate_goal_2.copy(), initial_goals[i], desired_goals[i])
 
+                    intermediate_goal_2 = np.clip(intermediate_goal_2.copy(), [0, 0, 0], tmp_goal)
+                    # intermediate_goal = intermediate_goal_1.copy()
                     intermediate_goal = (intermediate_goal_1.copy() + intermediate_goal_2.copy()) / 2
 
                     # Clipping because of dynamic goals
@@ -942,10 +943,10 @@ class HGGLearner_DT:
                     # print(min_arr)
                     # print("max: ")
                     # print(max_arr)
-                    intermediate_goal = np.clip(intermediate_goal.copy(), initial_goals[i], desired_goals[i])
+                    intermediate_goal = np.clip(intermediate_goal.copy(), [0, 0, 0], tmp_goal)
 
                 # this is the "end-goal reached" part
-                if goal_reached is True:
+                if goal_reached_1[i] is True:
                     # the goal does not move from here. It stays the same
                     list_of_current_arm_position[i] = np.clip(list_of_current_arm_position[i].copy(), [0, 0, 0], tmp_goal)
                     intermediate_goal = np.array(list_of_current_arm_position[i].copy())
