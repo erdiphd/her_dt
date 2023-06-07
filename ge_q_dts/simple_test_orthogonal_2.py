@@ -126,13 +126,13 @@ def evaluate_fitness(fitness_function, leaf, genotype, grid_size, agent_start, a
     return fitness_function(bt, grid_size, agent_start, agent_goal, dimensions, reward_type, episodes)
 
 
-def fitness(x, grid_size, agent_start, agent_goal, dimensions, reward_type, episodes=args.episodes):
+def fitness(x, grid_size, agent_start, agent_goal, dimensions, reward_type, obstacle_is_on, episodes=args.episodes):
     random.seed(args.seed)
     np.random.seed(args.seed)
     global_cumulative_rewards = []
     environment_name = "gym_examples/GridWorld-v0"
     e = gym.make(environment_name, size=grid_size, agent_location=agent_start, target_location=agent_goal,
-                 dimensions=dimensions, reward_type=reward_type)
+                 dimensions=dimensions, reward_type=reward_type, obstacle_is_on=obstacle_is_on)
 
     try:
         for iteration in range(episodes):
@@ -171,13 +171,13 @@ def fitness(x, grid_size, agent_start, agent_goal, dimensions, reward_type, epis
 
 
 # if __name__ == '__main__':
-def main(grid_size, agent_start, agent_goal, dimensions, reward_type):
+def main(grid_size, agent_start, agent_goal, dimensions, reward_type, obstacle_is_on):
 
     import collections
     from joblib import parallel_backend
 
     def fit_fcn(x):
-        return evaluate_fitness(fitness, CLeaf, x, grid_size, agent_start, agent_goal, dimensions, reward_type)
+        return evaluate_fitness(fitness, CLeaf, x, grid_size, agent_start, agent_goal, dimensions, reward_type, obstacle_is_on)
 
     with parallel_backend("multiprocessing"):
         pop, log, hof, best_leaves = grammatical_evolution(fit_fcn, inputs=input_space_size, leaf=CLeaf, individuals=args.lambda_, generations=args.generations, jobs=args.jobs, cx_prob=args.cxp, m_prob=args.mp, logfile=logfile, seed=args.seed, mutation=args.mutation, crossover=args.crossover, initial_len=args.genotype_len, selection=args.selection)

@@ -41,11 +41,11 @@ if __name__ == '__main__':
 
 #         list_of_phenotypes_first_part = []
 #         for i in range(args.episodes):
-#             list_of_phenotypes_first_part.append("""if _in_1 < 9.0:
-#     out=1
+#             list_of_phenotypes_first_part.append("""if _in_0 > 14.0:
+#     out=2
 #
 # else:
-#     out=2""")
+#     out=1""")
 #
 #         list_of_phenotypes_second_part = []
 #         for i in range(args.episodes):
@@ -53,7 +53,7 @@ if __name__ == '__main__':
 #     out=4
 #
 # else:
-#     out=0""")
+#     out=2""")
 
         """
         Arm position:

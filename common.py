@@ -56,6 +56,7 @@ def get_args():
 	parser.add_argument('--hgg_dt_step_size', help='step size between intermediate goals; '
 	'affects number of goals: 0.1 -> 2, 0.00075 -> 400', type=np.float32, default=0.01)
 	parser.add_argument('--c', help='c parameter to measure success basing on Q function', type=np.float32, default=-1)
+	parser.add_argument('--obstacle', help='turn on obstacle for HGG_DT, only for FetchPush', type=str2bool, default=False)
 	parser.add_argument('--save_acc', help='save successful rate', type=str2bool, default=True)
 
 	args = parser.parse_args()
