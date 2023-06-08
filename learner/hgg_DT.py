@@ -353,11 +353,11 @@ class HGGLearner_DT:
 
                 # generate current DT only once for every start-goal pair
                 # working here with 2D DT, use sparse reward
-                phenotype = dt_2.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
-                                    dimensions=2,
-                                    reward_type="sparse", obstacle_is_on=False)
+                # phenotype = dt_2.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
+                #                     dimensions=2,
+                #                     reward_type="sparse", obstacle_is_on=False)
                 print("Phenotype part 1 number " + str(j) + " generated")
-                list_of_phenotypes_first_part.append(phenotype)
+                # list_of_phenotypes_first_part.append(phenotype)
                 list_of_arm_first_part.append(upscaled_arm_position)
                 list_of_goal_first_part.append(upscaled_goal)
                 list_of_third_coordinate.append(third_coordinate)
@@ -384,11 +384,11 @@ class HGGLearner_DT:
                 # generate current DT only once for every start-goal pair
                 # DT is always working with 3 dimensions, even for FetchPush and FetchSlide
                 # working here with 3D DT, dense is faster with 3D
-                phenotype = dt.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
-                                    dimensions=3,
-                                    reward_type="dense", obstacle_is_on=False)
+                # phenotype = dt.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
+                #                     dimensions=3,
+                #                     reward_type="dense", obstacle_is_on=False)
                 print("Phenotype part 2 number " + str(j) + " generated")
-                list_of_phenotypes_second_part.append(phenotype)
+                # list_of_phenotypes_second_part.append(phenotype)
                 list_of_arm_second_part.append(upscaled_arm_position)
                 list_of_goal_second_part.append(upscaled_goal)
 
@@ -787,9 +787,9 @@ class HGGLearner_DT:
                     third_coordinate_is_done_1[i] = True
                 if np.array_equal(tmp_goal_2, tmp_arm):
                     # checking for the end goal to be reached
-                    print("------------------------")
-                    print("goal reached")
-                    print("------------------------")
+                    # print("------------------------")
+                    # print("goal reached")
+                    # print("------------------------")
                     goal_reached_1[i] = True
             sum_q_vector_1 = 0
             # check if at least one mean_q is small enough. feedback_positive is set here
@@ -805,6 +805,10 @@ class HGGLearner_DT:
 
             # calculate mean over all vectors and episodes
             # sum / len(args.episodes) / len(q_vector)
+            if goal_reached_1[0] is True:
+                print("------------------------")
+                print("goal reached")
+                print("------------------------")
             mean_q = sum_q_vector_1 / 50 / 51
             print("Mean Q over all episodes: " + str(mean_q))
             # If mean of all Q values is close enough to 0
@@ -832,118 +836,34 @@ class HGGLearner_DT:
                 intermediate_goal_1 = []
                 intermediate_goal_2 = []
                 if goal_reached_1[i] is False:
-                    # check for xy is done and z is done separately, because they can be done not simultaneously
+                    # check for xy is done -> only phenotypes first part
                     if xy_is_done_1[i] is False:
                         # pass dt and current arm position to get next intermediate goal
                         # return 1 intermediate goal for every start-goal pair
-                        intermediate_goal_1_xy = np.array(self.get_intermediate_goal(args, list_of_phenotypes_first_part[i],
+                        intermediate_goal_1 = np.array(self.get_intermediate_goal(args, list_of_phenotypes_first_part[i],
                                                                                   list_of_current_arm_position[i].copy(),
                                                                                   list_of_third_coordinate[i],
                                                                                   1 - feedback))
-                        # print("intermediate_goal_1_xy: ")
-                        # print(intermediate_goal_1_xy)
-                    if third_coordinate_is_done_1[i] is False:
-                        intermediate_goal_1_z = np.array(self.get_intermediate_goal(args, list_of_phenotypes_second_part[i],
+                        intermediate_goal_2 = np.array(self.get_intermediate_goal(args, list_of_phenotypes_first_part[i],
+                                                                                  intermediate_goal_1.copy(),
+                                                                                  list_of_third_coordinate[i],
+                                                                                  feedback))
+                        intermediate_goal_2 = np.clip(intermediate_goal_2.copy(), [0, 0, 0], tmp_goal)
+                        intermediate_goal = (intermediate_goal_1.copy() + intermediate_goal_2.copy()) / 2
+                        intermediate_goal = np.clip(intermediate_goal, [0, 0, 0], tmp_goal)
+
+                    if xy_is_done_1[i] is True:
+                        intermediate_goal_1 = np.array(self.get_intermediate_goal(args, list_of_phenotypes_second_part[i],
                                                                                   list_of_current_arm_position[i].copy(),
                                                                                   list_of_third_coordinate[i],
                                                                                   1 - feedback))
-                        # print("intermediate_goal_1_z: ")
-                        # print(intermediate_goal_1_z)
-                    # combine xy and z goals to get the goal moving diagonally
-                    # this if block is here to avoid referencing before assignment
-                    if xy_is_done_1[i] is False and third_coordinate_is_done_1[i] is False:
-                        intermediate_goal_1 = np.array([intermediate_goal_1_xy[0], intermediate_goal_1_xy[1], intermediate_goal_1_z[2]])
-                    if xy_is_done_1[i] is True and third_coordinate_is_done_1[i] is False:
-                        intermediate_goal_1 = np.array([list_of_current_arm_position[i][0], list_of_current_arm_position[i][1], intermediate_goal_1_z[2]])
-                    # if third coordinate is done before xy; fixate third, so it doesn't run away
-                    if xy_is_done_1[i] is True and third_coordinate_is_done_1[i] is True:
-                        # this should not be triggered anyway, just for safety
-                        intermediate_goal_1 = np.array([list_of_current_arm_position[i][0], list_of_current_arm_position[i][1], list_of_current_arm_position[i][2]])
-                    if xy_is_done_1[i] is False and third_coordinate_is_done_1[i] is True:
-                        intermediate_goal_1 = np.array([intermediate_goal_1_xy[0], intermediate_goal_1_xy[1], intermediate_goal_1_xy[2]])
-
-                    # print("intermediate_goal_1: ")
-                    # print(intermediate_goal_1)
-                    if xy_is_done_1[i] is False:
-                        # same stuff for second intermediate goal for t+1.
-                        # Is used later to create average from intermediate_goal_1 {t} and intermediate_goal_2 {t+1}
-                        intermediate_goal_2_xy = np.array(self.get_intermediate_goal(args, list_of_phenotypes_first_part[i],
+                        intermediate_goal_2 = np.array(self.get_intermediate_goal(args, list_of_phenotypes_second_part[i],
                                                                                   intermediate_goal_1.copy(),
                                                                                   list_of_third_coordinate[i],
                                                                                   feedback))
-                        # print("intermediate_goal_2_xy: ")
-                        # print(intermediate_goal_2_xy)
-                    if third_coordinate_is_done_1[i] is False:
-                        intermediate_goal_2_z = np.array(self.get_intermediate_goal(args, list_of_phenotypes_second_part[i],
-                                                                                  intermediate_goal_1.copy(),
-                                                                                  list_of_third_coordinate[i],
-                                                                                  feedback))
-                        # print("intermediate_goal_2_z: ")
-                        # print(intermediate_goal_2_z)
-                        # combine xy and z goals to get the goal moving diagonally
-                    if xy_is_done_1[i] is False and third_coordinate_is_done_1[i] is False:
-                        intermediate_goal_2 = np.array(
-                            [intermediate_goal_2_xy[0], intermediate_goal_2_xy[1], intermediate_goal_2_z[2]])
-                    if xy_is_done_1[i] is True and third_coordinate_is_done_1[i] is False:
-                        intermediate_goal_2 = np.array(
-                            [list_of_current_arm_position[i][0], list_of_current_arm_position[i][1],
-                             intermediate_goal_2_z[2]])
-                    # if third coordinate is done before xy; fixate third, so it doesn't run away
-                    if xy_is_done_1[i] is True and third_coordinate_is_done_1[i] is True:
-                        # this should not be triggered anyway, just for safety
-                        intermediate_goal_2 = np.array(
-                            [list_of_current_arm_position[i][0], list_of_current_arm_position[i][1],
-                             list_of_current_arm_position[i][2]])
-                    if xy_is_done_1[i] is False and third_coordinate_is_done_1[i] is True:
-                        intermediate_goal_2 = np.array(
-                            [intermediate_goal_2_xy[0], intermediate_goal_2_xy[1], intermediate_goal_2_xy[2]])
-
-                    # preparation for clip of intermediate_goal_2
-                    # print("tmp-goal: ")
-                    # print(tmp_goal)
-                    # arr = [intermediate_goal_2.tolist(), tmp_goal]
-                    # indexes_of_min_goal = np.argmin(arr, axis=0)
-                    # indexes_of_max_goal = np.argmax(arr, axis=0)
-                    #
-                    # min_arr = np.array([arr[indexes_of_min_goal[0]][0], arr[indexes_of_min_goal[1]][1],
-                    #                     arr[indexes_of_min_goal[2]][2]])
-                    # max_arr = np.array([arr[indexes_of_max_goal[0]][0], arr[indexes_of_max_goal[1]][1],
-                    #                     arr[indexes_of_max_goal[2]][2]])
-                    # # this is here because of some python bugs. If variable is not used, it is getting distorted
-                    # min_arr = min_arr
-                    # max_arr = max_arr
-                    # print("clipping of intermediate_goal_2:")
-                    # print("min: ")
-                    # print(min_arr)
-                    # print("max: ")
-                    # print(max_arr)
-                    # max_arr = np.clip(max_arr.copy(), [0, 0, 0], tmp_goal)
-                    # max_arr = np.clip(max_arr.copy(), [0, 0, 0], tmp_goal)
-                    # intermediate_goal_2 = np.clip(intermediate_goal_2.copy(), min_arr, max_arr)
-
-                    intermediate_goal_2 = np.clip(intermediate_goal_2.copy(), [0, 0, 0], tmp_goal)
-                    # intermediate_goal = intermediate_goal_1.copy()
-                    intermediate_goal = (intermediate_goal_1.copy() + intermediate_goal_2.copy()) / 2
-
-                    # Clipping because of dynamic goals
-                    # preparation for clip of intermediate_goal
-                    # arr = [intermediate_goal.tolist(), tmp_goal]
-                    # indexes_of_min_goal = np.argmin(arr, axis=0)
-                    # indexes_of_max_goal = np.argmax(arr, axis=0)
-                    #
-                    # min_arr = np.array([round(arr[indexes_of_min_goal[0]][0], 2), round(arr[indexes_of_min_goal[1]][1], 2),
-                    #                     round(arr[indexes_of_min_goal[2]][2], 2)])
-                    # max_arr = np.array([round(arr[indexes_of_max_goal[0]][0], 2), round(arr[indexes_of_max_goal[1]][1], 2),
-                    #                     round(arr[indexes_of_max_goal[2]][2], 2)])
-                    #
-                    # min_arr = min_arr
-                    # max_arr = max_arr
-                    # print("clipping of intermediate_goal:")
-                    # print("min: ")
-                    # print(min_arr)
-                    # print("max: ")
-                    # print(max_arr)
-                    intermediate_goal = np.clip(intermediate_goal.copy(), [0, 0, 0], tmp_goal)
+                        intermediate_goal_2 = np.clip(intermediate_goal_2.copy(), [0, 0, 0], tmp_goal)
+                        intermediate_goal = (intermediate_goal_1.copy() + intermediate_goal_2.copy()) / 2
+                        intermediate_goal = np.clip(intermediate_goal, [0, 0, 0], tmp_goal)
 
                 # this is the "end-goal reached" part
                 if goal_reached_1[i] is True:
