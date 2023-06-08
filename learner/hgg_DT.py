@@ -353,11 +353,11 @@ class HGGLearner_DT:
 
                 # generate current DT only once for every start-goal pair
                 # working here with 2D DT, use sparse reward
-                # phenotype = dt_2.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
-                #                     dimensions=2,
-                #                     reward_type="sparse", obstacle_is_on=False)
+                phenotype = dt_2.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
+                                    dimensions=2,
+                                    reward_type="sparse", obstacle_is_on=False)
                 print("Phenotype part 1 number " + str(j) + " generated")
-                # list_of_phenotypes_first_part.append(phenotype)
+                list_of_phenotypes_first_part.append(phenotype)
                 list_of_arm_first_part.append(upscaled_arm_position)
                 list_of_goal_first_part.append(upscaled_goal)
                 list_of_third_coordinate.append(third_coordinate)
@@ -384,11 +384,11 @@ class HGGLearner_DT:
                 # generate current DT only once for every start-goal pair
                 # DT is always working with 3 dimensions, even for FetchPush and FetchSlide
                 # working here with 3D DT, dense is faster with 3D
-                # phenotype = dt.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
-                #                     dimensions=3,
-                #                     reward_type="dense", obstacle_is_on=False)
+                phenotype = dt.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
+                                    dimensions=3,
+                                    reward_type="dense", obstacle_is_on=False)
                 print("Phenotype part 2 number " + str(j) + " generated")
-                # list_of_phenotypes_second_part.append(phenotype)
+                list_of_phenotypes_second_part.append(phenotype)
                 list_of_arm_second_part.append(upscaled_arm_position)
                 list_of_goal_second_part.append(upscaled_goal)
 
