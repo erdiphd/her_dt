@@ -26,7 +26,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "/home/vlaffo/Desktop/vlad_thesis (copy)",
+    "last_opened_file_path": "/home/vlaffo/Desktop/vlad_thesis",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
@@ -114,9 +114,9 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.hgg_DT" />
       <item itemvalue="Python.plot_intermediate_goals" />
       <item itemvalue="Python.train" />
-      <item itemvalue="Python.hgg_DT" />
       <item itemvalue="Python tests.Python tests for test.Tester.test_acc" />
     </list>
     <recent_temporary>
