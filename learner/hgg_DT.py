@@ -9,7 +9,7 @@ from ge_q_dts.dt import EpsGreedyLeaf, PythonDT
 from ge_q_dts import simple_test_orthogonal as dt
 from ge_q_dts import simple_test_orthogonal_2 as dt_2
 from ge_q_dts import simple_test_orthogonal_3 as dt_3
-from ge_q_dts import simple_test_orthogonal_4 as dt_4
+# from ge_q_dts import simple_test_orthogonal_4 as dt_4
 import ast
 import copy
 
@@ -306,8 +306,9 @@ class HGGLearner_DT:
                 # print(desired_goals[j])
                 if args.env == "FetchSlide-v1":
                     # generate current DT only once for every start-goal pair
-                    # working here with 2D DT, use sparse reward, dt_4 ith 200 episode length for complex tasks
-                    phenotype = dt_4.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
+                    # working here with 2D DT, use sparse reward, dt_2 ith 200 episode length for complex tasks
+                    # TODO: if you run FetchSlide, change episode length to 200 in dt_2
+                    phenotype = dt_2.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
                                         dimensions=2,
                                         reward_type="sparse", obstacle_is_on=False)
                     print("Phenotype number " + str(j) + " generated")
