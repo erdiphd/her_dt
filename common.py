@@ -64,9 +64,8 @@ def get_args():
     parser.add_argument('--hgg_c', help='weight of initial distribution in flow learner', type=np.float32, default=3.0)
     parser.add_argument('--hgg_L', help='Lipschitz constant', type=np.float32, default=5.0)
     parser.add_argument('--hgg_pool_size', help='size of achieved trajectories pool', type=np.int32, default=1000)
-    # 0.3 / 400 = 0.00075
-    parser.add_argument('--hgg_dt_step_size', help='step size between intermediate goals', type=np.float32,
-                        default=(0.03 if args.env == "FetchPickAndPlace-v1" or args.env == "FetchReach-v1" else 0.01))
+    parser.add_argument('--forced_hgg_dt_step_size', help='step size between intermediate goals', type=np.float32,
+                        default=None)
     parser.add_argument('--c', help='c parameter to measure success basing on Q function', type=np.float32, default=-1)
     parser.add_argument('--obstacle', help='turn on obstacle for HGG_DT, only for FetchPush', type=str2bool,
                         default=False)

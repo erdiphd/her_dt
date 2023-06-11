@@ -9,7 +9,7 @@ from ge_q_dts.dt import EpsGreedyLeaf, PythonDT
 from ge_q_dts import simple_test_orthogonal as dt
 from ge_q_dts import simple_test_orthogonal_2 as dt_2
 from ge_q_dts import simple_test_orthogonal_3 as dt_3
-# from ge_q_dts import simple_test_orthogonal_4 as dt_4
+from ge_q_dts import simple_test_orthogonal_4 as dt_4
 import ast
 import copy
 
@@ -230,23 +230,36 @@ class HGGLearner_DT:
         # print("Action: " + str(action))
 
         next_intermediate_goal = current_arm_position.copy()
+        # choose which step size to use, optimal or forced
+        step_size = 0
+        if args.forced_hgg_dt_step_size is None:
+            # if forced is not given, take optimal step size
+            if args.env == "FetchPickAndPlace-v1" or args.env == "FetchReach-v1":
+                step_size = 0.03
+            elif args.env == "FetchSlide-v1":
+                step_size = 0.015
+            else:
+                # FetchPush and others
+                step_size = 0.01
+        else:
+            step_size = args.forced_hgg_dt_step_size
 
         # apply action. Only DT is working with 10X upscaling and actions with "1" steps, the algorithm not.
         # No need to upscale and downscale every goal in HGG, action is only direction info, step size can be of anything
         # Dynamic step size: 0.1 -> 2 goals, 0.025 -> 8, 0.00075 -> 400. Impacted by feedback
         if action == 0:
-            next_intermediate_goal[0] = next_intermediate_goal[0] + args.hgg_dt_step_size * feedback
+            next_intermediate_goal[0] = next_intermediate_goal[0] + step_size * feedback
         if action == 1:
-            next_intermediate_goal[1] = next_intermediate_goal[1] + args.hgg_dt_step_size * feedback
+            next_intermediate_goal[1] = next_intermediate_goal[1] + step_size * feedback
         if action == 2:
-            next_intermediate_goal[0] = next_intermediate_goal[0] - args.hgg_dt_step_size * feedback
+            next_intermediate_goal[0] = next_intermediate_goal[0] - step_size * feedback
         if action == 3:
-            next_intermediate_goal[1] = next_intermediate_goal[1] - args.hgg_dt_step_size * feedback
+            next_intermediate_goal[1] = next_intermediate_goal[1] - step_size * feedback
         # action 4 and 5 can only be called with 3D DT
         if action == 4:
-            next_intermediate_goal[2] = next_intermediate_goal[2] + args.hgg_dt_step_size * feedback
+            next_intermediate_goal[2] = next_intermediate_goal[2] + step_size * feedback
         if action == 5:
-            next_intermediate_goal[2] = next_intermediate_goal[2] - args.hgg_dt_step_size * feedback
+            next_intermediate_goal[2] = next_intermediate_goal[2] - step_size * feedback
 
         # Append third coordinate for FetchPush and FetchSlide, because it stays the same
         if args.env == "FetchPush-v1" or args.env == "FetchSlide-v1":
@@ -304,11 +317,15 @@ class HGGLearner_DT:
                 # print(initial_goals[j])
                 # print("Desired goals: ")
                 # print(desired_goals[j])
+                # print("upscaled arm: ")
+                # print(upscaled_arm_position)
+                # print("upscaled goal: ")
+                # print(upscaled_goal)
+
                 if args.env == "FetchSlide-v1":
                     # generate current DT only once for every start-goal pair
-                    # working here with 2D DT, use sparse reward, dt_2 ith 200 episode length for complex tasks
-                    # TODO: if you run FetchSlide, change episode length to 200 in dt_2
-                    phenotype = dt_2.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
+                    # working here with 2D DT, use sparse reward, 200 episode length for complex tasks
+                    phenotype = dt_4.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
                                         dimensions=2,
                                         reward_type="sparse", obstacle_is_on=False)
                     print("Phenotype number " + str(j) + " generated")
@@ -318,7 +335,7 @@ class HGGLearner_DT:
                     list_of_third_coordinate.append(third_coordinate)
 
                 if args.env == "FetchPush-v1" and args.obstacle is False:
-                    # working here with 2D DT, use sparse reward
+                    # working here with 2D DT, use sparse reward, 100 episode length for simpler tasks
                     phenotype = dt_2.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
                                         dimensions=2,
                                         reward_type="sparse", obstacle_is_on=args.obstacle)
