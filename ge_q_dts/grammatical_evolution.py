@@ -192,8 +192,10 @@ def eaSimple(population, toolbox, cxpb, mutpb, ngen, stats=None,
         print(logbook.stream)
 
     # Begin the generational process
+    done = False
     for gen in range(1, ngen + 1):
-
+        if done is True:
+            break
         # Select the next generation individuals
         offspring = toolbox.select(population, len(population))
 
@@ -230,6 +232,8 @@ def eaSimple(population, toolbox, cxpb, mutpb, ngen, stats=None,
 
         # Append the current generation statistics to the logbook
         record = stats.compile(population) if stats else {}
+        if record['max'] == 1.0:
+            done = True
         logbook.record(gen=gen, nevals=len(invalid_ind), **record)
         if verbose:
             print(logbook.stream)
