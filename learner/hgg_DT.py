@@ -304,7 +304,7 @@ class HGGLearner_DT:
                 # print("Desired goals: ")
                 # print(desired_goals[j])
 
-                if args.obstacle is False or args.env == "FetchSlide-v1":
+                if (args.env == "FetchPush-v1" and args.obstacle is False) or args.env == "FetchSlide-v1":
                     # generate current DT only once for every start-goal pair
                     # working here with 2D DT, use sparse reward
                     phenotype = dt_2.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
