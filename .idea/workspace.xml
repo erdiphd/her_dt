@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="75825a11-a60f-49d4-92a7-fc8efd337172" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/common.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learner/hgg_DT.py" beforeDir="false" afterPath="$PROJECT_DIR$/learner/hgg_DT.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +25,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "/home/vlaffo/Desktop/vlad_thesis/ge_q_dts",
+    "last_opened_file_path": "/home/vlaffo/Desktop/vlad_thesis (copy)",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
