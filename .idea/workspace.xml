@@ -2005,7 +2005,6 @@
       <change beforePath="$PROJECT_DIR$/container/pool_goals_ep_9_cycle8.npy" beforeDir="false" afterPath="$PROJECT_DIR$/container/pool_goals_ep_9_cycle8.npy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/container/pool_goals_ep_9_cycle9.npy" beforeDir="false" afterPath="$PROJECT_DIR$/container/pool_goals_ep_9_cycle9.npy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/learner/hgg_DT.py" beforeDir="false" afterPath="$PROJECT_DIR$/learner/hgg_DT.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -2028,7 +2027,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "/home/vlaffo/Desktop/vlad_thesis (copy)",
+    "last_opened_file_path": "/home/vlaffo/Desktop/vlad_thesis (another copy)",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
