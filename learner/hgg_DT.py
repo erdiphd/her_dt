@@ -336,11 +336,11 @@ class HGGLearner_DT:
 
                 if args.env == "FetchPush-v1" and args.obstacle is False:
                     # working here with 2D DT, use sparse reward, 100 episode length for simpler tasks
-                    # phenotype = dt_2.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
-                    #                     dimensions=2,
-                    #                     reward_type="sparse", obstacle_is_on=args.obstacle)
+                    phenotype = dt_2.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
+                                        dimensions=2,
+                                        reward_type="sparse", obstacle_is_on=args.obstacle)
                     print("Phenotype number " + str(j) + " generated")
-                    # list_of_phenotypes.append(phenotype)
+                    list_of_phenotypes.append(phenotype)
                     list_of_arm.append(upscaled_arm_position)
                     list_of_goal.append(upscaled_goal)
                     list_of_third_coordinate.append(third_coordinate)
@@ -524,7 +524,7 @@ class HGGLearner_DT:
                 # If mean of all Q values is close enough to 0
                 # -> learner feedback is positive. This synchronizes the steps
                 result = abs(args.c - self.clip(mean_q, -1, 0))
-                print("Result: " + str(result))
+                print("Feedback: " + str(result))
 
                 for i in range(args.episodes):
                     obs = self.env_List[i].get_obs()
@@ -659,7 +659,7 @@ class HGGLearner_DT:
                 # If mean of all Q values is close enough to 0
                 # -> learner feedback is positive. This synchronizes the steps
                 result = abs(args.c - self.clip(mean_q, -1, 0))
-                print("Result: " + str(result))
+                print("Feedback: " + str(result))
 
                 for i in range(args.episodes):
                     obs = self.env_List[i].get_obs()
@@ -824,16 +824,13 @@ class HGGLearner_DT:
 
             # calculate mean over all vectors and episodes
             # sum / len(args.episodes) / len(q_vector)
-            if goal_reached_1[0] is True:
-                print("------------------------")
-                print("goal reached")
-                print("------------------------")
+
             mean_q = sum_q_vector_1 / 50 / 51
             print("Mean Q over all episodes: " + str(mean_q))
             # If mean of all Q values is close enough to 0
             # -> learner feedback is positive. This synchronizes the steps
             feedback = abs(args.c - self.clip(mean_q, -1, 0))
-            print("Result: " + str(feedback))
+            print("Feedback: " + str(feedback))
 
             for i in range(args.episodes):
                 obs = self.env_List[i].get_obs()
