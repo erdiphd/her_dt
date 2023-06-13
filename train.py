@@ -40,85 +40,68 @@ if __name__ == '__main__':
             current_arm_position.append(initial_goals[i][2])
             list_of_current_arm_position.append(current_arm_position)
 
-        # list_of_phenotypes_first_part = []
-        # for i in range(args.episodes):
-        #     list_of_phenotypes_first_part.append(""" """)
+        list_of_phenotypes_first_part = []
+        for i in range(args.episodes):
+            list_of_phenotypes_first_part.append(""" """)
 
 
-        # """
-        # 10, 7
-        # 16, 8
-        # or
-        # 10, 8
-        # 16, 8
-        # """
+        for i in [0, 1, 5, 7, 8, 9, 10, 22, 26, 28, 30, 33, 34, 36, 38, 42]:
+            list_of_phenotypes_first_part[i] = """if _in_1 < 9.0:
+    out=1
 
-#         for i in [0, 1, 2, 4, 5, 7, 8, 9, 10, 12, 14, 18, 20, 21, 22, 23, 25, 26, 27, 28, 29, 30, 31, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 44, 45, 47, 48, 49]:
-#             list_of_phenotypes_first_part[i] = """if _in_0 < 16.0:
-#     out=0
-#
-# else:
-#     out=1"""
+else:
+    out=1"""
+        for i in [2, 4, 18, 27, 29, 39, 47, 49]:
+            list_of_phenotypes_first_part[i] = """if _in_0 < 14.0:
+    out=0
 
-        # """
-        # 10, 8
-        # 16, 7
-        # """
+else:
+    out=1"""
 
-#         for i in [3, 6, 11, 13, 15, 16, 17, 19, 24, 32, 43, 46]:
-#             list_of_phenotypes_first_part[i] = """if _in_0 < 16.0:
-#     out=0
-#
-# else:
-#     out=3"""
-#
-#         for i in [3, 6, 13, 15, 24, 46]:
-#             list_of_phenotypes_first_part[i] = """if _in_0 > 13.0:
-#     out=2
-#
-# else:
-#     out=1"""
-#
-#         for i in [11, 17, 20, 35, 40]:
-#             list_of_phenotypes_first_part[i] = """if _in_0 > 14.0:
-#     out=2
-#
-# else:
-#     out=1"""
-#
-#         for i in [12, 14, 21, 25, 31, 37, 41, 44, 45, 48]:
-#             list_of_phenotypes_first_part[i] = """if _in_0 < 15.0:
-#     out=0
-#
-# else:
-#     out=1"""
-#         for i in [16, 32]:
-#             list_of_phenotypes_first_part[i] = """if _in_0 > 13.0:
-#     out=2
-#
-# else:
-#     out=1"""
-#         for i in [19, 43]:
-#             list_of_phenotypes_first_part[i] = """if _in_0 > 12.0:
-#     out=2
-#
-# else:
-#     out=1"""
-#
-#         for i in [23]:
-#             list_of_phenotypes_first_part[i] = """if _in_0 < 15.0:
-#     out=0
-#
-# else:
-#     out=1"""
+        for i in [3, 6, 13, 15, 24, 46]:
+            list_of_phenotypes_first_part[i] = """if _in_0 > 13.0:
+    out=2
 
-        # list_of_phenotypes = list_of_phenotypes_first_part
+else:
+    out=1"""
+
+        for i in [11, 17, 20, 35, 40]:
+            list_of_phenotypes_first_part[i] = """if _in_0 > 14.0:
+    out=2
+
+else:
+    out=1"""
+
+        for i in [12, 14, 21, 25, 31, 37, 41, 44, 45, 48]:
+            list_of_phenotypes_first_part[i] = """if _in_0 < 15.0:
+    out=0
+
+else:
+    out=1"""
+        for i in [16, 32]:
+            list_of_phenotypes_first_part[i] = """if _in_0 > 13.0:
+    out=2
+
+else:
+    out=1"""
+        for i in [19, 43]:
+            list_of_phenotypes_first_part[i] = """if _in_0 > 12.0:
+    out=2
+
+else:
+    out=1"""
+
+        for i in [23]:
+            list_of_phenotypes_first_part[i] = """if _in_0 < 15.0:
+    out=0
+
+else:
+    out=1"""
+
+        list_of_phenotypes = list_of_phenotypes_first_part
 
 
-#         """
-#         14, 6
-#         14, 9
-#         """
+
 #         pos_1 = [0, 1, 5, 7, 8, 9, 10, 22, 26, 28, 30, 33, 34, 36, 38, 42]
 #         target_1 = """if _in_1 < 9.0:
 #     out=1

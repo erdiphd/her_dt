@@ -55,16 +55,30 @@ xdata = 200 * np.arange(100)
 
 neural_network_option = 'compare_nn'
 
-file_list = [ "/home/vlaffo/Desktop/ddpg-FetchPush-v1-hgg_dt.log",
+# HGG_DT
+file_list = [ "/home/vlaffo/Desktop/thesis results/FetchPickAndPlace/HGG-DT/ddpg-FetchPickAndPlace-v1-hgg_dt-(2023-06-12-22 10 09).log",
+
+"/home/vlaffo/Desktop/thesis results/FetchPickAndPlace/HGG-DT/ddpg-FetchPickAndPlace-v1-hgg_dt-(2023-06-12-23:33:57).log",
+
+ "/home/vlaffo/Desktop/thesis results/FetchPickAndPlace/HGG-DT/ddpg-FetchPickAndPlace-v1-hgg_dt-(2023-06-12-23:34:07).log",
+
+ "/home/vlaffo/Desktop/thesis results/FetchPickAndPlace/HGG-DT/ddpg-FetchPickAndPlace-v1-hgg_dt-(2023-06-12-23:34:17).log",
+
+ "/home/vlaffo/Desktop/thesis results/FetchPickAndPlace/HGG-DT/ddpg-FetchPickAndPlace-v1-hgg_dt-(2023-06-12-23:34:36).log",
               ]
 plot_graphs(file_list, 'red')
 
+# HGG
+file_list = [ "/home/vlaffo/Desktop/thesis results/FetchPickAndPlace/HGG/ddpg-FetchPickAndPlace-v1-hgg.log",
+ "/home/vlaffo/Desktop/thesis results/FetchPickAndPlace/HGG/ddpg-FetchPickAndPlace-v1-hgg-(2023-06-10-21 11 59).log",
 
-file_list = [ 
-             "/home/vlaffo/Desktop/ddpg-FetchPush-v1-hgg.log",
-              ]
+ "/home/vlaffo/Desktop/thesis results/FetchPickAndPlace/HGG/ddpg-FetchPickAndPlace-v1-hgg-(2023-06-10-21 12 15).log",
+
+"/home/vlaffo/Desktop/thesis results/FetchPickAndPlace/HGG/ddpg-FetchPickAndPlace-v1-hgg-(2023-06-10-21 12 24).log",
+
+ "/home/vlaffo/Desktop/thesis results/FetchPickAndPlace/HGG/ddpg-FetchPickAndPlace-v1-hgg-(2023-06-10-21 12 31).log",
+            ]
 plot_graphs(file_list, 'blue')
-
 
 
 sns.tsplot(time=xdata, data=np.ones(len(xdata)), color="b", linestyle="-")

@@ -336,11 +336,11 @@ class HGGLearner_DT:
 
                 if args.env == "FetchPush-v1" and args.obstacle is False:
                     # working here with 2D DT, use sparse reward, 100 episode length for simpler tasks
-                    phenotype = dt_2.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
-                                        dimensions=2,
-                                        reward_type="sparse", obstacle_is_on=args.obstacle)
+                    # phenotype = dt_2.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
+                    #                     dimensions=2,
+                    #                     reward_type="sparse", obstacle_is_on=args.obstacle)
                     print("Phenotype number " + str(j) + " generated")
-                    list_of_phenotypes.append(phenotype)
+                    # list_of_phenotypes.append(phenotype)
                     list_of_arm.append(upscaled_arm_position)
                     list_of_goal.append(upscaled_goal)
                     list_of_third_coordinate.append(third_coordinate)
@@ -573,10 +573,7 @@ class HGGLearner_DT:
                         # print(intermediate_goal_2_after_clip)
                         if np.array_equal(intermediate_goal_2_before_clip, intermediate_goal_2_after_clip) is False:
                             # this means that intermediate_goal_2 went too far and was clipped -> use only intermediate_goal_1
-                            # CAREFUL: While testing with 1 DT this "if" can be triggered if wrong action is executed
-                            # => clipping => inter_1 == inter_2 => average is getting left behind
                             intermediate_goal_2 = intermediate_goal_1.copy()
-
                         intermediate_goal = (intermediate_goal_1.copy() + intermediate_goal_2.copy()) / 2
                         # print("Inter 1: ")
                         # print(intermediate_goal_1)
@@ -642,7 +639,7 @@ class HGGLearner_DT:
 
                     # check point so the intermediate goal won't run away from the desired goal
                     if np.array_equal(tmp_goal, np.clip(tmp_arm, [0, 0, 0], tmp_goal)):
-                        goal_reached = True
+                        goal_reached_1[i] = True
                 sum_q_vector_1 = 0
                 # check if at least one mean_q is small enough. feedback_positive is set here
                 for i in range(args.episodes):
@@ -687,13 +684,13 @@ class HGGLearner_DT:
                         tmp_goal.append(current_goal[j])
 
                     # check point so the intermediate goal won't run away from the desired goal
-                    if goal_reached is True:
+                    if goal_reached_1[i] is True:
                         # Clipping because of dynamic goals
                         # print("goal reached")
                         list_of_current_arm_position[i] = np.clip(list_of_current_arm_position[i].copy(), [0, 0, 0],
                                                                   tmp_goal)
                         intermediate_goal = np.array(list_of_current_arm_position[i].copy())
-                    if goal_reached is False:
+                    if goal_reached_1[i] is False:
                         # pass dt and current arm position to get next intermediate goal
                         # return 1 intermediate goal for every start-goal pair
                         intermediate_goal_1 = np.array(self.get_intermediate_goal(args, list_of_phenotypes[i],
@@ -714,10 +711,7 @@ class HGGLearner_DT:
                         # print(intermediate_goal_2_after_clip)
                         if np.array_equal(intermediate_goal_2_before_clip, intermediate_goal_2_after_clip) is False:
                             # this means that intermediate_goal_2 went too far and was clipped -> use only intermediate_goal_1
-                            # CAREFUL: While testing with 1 DT this "if" can be triggered if wrong action is executed
-                            # => clipping => inter_1 == inter_2 => average is getting left behind
                             intermediate_goal_2 = intermediate_goal_1.copy()
-
                         intermediate_goal = (intermediate_goal_1.copy() + intermediate_goal_2.copy()) / 2
                         # print("Inter 1: ")
                         # print(intermediate_goal_1)
@@ -728,7 +722,7 @@ class HGGLearner_DT:
                         # Clipping because of dynamic goals
                         intermediate_goal = np.clip(intermediate_goal, [0, 0, 0], tmp_goal)
 
-                        # write the intermediate goal
+                    # write the intermediate goal
                     self.env_List[i].goal = np.array(intermediate_goal.copy())
                     # make the intermediate goal move
                     list_of_current_arm_position[i] = np.array(intermediate_goal.copy())
