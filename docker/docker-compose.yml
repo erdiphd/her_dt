@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  her_dt:
+    image: erditmp/her_dt:latest
+    volumes:
+    - ../:/home/user/her_dt
+    environment:
+      tag: "her_result1"
+      learn: "normal"
+      env: "FetchPickAndPlace-v1"
+      goal: "interval"
+      epochs: 20
+      cycles: 20
+      episodes: 50
+      obstacle: None
+      forced_hgg_dt_step_size: False
