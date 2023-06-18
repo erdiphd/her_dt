@@ -40,17 +40,19 @@ if __name__ == '__main__':
             current_arm_position.append(initial_goals[i][2])
             list_of_current_arm_position.append(current_arm_position)
 
-#         list_of_phenotypes_first_part = []
-#         for i in range(args.episodes):
-#             list_of_phenotypes_first_part.append(""" """)
-#
-#
+        # list_of_phenotypes_first_part = []
+        # for i in range(args.episodes):
+        #     list_of_phenotypes_first_part.append(""" """)
+        #
+# #
+# #
 #         for i in [0, 1, 5, 7, 8, 9, 10, 22, 26, 28, 30, 33, 34, 36, 38, 42]:
 #             list_of_phenotypes_first_part[i] = """if _in_1 < 9.0:
 #     out=1
 #
 # else:
 #     out=1"""
+#
 #         for i in [2, 4, 18, 27, 29, 39, 47, 49]:
 #             list_of_phenotypes_first_part[i] = """if _in_0 < 14.0:
 #     out=0
@@ -79,11 +81,45 @@ if __name__ == '__main__':
 # else:
 #     out=1"""
 #         for i in [16, 32]:
-#             list_of_phenotypes_first_part[i] = """if _in_0 > 13.0:
-#     out=2
+#             list_of_phenotypes_first_part[i] = """if _in_1 < 9.0:
+#     if _in_1 > 11.0:
+#         if _in_1 > 15.0:
+#             out=3
+#
+#         else:
+#             out=0
+#
+#
+#     else:
+#         if _in_0 > 14.0:
+#             out=1
+#
+#         else:
+#             out=0
+#
+#
 #
 # else:
-#     out=1"""
+#     if _in_0 < 1.0:
+#         if _in_1 > 19.0:
+#             out=0
+#
+#         else:
+#             if _in_1 < 4.0:
+#                 out=0
+#
+#             else:
+#                 if _in_0 < 10.0:
+#                     out=3
+#
+#                 else:
+#                     out=0
+#
+#
+#
+#
+#     else:
+#         out=2"""
 #         for i in [19, 43]:
 #             list_of_phenotypes_first_part[i] = """if _in_0 > 12.0:
 #     out=2
@@ -225,6 +261,7 @@ if __name__ == '__main__':
         [1.5, 0.9, 0.4]
         """
         args.logger.summary_setup()
+        all_intermediate_goals = []
 
         for epoch in range(args.epochs):
             for cycle in range(args.cycles):
@@ -233,13 +270,10 @@ if __name__ == '__main__':
                 start_time = time.time()
 
                 # learner.learn(args, env, env_test, agent, buffer)
-                list_of_current_arm_position = learner.learn(args, env, env_test, agent, buffer,
-                                                                                   list_of_phenotypes, list_of_arm,
-                                                                                   list_of_goal,
-                                                                                   list_of_third_coordinate,
-                                                                                   list_of_current_arm_position,
-                                                                                   list_of_goal_first_part,
-                                                                                   list_of_arm_first_part, list_of_phenotypes_first_part, list_of_arm_second_part, list_of_goal_second_part, list_of_phenotypes_second_part)
+                all_intermediate_goals = learner.learn(args, env, env_test, agent, buffer,
+                list_of_phenotypes, list_of_arm,list_of_goal,list_of_third_coordinate,list_of_current_arm_position,
+                list_of_goal_first_part,list_of_arm_first_part, list_of_phenotypes_first_part, list_of_arm_second_part,
+                list_of_goal_second_part, list_of_phenotypes_second_part, all_intermediate_goals, cycle)
 
                 tester.cycle_summary()
 
@@ -249,7 +283,7 @@ if __name__ == '__main__':
                 np.save('container/desired_goals_ep_' + str(epoch) + '_cycle' + str(cycle) + '.npy',
                         learner.desired_goals_tmp)
                 np.save('container/pool_goals_ep_' + str(epoch) + '_cycle' + str(cycle) + '.npy',
-                        list_of_current_arm_position)
+                        learner.sampler.pool)
                 np.save('container/achieved_trajectories_' + str(epoch) + '_cycle' + str(cycle) + '.npy',
                         learner.achieved_trajectories_by_robot)
                 np.save('container/achieved_init_states_' + str(epoch) + '_cycle' + str(cycle) + '.npy',

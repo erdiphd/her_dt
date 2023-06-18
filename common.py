@@ -16,7 +16,7 @@ def get_args():
     parser.add_argument('--learn', help='type of training method', type=str, default='hgg_dt',
                         choices=learner_collection.keys())
 
-    parser.add_argument('--env', help='gym env id', type=str, default='FetchPush-v1', choices=Robotics_envs_id)
+    parser.add_argument('--env', help='gym env id', type=str, default='FetchPickAndPlace-v1', choices=Robotics_envs_id)
     args, _ = parser.parse_known_args()
     if args.env == 'HandReach-v0':
         parser.add_argument('--goal', help='method of goal generation', type=str, default='reach',
@@ -68,7 +68,7 @@ def get_args():
                         default=None)
     parser.add_argument('--c', help='c parameter to measure success basing on Q function', type=np.float32, default=-1)
     parser.add_argument('--obstacle', help='turn on obstacle for HGG_DT, only for FetchPush', type=str2bool,
-                        default=False)
+                        default=True)
     parser.add_argument('--save_acc', help='save successful rate', type=str2bool, default=True)
 
     args = parser.parse_args()

@@ -45,7 +45,7 @@ parser.add_argument("--df", default=0.9, type=float, help="The discount factor u
 parser.add_argument("--eps", default=0.05, type=float, help="Epsilon parameter for the epsilon greedy Q-learning")
 parser.add_argument("--input_space", default=2, type=int, help="Number of inputs given to the agent")
 parser.add_argument("--episodes", default=50, type=int, help="Number of episodes that the agent faces in the fitness evaluation phase")
-parser.add_argument("--episode_len", default=100, type=int, help="The max length of an episode in timesteps")
+parser.add_argument("--episode_len", default=300, type=int, help="The max length of an episode in timesteps")
 parser.add_argument("--lambda_", default=50, type=int, help="Population size")
 parser.add_argument("--generations", default=200, type=int, help="Number of generations")
 parser.add_argument("--cxp", default=0.5, type=float, help="Crossover probability")
@@ -63,7 +63,7 @@ parser.add_argument("--types", default="#0,20,1,1;0,20,1,1", type=str, help="Thi
 # Setup of the logging
 
 date = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-logdir = "ge_q_dts/logs/gym/{}_{}".format(date, "".join(np.random.choice(list(string.ascii_lowercase), size=8)))
+logdir = "ge_q_dts/logs/gym/{}_{}".format(date, "".join(np.random.choice(list(string.ascii_lowercase), size=11)))
 logfile = os.path.join(logdir, "log.txt")
 os.makedirs(logdir)
 
