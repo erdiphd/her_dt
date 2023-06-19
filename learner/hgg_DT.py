@@ -206,7 +206,7 @@ class HGGLearner_DT:
 
         return self.exec_with_return("def func(): \n" + phenotype + "    return out \nfunc()", variables)
 
-    def get_intermediate_goal(self, args, phenotype, current_arm_position, third_coordinate, feedback, going_up):
+    def get_intermediate_goal(self, args, phenotype, current_arm_position, third_coordinate, feedback):
 
         # compute intermediate goal
 
@@ -584,11 +584,6 @@ class HGGLearner_DT:
                     tmp_goal = []
                     for j in range(len(current_goal)):
                         tmp_goal.append(current_goal[j])
-                    going_up = False
-                    if cycle > 1:
-                        if (all_intermediate_goals[(cycle - 1) * args.episodes + i].copy() >= all_intermediate_goals[
-                            (cycle - 2) * args.episodes + i].copy()).all():
-                            going_up = True
 
                     # check point so the intermediate goal won't run away from the desired goal
                     if goal_reached_1[i] is True:
@@ -602,10 +597,10 @@ class HGGLearner_DT:
                         intermediate_goal_1 = np.array(self.get_intermediate_goal(args, list_of_phenotypes[i],
                                                                                   list_of_current_arm_position[i].copy(),
                                                                                   list_of_third_coordinate[i].copy(),
-                                                                                  1 - result, going_up))
+                                                                                  1 - result))
                         intermediate_goal_2 = np.array(self.get_intermediate_goal(args, list_of_phenotypes[i],
                                                                                   intermediate_goal_1.copy(),
-                                                                                  list_of_third_coordinate[i].copy(), result, going_up))
+                                                                                  list_of_third_coordinate[i].copy(), result))
                         intermediate_goal_2_before_clip = intermediate_goal_2.copy()
                         # print("Before clip: ")
                         # print(intermediate_goal_2_before_clip)
@@ -724,11 +719,6 @@ class HGGLearner_DT:
                     tmp_goal = []
                     for j in range(len(current_goal)):
                         tmp_goal.append(current_goal[j])
-                    going_up = False
-                    if cycle > 1:
-                        if (all_intermediate_goals[(cycle - 1) * args.episodes + i].copy() >= all_intermediate_goals[
-                            (cycle - 2) * args.episodes + i].copy()).all():
-                            going_up = True
 
                     # check point so the intermediate goal won't run away from the desired goal
                     if goal_reached_1[i] is True:
@@ -744,11 +734,11 @@ class HGGLearner_DT:
                                                                                   list_of_current_arm_position[
                                                                                       i].copy(),
                                                                                   list_of_third_coordinate[i].copy(),
-                                                                                  1 - result, going_up))
+                                                                                  1 - result))
                         intermediate_goal_2 = np.array(self.get_intermediate_goal(args, list_of_phenotypes[i],
                                                                                   intermediate_goal_1.copy(),
                                                                                   list_of_third_coordinate[i].copy(),
-                                                                                  result, going_up))
+                                                                                  result))
                         intermediate_goal_2_before_clip = intermediate_goal_2.copy()
                         # print("Before clip: ")
                         # print(intermediate_goal_2_before_clip)
@@ -914,10 +904,6 @@ class HGGLearner_DT:
                 # print(all_intermediate_goals)
                 # print("cycle: ")
                 # print(cycle)
-                going_up = False
-                if cycle > 1:
-                    if (all_intermediate_goals[(cycle-1)*args.episodes+i].copy() >= all_intermediate_goals[(cycle-2)*args.episodes+i].copy()).all():
-                        going_up = True
 
                 if goal_reached_1[i] is False:
                     # check for xy is done -> only phenotypes first part
@@ -927,7 +913,7 @@ class HGGLearner_DT:
                         intermediate_goal_1 = np.array(self.get_intermediate_goal(args, list_of_phenotypes_first_part[i],
                                                                                   list_of_current_arm_position[i].copy(),
                                                                                   list_of_third_coordinate[i],
-                                                                                  1 - feedback, going_up))
+                                                                                  1 - feedback))
                         # print("-----------------------------------------")
                         # print("current inter: " + str(i))
                         # print("intermediate goal 1: ")
@@ -935,7 +921,7 @@ class HGGLearner_DT:
                         intermediate_goal_2 = np.array(self.get_intermediate_goal(args, list_of_phenotypes_first_part[i],
                                                                                   intermediate_goal_1.copy(),
                                                                                   list_of_third_coordinate[i],
-                                                                                  feedback, going_up))
+                                                                                  feedback))
                         # print("intermediate goal 2 before clip: ")
                         # print(intermediate_goal_2)
                         # fill list_for_clip using first part
@@ -996,11 +982,11 @@ class HGGLearner_DT:
                         intermediate_goal_1 = np.array(self.get_intermediate_goal(args, list_of_phenotypes_second_part[i],
                                                                                   list_of_current_arm_position[i].copy(),
                                                                                   list_of_third_coordinate[i],
-                                                                                  1 - feedback, going_up))
+                                                                                  1 - feedback))
                         intermediate_goal_2 = np.array(self.get_intermediate_goal(args, list_of_phenotypes_second_part[i],
                                                                                   intermediate_goal_1.copy(),
                                                                                   list_of_third_coordinate[i],
-                                                                                  feedback, going_up))
+                                                                                  feedback))
                         intermediate_goal_2_before_clip = intermediate_goal_2.copy()
                         # print("intermediate goal 2 before clip: ")
                         # print(intermediate_goal_2)
