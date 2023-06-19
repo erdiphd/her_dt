@@ -468,7 +468,7 @@ class HGGLearner_DT:
     def learn(self, args, env, env_test, agent, buffer, list_of_phenotypes, list_of_arm, list_of_goal,
               list_of_third_coordinate, list_of_current_arm_position, list_of_goal_first_part, list_of_arm_first_part,
               list_of_phenotypes_first_part, list_of_arm_second_part, list_of_goal_second_part, list_of_phenotypes_second_part,
-              all_intermediate_goals, cycle):
+              cycle):
         initial_goals = []
         desired_goals = []
         for i in range(args.episodes):
@@ -1031,7 +1031,6 @@ class HGGLearner_DT:
                 self.env_List[i].goal = np.array(intermediate_goal.copy())
                 # make the intermediate goal move
                 list_of_current_arm_position[i] = np.array(intermediate_goal.copy())
-                all_intermediate_goals.append(intermediate_goal.copy())
 
                 # print("Upscaled arm position: ")
                 # print(list_of_current_arm_position[i])
@@ -1078,4 +1077,4 @@ class HGGLearner_DT:
         for idx in selection_trajectory_idx.keys():
             self.achieved_trajectory_pool.insert(achieved_trajectories[idx].copy(), achieved_init_states[idx].copy())
 
-        return all_intermediate_goals
+        return list_of_current_arm_position

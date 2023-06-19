@@ -40,12 +40,10 @@ if __name__ == '__main__':
             current_arm_position.append(initial_goals[i][2])
             list_of_current_arm_position.append(current_arm_position)
 
-        # list_of_phenotypes_first_part = []
-        # for i in range(args.episodes):
-        #     list_of_phenotypes_first_part.append(""" """)
-        #
-# #
-# #
+#         list_of_phenotypes_first_part = []
+#         for i in range(args.episodes):
+#             list_of_phenotypes_first_part.append(""" """)
+#
 #         for i in [0, 1, 5, 7, 8, 9, 10, 22, 26, 28, 30, 33, 34, 36, 38, 42]:
 #             list_of_phenotypes_first_part[i] = """if _in_1 < 9.0:
 #     out=1
@@ -261,7 +259,6 @@ if __name__ == '__main__':
         [1.5, 0.9, 0.4]
         """
         args.logger.summary_setup()
-        all_intermediate_goals = []
 
         for epoch in range(args.epochs):
             for cycle in range(args.cycles):
@@ -270,10 +267,10 @@ if __name__ == '__main__':
                 start_time = time.time()
 
                 # learner.learn(args, env, env_test, agent, buffer)
-                all_intermediate_goals = learner.learn(args, env, env_test, agent, buffer,
+                list_of_current_arm_position = learner.learn(args, env, env_test, agent, buffer,
                 list_of_phenotypes, list_of_arm,list_of_goal,list_of_third_coordinate,list_of_current_arm_position,
                 list_of_goal_first_part,list_of_arm_first_part, list_of_phenotypes_first_part, list_of_arm_second_part,
-                list_of_goal_second_part, list_of_phenotypes_second_part, all_intermediate_goals, cycle)
+                list_of_goal_second_part, list_of_phenotypes_second_part, cycle)
 
                 tester.cycle_summary()
 
