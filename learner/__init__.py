@@ -5,7 +5,7 @@ from .hgg_DT import HGGLearner_DT
 
 learner_collection = {
 	'normal': NormalLearner,
-	'hgg_dt': HGGLearner_DT,
+	'dt-her': HGGLearner_DT,
 	'hgg': HGGLearner,
 }
 

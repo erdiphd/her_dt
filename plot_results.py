@@ -50,56 +50,56 @@ def plot_graphs(file_list, color='r'):
     legend_list.append(label_text)
 
 
-robotic_task = 'FetchPush'
+robotic_task = 'FetchSlide'
 xdata = 200 * np.arange(100)
 
 neural_network_option = 'compare_nn'
 
 # HGG_DT
-file_list = [ "/home/vlaffo/Desktop/thesis results/FetchPush/HGG-DT/ddpg-FetchPush-v1-hgg_dt-0.01 step.log",
+file_list = [ "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPickAndPlace/ddpg-FetchPickAndPlace-v1-hgg_dt-(2023-06-15-13:21:10).log",
 
-"/home/vlaffo/Desktop/thesis results/FetchPush/HGG-DT/ddpg-FetchPush-v1-hgg_dt-(2023-06-13-16:38:50).log",
+"/home/vlaffo/Desktop/thesis results/obstacle test/FetchPickAndPlace/ddpg-FetchPickAndPlace-v1-hgg_dt-(2023-06-17-15:46:04).log",
 
- "/home/vlaffo/Desktop/thesis results/FetchPush/HGG-DT/ddpg-FetchPush-v1-hgg_dt-(2023-06-13-16:39:09).log",
+ "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPickAndPlace/ddpg-FetchPickAndPlace-v1-hgg_dt-(2023-06-18-20:12:05).log",
 
- "/home/vlaffo/Desktop/thesis results/FetchPush/HGG-DT/ddpg-FetchPush-v1-hgg_dt-(2023-06-13-16:39:19).log",
+ # "/home/vlaffo/Desktop/thesis results/obstacle test/FetchSlide/ddpg-FetchSlide-v1-hgg_dt-(2023-06-19-18:35:31).log",
 
- "/home/vlaffo/Desktop/thesis results/FetchPush/HGG-DT/ddpg-FetchPush-v1-hgg_dt-(2023-06-13-16:39:23).log",
+ # "/home/vlaffo/Desktop/thesis results/obstacle test/FetchSlide/HGG-DT/ddpg-FetchPush-v1-hgg_dt-obstacle.log",
               ]
 plot_graphs(file_list, 'red')
 
 # HGG
-file_list = [ "/home/vlaffo/Desktop/thesis results/FetchPush/HGG/ddpg-FetchPush-v1-hgg.log",
- "/home/vlaffo/Desktop/thesis results/FetchPush/HGG/ddpg-FetchPush-v1-hgg-(2023-06-10-22:50:59).log",
-
- "/home/vlaffo/Desktop/thesis results/FetchPush/HGG/ddpg-FetchPush-v1-hgg-(2023-06-10-22:51:06).log",
-
-"/home/vlaffo/Desktop/thesis results/FetchPush/HGG/ddpg-FetchPush-v1-hgg-(2023-06-10-22:51:12).log",
-
- "/home/vlaffo/Desktop/thesis results/FetchPush/HGG/ddpg-FetchPush-v1-hgg-(2023-06-10-22:51:20).log",
-            ]
-plot_graphs(file_list, 'blue')
-
-# HER
-file_list = [ "/home/vlaffo/Desktop/thesis results/FetchPush/HER/ddpg-FetchPush-v1-normal-(2023-06-16-18 02 27).log",
- "/home/vlaffo/Desktop/thesis results/FetchPush/HER/ddpg-FetchPush-v1-normal-(2023-06-16-18 02 33).log",
-
- "/home/vlaffo/Desktop/thesis results/FetchPush/HER/ddpg-FetchPush-v1-normal-(2023-06-16-18 02 36).log",
-
-"/home/vlaffo/Desktop/thesis results/FetchPush/HER/ddpg-FetchPush-v1-normal-(2023-06-16-18 02 37).log",
-
- "/home/vlaffo/Desktop/thesis results/FetchPush/HER/ddpg-FetchPush-v1-normal-(2023-06-16-18 02 40).log",
-            ]
-plot_graphs(file_list, 'green')
+# file_list = [ "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HGG/ddpg-FetchPush-v1-hgg-(2023-06-14-11:38:56).log",
+#  "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HGG/ddpg-FetchPush-v1-hgg-(2023-06-14-11:39:14).log",
+#
+#  "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HGG/ddpg-FetchPush-v1-hgg-(2023-06-14-11:39:34).log",
+#
+# "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HGG/ddpg-FetchPush-v1-hgg-(2023-06-14-11:39:46).log",
+#
+#  "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HGG/ddpg-FetchPush-v1-hgg-obstacle.log",
+#             ]
+# plot_graphs(file_list, 'blue')
+#
+# # HER
+# file_list = [ "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HER/ddpg-FetchPush-v1-normal-(2023-06-14-16 41 19).log",
+#  "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HER/ddpg-FetchPush-v1-normal-(2023-06-14-16 52 43).log",
+#
+#  "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HER/ddpg-FetchPush-v1-normal-(2023-06-14-16 52 45).log",
+#
+# "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HER/ddpg-FetchPush-v1-normal-(2023-06-14-16 52 49).log",
+#
+#  "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HER/ddpg-FetchPush-v1-normal-(2023-06-14-16 52 56).log",
+#             ]
+# plot_graphs(file_list, 'green')
 
 
 sns.tsplot(time=xdata, data=np.ones(len(xdata)), color="b", linestyle="-")
 
 plt.ylabel("Success Rate", fontsize=15)
 plt.xlabel("Episode ", fontsize=15, labelpad=4)
-plt.title('FetchPush', fontsize=16)
+plt.title('FetchPickAndPlace + obstacle', fontsize=16)
 
-plt.legend(labels=["HGG_DT", "HGG", "HER"],
+plt.legend(labels=["DT-HER"],
            loc='lower left', )
 # plt.legend(labels=legend_list)
 plt.show()
