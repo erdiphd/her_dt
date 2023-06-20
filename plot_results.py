@@ -14,10 +14,10 @@ def plot_graphs(file_list, color='r'):
         logs = open(file_list[file_number])
         logs.seek(0)
         log_file = logs.read()
-        # if file_list[0] == "/home/vlaffo/Desktop/ddpg-FetchPush-v1-hgg_dt-obstacle.log":
-        success_rates = [(m.start(0), m.end(0)) for m in re.finditer('Success/interval', log_file)]
-        # else:
-        #     success_rates = [(m.start(0), m.end(0)) for m in re.finditer('Success/obstacle', log_file)]
+        if file_list[0] == "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HGG/ddpg-FetchPush-v1-hgg-(2023-06-14-11:38:56).log" or file_list[0] == "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HER/ddpg-FetchPush-v1-normal-(2023-06-14-16 41 19).log":
+            success_rates = [(m.start(0), m.end(0)) for m in re.finditer('Success/obstacle', log_file)]
+        else:
+            success_rates = [(m.start(0), m.end(0)) for m in re.finditer('Success/interval', log_file)]
 
         # print(success_rates)
 
@@ -56,37 +56,50 @@ xdata = 200 * np.arange(100)
 neural_network_option = 'compare_nn'
 
 # HGG_DT
-file_list = [ "/home/vlaffo/Desktop/thesis results/FetchPickAndPlace/HGG-DT/ddpg-FetchPickAndPlace-v1-hgg_dt-(2023-06-12-22 10 09).log",
+file_list = [ "/home/vlaffo/Desktop/thesis results/FetchPush/HGG-DT/ddpg-FetchPush-v1-hgg_dt-0.01 step.log",
 
-"/home/vlaffo/Desktop/thesis results/FetchPickAndPlace/HGG-DT/ddpg-FetchPickAndPlace-v1-hgg_dt-(2023-06-12-23:33:57).log",
+"/home/vlaffo/Desktop/thesis results/FetchPush/HGG-DT/ddpg-FetchPush-v1-hgg_dt-(2023-06-13-16:38:50).log",
 
- "/home/vlaffo/Desktop/thesis results/FetchPickAndPlace/HGG-DT/ddpg-FetchPickAndPlace-v1-hgg_dt-(2023-06-12-23:34:07).log",
+ "/home/vlaffo/Desktop/thesis results/FetchPush/HGG-DT/ddpg-FetchPush-v1-hgg_dt-(2023-06-13-16:39:09).log",
 
- "/home/vlaffo/Desktop/thesis results/FetchPickAndPlace/HGG-DT/ddpg-FetchPickAndPlace-v1-hgg_dt-(2023-06-12-23:34:17).log",
+ "/home/vlaffo/Desktop/thesis results/FetchPush/HGG-DT/ddpg-FetchPush-v1-hgg_dt-(2023-06-13-16:39:19).log",
 
- "/home/vlaffo/Desktop/thesis results/FetchPickAndPlace/HGG-DT/ddpg-FetchPickAndPlace-v1-hgg_dt-(2023-06-12-23:34:36).log",
+ "/home/vlaffo/Desktop/thesis results/FetchPush/HGG-DT/ddpg-FetchPush-v1-hgg_dt-(2023-06-13-16:39:23).log",
               ]
 plot_graphs(file_list, 'red')
 
 # HGG
-file_list = [ "/home/vlaffo/Desktop/thesis results/FetchPickAndPlace/HGG/ddpg-FetchPickAndPlace-v1-hgg.log",
- "/home/vlaffo/Desktop/thesis results/FetchPickAndPlace/HGG/ddpg-FetchPickAndPlace-v1-hgg-(2023-06-10-21 11 59).log",
+file_list = [ "/home/vlaffo/Desktop/thesis results/FetchPush/HGG/ddpg-FetchPush-v1-hgg.log",
+ "/home/vlaffo/Desktop/thesis results/FetchPush/HGG/ddpg-FetchPush-v1-hgg-(2023-06-10-22:50:59).log",
 
- "/home/vlaffo/Desktop/thesis results/FetchPickAndPlace/HGG/ddpg-FetchPickAndPlace-v1-hgg-(2023-06-10-21 12 15).log",
+ "/home/vlaffo/Desktop/thesis results/FetchPush/HGG/ddpg-FetchPush-v1-hgg-(2023-06-10-22:51:06).log",
 
-"/home/vlaffo/Desktop/thesis results/FetchPickAndPlace/HGG/ddpg-FetchPickAndPlace-v1-hgg-(2023-06-10-21 12 24).log",
+"/home/vlaffo/Desktop/thesis results/FetchPush/HGG/ddpg-FetchPush-v1-hgg-(2023-06-10-22:51:12).log",
 
- "/home/vlaffo/Desktop/thesis results/FetchPickAndPlace/HGG/ddpg-FetchPickAndPlace-v1-hgg-(2023-06-10-21 12 31).log",
+ "/home/vlaffo/Desktop/thesis results/FetchPush/HGG/ddpg-FetchPush-v1-hgg-(2023-06-10-22:51:20).log",
             ]
 plot_graphs(file_list, 'blue')
+
+# HER
+file_list = [ "/home/vlaffo/Desktop/thesis results/FetchPush/HER/ddpg-FetchPush-v1-normal-(2023-06-16-18 02 27).log",
+ "/home/vlaffo/Desktop/thesis results/FetchPush/HER/ddpg-FetchPush-v1-normal-(2023-06-16-18 02 33).log",
+
+ "/home/vlaffo/Desktop/thesis results/FetchPush/HER/ddpg-FetchPush-v1-normal-(2023-06-16-18 02 36).log",
+
+"/home/vlaffo/Desktop/thesis results/FetchPush/HER/ddpg-FetchPush-v1-normal-(2023-06-16-18 02 37).log",
+
+ "/home/vlaffo/Desktop/thesis results/FetchPush/HER/ddpg-FetchPush-v1-normal-(2023-06-16-18 02 40).log",
+            ]
+plot_graphs(file_list, 'green')
 
 
 sns.tsplot(time=xdata, data=np.ones(len(xdata)), color="b", linestyle="-")
 
 plt.ylabel("Success Rate", fontsize=15)
 plt.xlabel("Episode ", fontsize=15, labelpad=4)
+plt.title('FetchPush', fontsize=16)
 
-plt.legend(labels=["HGG_DT","HGG"],
+plt.legend(labels=["HGG_DT", "HGG", "HER"],
            loc='lower left', )
 # plt.legend(labels=legend_list)
 plt.show()
