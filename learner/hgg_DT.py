@@ -324,12 +324,12 @@ class HGGLearner_DT:
                 # print(upscaled_goal)
 
                 if args.env == "FetchSlide-v1":
-                    if args.obstacle is False:
+                    if args.goal != "obstacle":
                         # generate current DT only once for every start-goal pair
                         # working here with 2D DT, use sparse reward, 200 episode length for complex tasks
                         phenotype = dt_4.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
                                             dimensions=2,
-                                            reward_type="sparse", obstacle_is_on=args.obstacle)
+                                            reward_type="sparse", obstacle_is_on=False)
                         print("Phenotype number " + str(j) + " generated")
                         list_of_phenotypes.append(phenotype)
                         list_of_arm.append(upscaled_arm_position)
@@ -342,14 +342,14 @@ class HGGLearner_DT:
                         # => Use 200 episode length with dense reward
                         phenotype = dt_4.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
                                             dimensions=2,
-                                            reward_type="dense", obstacle_is_on=args.obstacle)
+                                            reward_type="dense", obstacle_is_on=True)
                         print("Phenotype number " + str(j) + " generated")
                         list_of_phenotypes.append(phenotype)
                         list_of_arm.append(upscaled_arm_position)
                         list_of_goal.append(upscaled_goal)
                         list_of_third_coordinate.append(third_coordinate)
 
-                if args.env == "FetchPush-v1" and args.obstacle is False:
+                if args.env == "FetchPush-v1" and args.goal != "obstacle":
                     # working here with 2D DT, 100 episode length for simpler tasks
                     # some desired goals require dense
                     reward_type = "sparse"
@@ -357,18 +357,18 @@ class HGGLearner_DT:
                         reward_type = "dense"
                     phenotype = dt_2.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
                                         dimensions=2,
-                                        reward_type=reward_type, obstacle_is_on=args.obstacle)
+                                        reward_type=reward_type, obstacle_is_on=False)
                     print("Phenotype number " + str(j) + " generated")
                     list_of_phenotypes.append(phenotype)
                     list_of_arm.append(upscaled_arm_position)
                     list_of_goal.append(upscaled_goal)
                     list_of_third_coordinate.append(third_coordinate)
-                elif args.obstacle is True and args.env == "FetchPush-v1":
+                elif args.goal == "obstacle" and args.env == "FetchPush-v1":
                     # if we are working with obstacles, use other file with larger number of generations
                     # + only dense function
                     phenotype = dt_3.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
                                         dimensions=2,
-                                        reward_type="dense", obstacle_is_on=args.obstacle)
+                                        reward_type="dense", obstacle_is_on=True)
                     print("Phenotype number " + str(j) + " generated")
                     list_of_phenotypes.append(phenotype)
                     list_of_arm.append(upscaled_arm_position)
@@ -398,7 +398,7 @@ class HGGLearner_DT:
                 # print(upscaled_arm_position)
                 # print("First part: goal: ")
                 # print(upscaled_goal)
-                if args.env == "FetchPickAndPlace-v1" and args.obstacle is False:
+                if args.env == "FetchPickAndPlace-v1" and args.goal != "obstacle":
 
                     # generate current DT only once for every start-goal pair
                     # working here with 2D DT, choose reward based on tasks
@@ -413,11 +413,11 @@ class HGGLearner_DT:
                     list_of_arm_first_part.append(upscaled_arm_position)
                     list_of_goal_first_part.append(upscaled_goal)
                     list_of_third_coordinate.append(third_coordinate)
-                elif args.env == "FetchPickAndPlace-v1" and args.obstacle is True:
+                elif args.env == "FetchPickAndPlace-v1" and args.goal == "obstacle":
                     # same here as for FetchPush, xy of FetchPickAndPlace == xy of FetchPush
                     phenotype = dt_3.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
                                     dimensions=2,
-                                    reward_type="dense", obstacle_is_on=args.obstacle)
+                                    reward_type="dense", obstacle_is_on=True)
                     print("Phenotype part 1 number " + str(j) + " generated")
                     list_of_phenotypes_first_part.append(phenotype)
                     list_of_arm_first_part.append(upscaled_arm_position)

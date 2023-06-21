@@ -13,7 +13,7 @@ def get_args():
 
     parser.add_argument('--tag', help='terminal tag in logger', type=str, default='')
     parser.add_argument('--alg', help='backend algorithm', type=str, default='ddpg', choices=['ddpg', 'ddpg2'])
-    parser.add_argument('--learn', help='type of training method', type=str, default='normal',
+    parser.add_argument('--learn', help='type of training method', type=str, default='dt-her',
                         choices=learner_collection.keys())
 
     parser.add_argument('--env', help='gym env id', type=str, default='FetchPickAndPlace-v1', choices=Robotics_envs_id)
@@ -22,7 +22,7 @@ def get_args():
         parser.add_argument('--goal', help='method of goal generation', type=str, default='reach',
                             choices=['vanilla', 'reach'])
     else:
-        parser.add_argument('--goal', help='method of goal generation', type=str, default='interval',
+        parser.add_argument('--goal', help='method of goal generation', type=str, default='obstacle',
                             choices=['vanilla', 'fixobj', 'interval', 'obstacle'])
         if args.env[:5] == 'Fetch':
             parser.add_argument('--init_offset', help='initial offset in fetch environments', type=np.float32,
@@ -67,8 +67,6 @@ def get_args():
     parser.add_argument('--forced_hgg_dt_step_size', help='step size between intermediate goals', type=np.float32,
                         default=None)
     parser.add_argument('--c', help='c parameter to measure success basing on Q function', type=np.float32, default=-1)
-    parser.add_argument('--obstacle', help='turn on obstacle for HGG_DT, only for FetchPush', type=str2bool,
-                        default=True)
     parser.add_argument('--save_acc', help='save successful rate', type=str2bool, default=True)
 
     args = parser.parse_args()

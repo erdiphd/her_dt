@@ -11,12 +11,13 @@ class GridWorldEnv(gym.Env):
     def __init__(self, size, agent_location, target_location, dimensions, reward_type, obstacle_is_on):
         self.dimensions = dimensions
         self.reward_type = reward_type
-        self.obstacle_cell_1 = [14, 8]
-        # self.obstacle_cell_2 = [13, 8]
+        # for FetchPickAndPlace and FetchPush: obstacle pos = 1.20 0.75 0.44
+        # for FetchSlide = 1.1 0.75 0.44
+        # FetchPick/FetchPush
+        self.obstacle_cell_1 = [12, 8]
+        # FetchSlide
+        # self.obstacle_cell_1 = [11, 8]
         self.obstacle_is_on = obstacle_is_on
-        """
-        pos="1.4 0.8 0.45" size="0.1 0.01 0.05"
-        """
 
         if obstacle_is_on is True and dimensions == 3:
             raise ValueError('decision tree cannot work with 3 dimensions and an obstacle')
@@ -157,6 +158,8 @@ class GridWorldEnv(gym.Env):
         elif self.reward_type == "dense":
             if self.obstacle_is_on is True:
                 if collision_occurred is False:
+                    # dimensions can only be 2. There are no obstacle tests with 3D.
+                    # FetchPick uses 2D with obstacle for x-y coordinate and 3D without obstacle for z-coordinate.
                     if self.dimensions == 2:
                         if (((self._agent_location[0] - self._target_location[0]) ** 2
                                             + (self._agent_location[1] - self._target_location[1]) ** 2) ** 0.5) == 0:
