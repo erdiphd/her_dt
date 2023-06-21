@@ -233,7 +233,10 @@ def eaSimple(population, toolbox, cxpb, mutpb, ngen, stats=None,
         # Append the current generation statistics to the logbook
         record = stats.compile(population) if stats else {}
         # this if statement massively improves runtime, as it stops the optimizing if it is already perfect.
-        if record['max'] == 1.0:
+        # for normal scenarios
+        # if record['max'] == 1.0:
+        # for scenarios with obstacles
+        if record['max'] > 0:
             done = True
         logbook.record(gen=gen, nevals=len(invalid_ind), **record)
         if verbose:

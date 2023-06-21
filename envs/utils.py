@@ -31,7 +31,7 @@ def fetchpush_obstacle_distance(goal_a, goal_b):
 
 def get_goal_distance(args):
 	if args.goal=='obstacle':
-		assert args.env=='FetchPush-v1'
+		# assert args.env=='FetchPush-v1'
 		return fetchpush_obstacle_distance
 	else:
 		return goal_distance

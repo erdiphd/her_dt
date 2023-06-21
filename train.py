@@ -9,7 +9,7 @@ if __name__ == '__main__':
     args = get_args()
     env, env_test, agent, buffer, learner, tester = experiment_setup(args)
 
-    if args.learn == "hgg_dt":
+    if args.learn == "dt-her":
         # generate DT only once
         list_of_phenotypes, list_of_arm, list_of_goal, list_of_third_coordinate, initial_goals, list_of_goal_first_part, list_of_arm_first_part, list_of_phenotypes_first_part, list_of_arm_second_part, list_of_goal_second_part, list_of_phenotypes_second_part = learner.get_phenotype(args)
 
