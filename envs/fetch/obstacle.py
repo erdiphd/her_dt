@@ -9,12 +9,38 @@ class ObstacleGoalEnv(VanillaGoalEnv):
 	def __init__(self, args):
 		VanillaGoalEnv.__init__(self, args)
 		env_id = {
-			'FetchPush-v1': 'push'
+			'FetchPush-v1': 'push',
+			'FetchSlide-v1': 'slide',
+			'FetchPickAndPlace-v1': 'pick'
 		}
 		assert args.env in env_id.keys()
-		MODEL_XML_PATH = os.path.abspath('.')+'/envs/assets/fetch/'+env_id[args.env]+'_obstacle.xml'
+		MODEL_XML_PATH = os.path.abspath('.')+'/envs/assets/fetch/'+'push_obstacle.xml'
 
 		if env_id[args.env] in ['push']:
+			initial_qpos = {
+				'robot0:slide0': 0.405,
+				'robot0:slide1': 0.48,
+				'robot0:slide2': 0.0,
+				'object0:joint': [1.25, 0.53, 0.4, 1., 0., 0., 0.],
+			}
+			self.env = FetchEnv(
+				MODEL_XML_PATH, has_object=True, block_gripper=False, n_substeps=20,
+				gripper_extra_height=0.2, target_in_the_air=True, target_offset=0.0,
+				obj_range=0.15, target_range=0.15, distance_threshold=0.05,
+				initial_qpos=initial_qpos, reward_type='sparse')
+		elif env_id[args.env] in ['slide']:
+			initial_qpos = {
+				'robot0:slide0': 0.05,
+				'robot0:slide1': 0.48,
+				'robot0:slide2': 0.0,
+				'object0:joint': [1.7, 1.1, 0.41, 1., 0., 0., 0.],
+			}
+			self.env = FetchEnv(
+				MODEL_XML_PATH, has_object=True, block_gripper=False, n_substeps=20,
+				gripper_extra_height=0.2, target_in_the_air=True, target_offset=0.0,
+				obj_range=0.15, target_range=0.15, distance_threshold=0.05,
+				initial_qpos=initial_qpos, reward_type='sparse')
+		elif env_id[args.env] in ['pick']:
 			initial_qpos = {
 				'robot0:slide0': 0.405,
 				'robot0:slide1': 0.48,
