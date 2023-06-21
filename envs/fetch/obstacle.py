@@ -14,7 +14,7 @@ class ObstacleGoalEnv(VanillaGoalEnv):
 			'FetchPickAndPlace-v1': 'pick'
 		}
 		assert args.env in env_id.keys()
-		MODEL_XML_PATH = os.path.abspath('.')+'/envs/assets/fetch/'+'push_obstacle.xml'
+		MODEL_XML_PATH = os.path.abspath('.')+'/envs/assets/fetch/' + env_id[args.env] + '_obstacle.xml'
 
 		if env_id[args.env] in ['push']:
 			initial_qpos = {
@@ -36,9 +36,9 @@ class ObstacleGoalEnv(VanillaGoalEnv):
 				'object0:joint': [1.7, 1.1, 0.41, 1., 0., 0., 0.],
 			}
 			self.env = FetchEnv(
-				MODEL_XML_PATH, has_object=True, block_gripper=False, n_substeps=20,
-				gripper_extra_height=0.2, target_in_the_air=True, target_offset=0.0,
-				obj_range=0.15, target_range=0.15, distance_threshold=0.05,
+				MODEL_XML_PATH, has_object=True, block_gripper=True, n_substeps=20,
+				gripper_extra_height=-0.02, target_in_the_air=False, target_offset=np.array([0.4, 0.0, 0.0]),
+				obj_range=0.1, target_range=0.3, distance_threshold=0.05,
 				initial_qpos=initial_qpos, reward_type='sparse')
 		elif env_id[args.env] in ['pick']:
 			initial_qpos = {
