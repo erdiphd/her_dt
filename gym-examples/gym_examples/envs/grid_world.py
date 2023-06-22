@@ -14,9 +14,9 @@ class GridWorldEnv(gym.Env):
         # for FetchPickAndPlace and FetchPush: obstacle pos = 1.20 0.75 0.44
         # for FetchSlide = 1.1 0.75 0.44
         # FetchPick/FetchPush
-        self.obstacle_cell_1 = [12, 8]
+        self.obstacle_cell_1 = [14, 8]
         # FetchSlide
-        # self.obstacle_cell_1 = [11, 8]
+        # self.obstacle_cell_1 = [14, 8]
         self.obstacle_is_on = obstacle_is_on
 
         if obstacle_is_on is True and dimensions == 3:

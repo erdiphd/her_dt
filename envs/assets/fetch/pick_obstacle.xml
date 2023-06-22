@@ -26,7 +26,7 @@
 		</body>
 
 		<body name="obstacle0" pos="1.20 0.75 0.44">
-			<geom size="0.05 0.02 0.2" rgba="0.5 0.3 0.2 1" type="box" condim="3" name="obstacle0" material="block_mat" mass="1000"></geom>
+			<geom size="0.05 0.02 0.05" rgba="0.5 0.3 0.2 1" type="box" condim="3" name="obstacle0" material="block_mat" mass="1000"></geom>
 			<site name="obstacle0" pos="0 0 0" size="0.02 0.02 0.02" rgba="1 0 0 1" type="sphere"></site>
 		</body>
 

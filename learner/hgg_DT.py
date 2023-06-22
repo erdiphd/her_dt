@@ -510,7 +510,7 @@ class HGGLearner_DT:
                     value = agent.sess.run(agent.q_pi, feed_dict)[:, 0]
                     # value = np.clip(value, -1.0 / (1.0 - self.args.gamma), 0)
                     achieved_value.append(value.copy())
-            if args.obstacle is True:
+            if args.goal == "obstacle":
                 # with obstacles we let every start-goal pair run separately
                 # check if at least one goal has reached destination. goal_reached is set here
                 for i in range(args.episodes):
