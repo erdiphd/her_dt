@@ -108,8 +108,6 @@ ENV goal "interval"
 ENV epochs "20"
 ENV cycles "20"
 ENV episodes "50"
-ENV obstacle "None"
-ENV forced_hgg_dt_step_size "False"
 
 COPY docker/startup.sh /home/user/
 ENV PATH /home/user/.conda/envs/her_dt/bin:$PATH

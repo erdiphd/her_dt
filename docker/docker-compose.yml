@@ -12,5 +12,3 @@ services:
       epochs: 20
       cycles: 20
       episodes: 50
-      obstacle: None
-      forced_hgg_dt_step_size: False

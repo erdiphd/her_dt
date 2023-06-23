@@ -13,7 +13,7 @@ class NormalLearner:
 			for timestep in range(args.timesteps):
 				action = agent.step(obs, explore=True)
 				obs, reward, done, _ = env.step(action)
-				env.render()
+				# env.render()
 				if timestep==args.timesteps-1: done = True
 				current.store_step(action, obs, reward, done)
 				if done: break
