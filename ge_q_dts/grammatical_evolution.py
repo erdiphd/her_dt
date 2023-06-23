@@ -102,7 +102,7 @@ def varAnd(population, toolbox, cxpb, mutpb):
 
 
 
-def eaSimple(population, toolbox, cxpb, mutpb, ngen, stats=None,
+def eaSimple(obstacle_is_on, population, toolbox, cxpb, mutpb, ngen, stats=None,
              halloffame=None, verbose=__debug__, logfile=None, var=varAnd):
     """This algorithm reproduce the simplest evolutionary algorithm as
     presented in chapter 7 of [Back2000]_.
@@ -234,10 +234,13 @@ def eaSimple(population, toolbox, cxpb, mutpb, ngen, stats=None,
         record = stats.compile(population) if stats else {}
         # this if statement massively improves runtime, as it stops the optimizing if it is already perfect.
         # for normal scenarios
-        # if record['max'] == 1.0:
-        # for scenarios with obstacles
-        # if record['max'] > 0:
-            # done = True
+        if obstacle_is_on is False:
+            if record['max'] == 1.0:
+                done = True
+        else:
+            # for scenarios with obstacles
+            if record['max'] > 0:
+                done = True
         logbook.record(gen=gen, nevals=len(invalid_ind), **record)
         if verbose:
             print(logbook.stream)
@@ -360,7 +363,7 @@ def ge_mutate(ind, attribute):
     return ind,
 
 
-def grammatical_evolution(fitness_function, inputs, leaf, individuals, generations, cx_prob, m_prob, initial_len=100, selection={'function': "tools.selBest"}, mutation={'function': "ge_mutate", 'attribute': None}, crossover={'function': "ge_mate", 'individual': None}, seed=0, jobs=1, logfile=None, timeout=10*60):
+def grammatical_evolution(obstacle_is_on, fitness_function, inputs, leaf, individuals, generations, cx_prob, m_prob, initial_len=100, selection={'function': "tools.selBest"}, mutation={'function': "ge_mutate", 'attribute': None}, crossover={'function': "ge_mate", 'individual': None}, seed=0, jobs=1, logfile=None, timeout=10*60):
     random.seed(seed)
     np.random.seed(seed)
 
@@ -401,7 +404,7 @@ def grammatical_evolution(fitness_function, inputs, leaf, individuals, generatio
     stats.register("min", np.min)
     stats.register("max", np.max)
     
-    pop, log, best_leaves = eaSimple(pop, toolbox, cxpb=cx_prob, mutpb=m_prob, ngen=generations, 
+    pop, log, best_leaves = eaSimple(obstacle_is_on, pop, toolbox, cxpb=cx_prob, mutpb=m_prob, ngen=generations,
                                    stats=stats, halloffame=hof, verbose=True, logfile=logfile)
     
     return pop, log, hof, best_leaves

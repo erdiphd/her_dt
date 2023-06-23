@@ -238,7 +238,7 @@ def main(grid_size, agent_start, agent_goal, dimensions, reward_type, obstacle_i
         return evaluate_fitness(fitness, CLeaf, x, grid_size, agent_start, agent_goal, dimensions, reward_type, obstacle_is_on)
 
     with parallel_backend("multiprocessing"):
-        pop, log, hof, best_leaves = grammatical_evolution(fit_fcn, inputs=input_space_size, leaf=CLeaf, individuals=args.lambda_, generations=args.generations, jobs=args.jobs, cx_prob=args.cxp, m_prob=args.mp, logfile=logfile, seed=args.seed, mutation=args.mutation, crossover=args.crossover, initial_len=args.genotype_len, selection=args.selection)
+        pop, log, hof, best_leaves = grammatical_evolution(obstacle_is_on, fit_fcn, inputs=input_space_size, leaf=CLeaf, individuals=args.lambda_, generations=args.generations, jobs=args.jobs, cx_prob=args.cxp, m_prob=args.mp, logfile=logfile, seed=args.seed, mutation=args.mutation, crossover=args.crossover, initial_len=args.genotype_len, selection=args.selection)
         # returning evolved structure of decision tree
 
     # Log best individual
