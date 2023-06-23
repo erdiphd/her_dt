@@ -236,8 +236,8 @@ def eaSimple(population, toolbox, cxpb, mutpb, ngen, stats=None,
         # for normal scenarios
         # if record['max'] == 1.0:
         # for scenarios with obstacles
-        if record['max'] > 0:
-            done = True
+        # if record['max'] > 0:
+            # done = True
         logbook.record(gen=gen, nevals=len(invalid_ind), **record)
         if verbose:
             print(logbook.stream)
