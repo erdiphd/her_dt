@@ -1002,10 +1002,12 @@ class HGGLearner_DT:
                             list_for_clip_upper[1] = list_of_goal_first_part[i][1] / 10
 
                         # lower bound
-                        if list_of_arm_first_part[i][0] < list_of_goal_first_part[i][0]:
-                            list_for_clip_lower[0] = list_of_arm_first_part[i][0] / 10
-                        if list_of_arm_first_part[i][0] >= list_of_goal_first_part[i][0]:
-                            list_for_clip_lower[0] = list_of_goal_first_part[i][0] / 10
+                        list_for_clip_lower[0] = 0
+
+                        # if list_of_arm_first_part[i][0] < list_of_goal_first_part[i][0]:
+                        #     list_for_clip_lower[0] = list_of_arm_first_part[i][0] / 10
+                        # if list_of_arm_first_part[i][0] >= list_of_goal_first_part[i][0]:
+                        #     list_for_clip_lower[0] = list_of_goal_first_part[i][0] / 10
 
                         if list_of_arm_first_part[i][1] < list_of_goal_first_part[i][1]:
                             list_for_clip_lower[1] = list_of_arm_first_part[i][1] / 10
