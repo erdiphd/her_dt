@@ -332,7 +332,7 @@ class HGGLearner_DT:
                         # working here with 2D DT, use sparse reward, 200 episode length for complex tasks
                         phenotype = dt_4.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
                                             dimensions=2,
-                                            reward_type="sparse", obstacle_is_on=False)
+                                            reward_type="sparse", obstacle_is_on=False, env="slide")
                         print("Phenotype number " + str(j) + " generated")
                         list_of_phenotypes.append(phenotype)
                         list_of_arm.append(upscaled_arm_position)
@@ -345,7 +345,7 @@ class HGGLearner_DT:
                         # => Use 200 episode length with dense reward
                         phenotype = dt_4.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
                                             dimensions=2,
-                                            reward_type="dense", obstacle_is_on=True)
+                                            reward_type="dense", obstacle_is_on=True, env="slide")
                         print("Phenotype number " + str(j) + " generated")
                         list_of_phenotypes.append(phenotype)
                         list_of_arm.append(upscaled_arm_position)
@@ -360,7 +360,7 @@ class HGGLearner_DT:
                         reward_type = "dense"
                     phenotype = dt_2.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
                                         dimensions=2,
-                                        reward_type=reward_type, obstacle_is_on=False)
+                                        reward_type=reward_type, obstacle_is_on=False, env="push")
                     print("Phenotype number " + str(j) + " generated")
                     list_of_phenotypes.append(phenotype)
                     list_of_arm.append(upscaled_arm_position)
@@ -373,7 +373,7 @@ class HGGLearner_DT:
                         # HARD TASKS, 300 episode length
                         phenotype = dt_3_2.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
                                         dimensions=2,
-                                        reward_type="dense", obstacle_is_on=True)
+                                        reward_type="dense", obstacle_is_on=True, env="push")
                         print("Phenotype part 1 number " + str(j) + " generated")
                         list_of_phenotypes.append(phenotype)
                         list_of_arm.append(upscaled_arm_position)
@@ -382,7 +382,7 @@ class HGGLearner_DT:
                     else:
                         phenotype = dt_3.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
                                         dimensions=2,
-                                        reward_type="dense", obstacle_is_on=True)
+                                        reward_type="dense", obstacle_is_on=True, env="push")
                         print("Phenotype part 1 number " + str(j) + " generated")
                         list_of_phenotypes.append(phenotype)
                         list_of_arm.append(upscaled_arm_position)
@@ -420,7 +420,7 @@ class HGGLearner_DT:
                         reward_type = "dense"
                     phenotype = dt_2.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
                                         dimensions=2,
-                                        reward_type=reward_type, obstacle_is_on=False)
+                                        reward_type=reward_type, obstacle_is_on=False, env="pick")
                     print("Phenotype part 1 number " + str(j) + " generated")
                     list_of_phenotypes_first_part.append(phenotype)
                     list_of_arm_first_part.append(upscaled_arm_position)
@@ -432,7 +432,7 @@ class HGGLearner_DT:
                         # same here as for FetchPush, xy of FetchPickAndPlace == xy of FetchPush
                         phenotype = dt_3_2.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
                                         dimensions=2,
-                                        reward_type="dense", obstacle_is_on=True)
+                                        reward_type="dense", obstacle_is_on=True, env="pick")
                         print("Phenotype part 1 number " + str(j) + " generated")
                         list_of_phenotypes_first_part.append(phenotype)
                         list_of_arm_first_part.append(upscaled_arm_position)
@@ -442,7 +442,7 @@ class HGGLearner_DT:
                         # same here as for FetchPush, xy of FetchPickAndPlace == xy of FetchPush
                         phenotype = dt_3.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
                                         dimensions=2,
-                                        reward_type="dense", obstacle_is_on=True)
+                                        reward_type="dense", obstacle_is_on=True, env="pick")
                         print("Phenotype part 1 number " + str(j) + " generated")
                         list_of_phenotypes_first_part.append(phenotype)
                         list_of_arm_first_part.append(upscaled_arm_position)
@@ -475,7 +475,7 @@ class HGGLearner_DT:
                 # The 3rd coordinate will go up only after x-y is done and obstacle is already avoided
                 phenotype = dt.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
                                     dimensions=3,
-                                    reward_type="dense", obstacle_is_on=False)
+                                    reward_type="dense", obstacle_is_on=False, env="pick")
                 print("Phenotype part 2 number " + str(j) + " generated")
                 list_of_phenotypes_second_part.append(phenotype)
                 list_of_arm_second_part.append(upscaled_arm_position)

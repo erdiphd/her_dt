@@ -8,16 +8,18 @@ import numpy as np
 class GridWorldEnv(gym.Env):
     metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 4}
 
-    def __init__(self, size, agent_location, target_location, dimensions, reward_type, obstacle_is_on):
+    def __init__(self, size, agent_location, target_location, dimensions, reward_type, obstacle_is_on, env):
         self.dimensions = dimensions
         self.reward_type = reward_type
-        # for FetchPickAndPlace and FetchPush: obstacle pos = 1.20 0.75 0.44
-        # for FetchSlide = 1.1 0.75 0.44
-        # FetchPick/FetchPush
-        self.obstacle_cell_2 = [13, 7]
-        self.obstacle_cell_1 = [12, 7]
-        # FetchSlide
-        # self.obstacle_cell_1 = [14, 8]
+        # for FetchPickAndPlace and FetchPush: obstacle pos = 1.25 0.75 0.44
+        # for FetchSlide = 1.1 1.0 0.44
+        if env == "push" or env == "pick":
+            # FetchPick/FetchPush
+            self.obstacle_cell_2 = [13, 7]
+            self.obstacle_cell_1 = [12, 7]
+        elif env == "slide":
+            # FetchSlide
+            self.obstacle_cell_1 = [11, 10]
         self.obstacle_is_on = obstacle_is_on
 
         if obstacle_is_on is True and dimensions == 3:
