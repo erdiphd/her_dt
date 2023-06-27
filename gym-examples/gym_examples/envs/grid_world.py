@@ -13,6 +13,7 @@ class GridWorldEnv(gym.Env):
         self.reward_type = reward_type
         # for FetchPickAndPlace and FetchPush: obstacle pos = 1.25 0.75 0.44
         # for FetchSlide = 1.1 1.0 0.44
+        self.env = env
         if env == "push" or env == "pick":
             # FetchPick/FetchPush
             self.obstacle_cell_2 = [13, 7]
@@ -136,8 +137,12 @@ class GridWorldEnv(gym.Env):
         # check if obstacle test is turned on
         if self.obstacle_is_on is True:
             # check if agent_position and obstacle position intersect
-            if np.array_equal(self._agent_location, self.obstacle_cell_1) or np.array_equal(self._agent_location, self.obstacle_cell_2):
-                collision_occurred = True
+            if self.env == "pick" or self.env == "push":
+                if np.array_equal(self._agent_location, self.obstacle_cell_1) or np.array_equal(self._agent_location, self.obstacle_cell_2):
+                    collision_occurred = True
+            if self.env == "slide":
+                if np.array_equal(self._agent_location, self.obstacle_cell_1):
+                    collision_occurred = True
         # An episode is done iff the agent has reached the target
         terminated = np.array_equal(np.array(self._agent_location), np.array(self._target_location))
         # Sparse rewards
