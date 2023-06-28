@@ -242,7 +242,10 @@ class HGGLearner_DT:
         if args.forced_hgg_dt_step_size is None:
             # if forced is not given, take optimal step size
             if args.env == "FetchPickAndPlace-v1" or args.env == "FetchReach-v1" or args.env == "FetchPush-v1":
-                step_size = 0.01
+                if args.goal == "obstacle":
+                    step_size = 0.02
+                else:
+                    step_size = 0.01
             elif args.env == "FetchSlide-v1":
                 step_size = 0.015
         else:
@@ -609,8 +612,11 @@ class HGGLearner_DT:
                             current_goal[2] = float(f'{list_of_third_coordinate[i]:.5f}')
 
                     # preparation for equality check
+                    tmp_arm = []
                     tmp_goal = []
-                    for j in range(len(current_goal)):
+                    for j in range(len(list_of_current_arm_position[i])):
+                        # round, to prevent phantom decimal points like 0.7000000000000001
+                        tmp_arm.append(round(list_of_current_arm_position[i][j], 10))
                         tmp_goal.append(current_goal[j])
                     # we need to check for upper and lower bound
                     list_for_clip_upper = []
@@ -639,7 +645,13 @@ class HGGLearner_DT:
                         # fill list_for_clip using first part
                         # upper bound
                         # allow the goal to move freely in the x coordinate to avoid obstacles
-                        list_for_clip_upper[0] = 2
+                        if tmp_arm[1] != tmp_goal[1]:
+                            list_for_clip_upper[0] = 2
+                        else:
+                            if list_of_arm[i][0] > list_of_goal[i][0]:
+                                list_for_clip_upper[0] = list_of_arm[i][0] / 10
+                            if list_of_arm[i][0] <= list_of_goal[i][0]:
+                                list_for_clip_upper[0] = list_of_goal[i][0] / 10
 
                         if list_of_arm[i][1] > list_of_goal[i][1]:
                             list_for_clip_upper[1] = list_of_arm[i][1] / 10
@@ -647,11 +659,13 @@ class HGGLearner_DT:
                             list_for_clip_upper[1] = list_of_goal[i][1] / 10
 
                         # lower bound
-                        # if list_of_arm[i][0] < list_of_goal[i][0]:
-                        #     list_for_clip_lower[0] = list_of_arm[i][0] / 10
-                        # if list_of_arm[i][0] >= list_of_goal[i][0]:
-                        #     list_for_clip_lower[0] = list_of_goal[i][0] / 10
-                        list_for_clip_lower[0] = 0
+                        if tmp_arm[1] != tmp_goal[1]:
+                            list_for_clip_lower[0] = 1
+                        else:
+                            if list_of_arm[i][0] < list_of_goal[i][0]:
+                                list_for_clip_lower[0] = list_of_arm[i][0] / 10
+                            if list_of_arm[i][0] >= list_of_goal[i][0]:
+                                list_for_clip_lower[0] = list_of_goal[i][0] / 10
 
                         if list_of_arm[i][1] < list_of_goal[i][1]:
                             list_for_clip_lower[1] = list_of_arm[i][1] / 10
@@ -900,7 +914,7 @@ class HGGLearner_DT:
                 # print("Temp arm: ")
                 # print(tmp_arm)
                 # print("Temp goal: ")
-                # print(tmp_goal)
+                # print(tmp_goal_2)
 
                 # check point so the intermediate goal won't run away from the desired goal
                 # Additionally this is needed to switch from calling first DT to second DT
@@ -955,8 +969,18 @@ class HGGLearner_DT:
                 for j in range(len(current_goal)):
                     tmp_goal.append(current_goal[j])
 
-                # print("tmp goal: ")
-                # print(tmp_goal)
+                current_goal_2 = list_of_goal_second_part[i].copy()
+                current_goal_2 = np.array(current_goal_2) / 10
+                current_goal_2 = current_goal_2.tolist()
+
+                # preparation for equality check
+                tmp_arm = []
+                tmp_goal_2 = []
+                for j in range(len(list_of_current_arm_position[i])):
+                    # round, to prevent phantom decimal points like 0.7000000000000001
+                    tmp_arm.append(round(list_of_current_arm_position[i][j], 10))
+                    tmp_goal_2.append(current_goal_2[j])
+                tmp_goal_2[2] = desired_goals[i][2]
 
                 # we need to check for upper and lower bound
                 list_for_clip_upper = []
@@ -994,7 +1018,13 @@ class HGGLearner_DT:
                         # fill list_for_clip using first part
                         # upper bound
                         # allow the goal to move freely in the x coordinate to avoid obstacles
-                        list_for_clip_upper[0] = 2
+                        if tmp_arm[1] != tmp_goal_2[1]:
+                            list_for_clip_upper[0] = 2
+                        else:
+                            if list_of_arm_first_part[i][0] > list_of_goal_first_part[i][0]:
+                                list_for_clip_upper[0] = list_of_arm_first_part[i][0] / 10
+                            if list_of_arm_first_part[i][0] <= list_of_goal_first_part[i][0]:
+                                list_for_clip_upper[0] = list_of_goal_first_part[i][0] / 10
 
                         if list_of_arm_first_part[i][1] > list_of_goal_first_part[i][1]:
                             list_for_clip_upper[1] = list_of_arm_first_part[i][1] / 10
@@ -1002,12 +1032,13 @@ class HGGLearner_DT:
                             list_for_clip_upper[1] = list_of_goal_first_part[i][1] / 10
 
                         # lower bound
-                        list_for_clip_lower[0] = 0
-
-                        # if list_of_arm_first_part[i][0] < list_of_goal_first_part[i][0]:
-                        #     list_for_clip_lower[0] = list_of_arm_first_part[i][0] / 10
-                        # if list_of_arm_first_part[i][0] >= list_of_goal_first_part[i][0]:
-                        #     list_for_clip_lower[0] = list_of_goal_first_part[i][0] / 10
+                        if tmp_arm[1] != tmp_goal_2[1]:
+                            list_for_clip_lower[0] = 1
+                        else:
+                            if list_of_arm_first_part[i][0] < list_of_goal_first_part[i][0]:
+                                list_for_clip_lower[0] = list_of_arm_first_part[i][0] / 10
+                            if list_of_arm_first_part[i][0] >= list_of_goal_first_part[i][0]:
+                                list_for_clip_lower[0] = list_of_goal_first_part[i][0] / 10
 
                         if list_of_arm_first_part[i][1] < list_of_goal_first_part[i][1]:
                             list_for_clip_lower[1] = list_of_arm_first_part[i][1] / 10
