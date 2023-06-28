@@ -14,10 +14,12 @@ class GridWorldEnv(gym.Env):
         # for FetchPickAndPlace and FetchPush: obstacle pos = 1.25 0.75 0.44
         # for FetchSlide = 1.1 1.0 0.44
         self.env = env
-        if env == "push" or env == "pick":
+        if env == "push":
             # FetchPick/FetchPush
             self.obstacle_cell_2 = [13, 7]
             self.obstacle_cell_1 = [12, 7]
+        elif env == "pick":
+            self.obstacle_cell_1 = [14, 7]
         elif env == "slide":
             # FetchSlide
             self.obstacle_cell_1 = [11, 10]
@@ -137,10 +139,10 @@ class GridWorldEnv(gym.Env):
         # check if obstacle test is turned on
         if self.obstacle_is_on is True:
             # check if agent_position and obstacle position intersect
-            if self.env == "pick" or self.env == "push":
+            if self.env == "push":
                 if np.array_equal(self._agent_location, self.obstacle_cell_1) or np.array_equal(self._agent_location, self.obstacle_cell_2):
                     collision_occurred = True
-            if self.env == "slide":
+            if self.env == "slide" or self.env == "pick":
                 if np.array_equal(self._agent_location, self.obstacle_cell_1):
                     collision_occurred = True
         # An episode is done iff the agent has reached the target
