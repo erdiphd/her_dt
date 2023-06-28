@@ -19,7 +19,7 @@ class GridWorldEnv(gym.Env):
             self.obstacle_cell_2 = [13, 7]
             self.obstacle_cell_1 = [12, 7]
         elif env == "pick":
-            self.obstacle_cell_1 = [14, 7]
+            self.obstacle_cell_1 = [12, 7]
         elif env == "slide":
             # FetchSlide
             self.obstacle_cell_1 = [11, 10]
