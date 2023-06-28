@@ -3,6 +3,7 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 import seaborn as sns
+from os import walk
 print(sns.__version__)
 legend_list = []
 
@@ -14,10 +15,10 @@ def plot_graphs(file_list, color='r'):
         logs = open(file_list[file_number])
         logs.seek(0)
         log_file = logs.read()
-        if file_list[0] == "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HGG/ddpg-FetchPush-v1-hgg-(2023-06-14-11:38:56).log" or file_list[0] == "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HER/ddpg-FetchPush-v1-normal-(2023-06-14-16 41 19).log":
-            success_rates = [(m.start(0), m.end(0)) for m in re.finditer('Success/obstacle', log_file)]
-        else:
-            success_rates = [(m.start(0), m.end(0)) for m in re.finditer('Success/interval', log_file)]
+        # if file_list[0] == "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HGG-DT/her_result1-ddpg-FetchPush-v1-dt-her-(2023-06-27-16_29_25).log" or file_list[0] == "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HGG/her_result1-ddpg-FetchPush-v1-hgg-(2023-06-27-09_23_52).log" or file_list[0] == "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HER/her_result1-ddpg-FetchPush-v1-normal-(2023-06-27-09_23_29).log":
+        # success_rates = [(m.start(0), m.end(0)) for m in re.finditer('Success/obstacle', log_file)]
+        # else:
+        success_rates = [(m.start(0), m.end(0)) for m in re.finditer('Success/interval', log_file)]
 
         # print(success_rates)
 
@@ -50,58 +51,58 @@ def plot_graphs(file_list, color='r'):
     legend_list.append(label_text)
 
 
-robotic_task = 'FetchSlide'
+robotic_task = 'FetchPickAndPlace'
 xdata = 200 * np.arange(100)
 
 neural_network_option = 'compare_nn'
 
 # HGG_DT
-file_list = [ "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPickAndPlace/ddpg-FetchPickAndPlace-v1-hgg_dt-(2023-06-15-13:21:10).log",
+file_list = []
+path = "/home/vlaffo/Desktop/thesis results/FetchSlide/HGG-DT/"
 
-"/home/vlaffo/Desktop/thesis results/obstacle test/FetchPickAndPlace/ddpg-FetchPickAndPlace-v1-hgg_dt-(2023-06-17-15:46:04).log",
+for (dirpath, dirnames, filenames) in walk(path):
+    file_list.append(path + filenames[0])
+    file_list.append(path + filenames[1])
+    file_list.append(path + filenames[2])
+    file_list.append(path + filenames[3])
+    file_list.append(path + filenames[4])
 
- "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPickAndPlace/ddpg-FetchPickAndPlace-v1-hgg_dt-(2023-06-18-20:12:05).log",
-
- # "/home/vlaffo/Desktop/thesis results/obstacle test/FetchSlide/ddpg-FetchSlide-v1-hgg_dt-(2023-06-19-18:35:31).log",
-
- # "/home/vlaffo/Desktop/thesis results/obstacle test/FetchSlide/HGG-DT/ddpg-FetchPush-v1-hgg_dt-obstacle.log",
-              ]
 plot_graphs(file_list, 'red')
 
 # HGG
-# file_list = [ "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HGG/ddpg-FetchPush-v1-hgg-(2023-06-14-11:38:56).log",
-#  "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HGG/ddpg-FetchPush-v1-hgg-(2023-06-14-11:39:14).log",
-#
-#  "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HGG/ddpg-FetchPush-v1-hgg-(2023-06-14-11:39:34).log",
-#
-# "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HGG/ddpg-FetchPush-v1-hgg-(2023-06-14-11:39:46).log",
-#
-#  "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HGG/ddpg-FetchPush-v1-hgg-obstacle.log",
-#             ]
-# plot_graphs(file_list, 'blue')
-#
-# # HER
-# file_list = [ "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HER/ddpg-FetchPush-v1-normal-(2023-06-14-16 41 19).log",
-#  "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HER/ddpg-FetchPush-v1-normal-(2023-06-14-16 52 43).log",
-#
-#  "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HER/ddpg-FetchPush-v1-normal-(2023-06-14-16 52 45).log",
-#
-# "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HER/ddpg-FetchPush-v1-normal-(2023-06-14-16 52 49).log",
-#
-#  "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HER/ddpg-FetchPush-v1-normal-(2023-06-14-16 52 56).log",
-#             ]
-# plot_graphs(file_list, 'green')
+file_list = []
+path = "/home/vlaffo/Desktop/thesis results/FetchSlide/HGG/"
+
+for (dirpath, dirnames, filenames) in walk(path):
+    file_list.append(path + filenames[0])
+    file_list.append(path + filenames[1])
+    file_list.append(path + filenames[2])
+    file_list.append(path + filenames[3])
+    file_list.append(path + filenames[4])
+plot_graphs(file_list, 'blue')
+
+# HER
+file_list = []
+path = "/home/vlaffo/Desktop/thesis results/FetchSlide/HER/"
+
+for (dirpath, dirnames, filenames) in walk(path):
+    file_list.append(path + filenames[0])
+    file_list.append(path + filenames[1])
+    file_list.append(path + filenames[2])
+    file_list.append(path + filenames[3])
+    file_list.append(path + filenames[4])
+
+plot_graphs(file_list, 'green')
 
 
 sns.tsplot(time=xdata, data=np.ones(len(xdata)), color="b", linestyle="-")
 
 plt.ylabel("Success Rate", fontsize=15)
 plt.xlabel("Episode ", fontsize=15, labelpad=4)
-plt.title('FetchPickAndPlace + obstacle', fontsize=16)
+plt.title('FetchSlide', fontsize=16)
 
-plt.legend(labels=["DT-HER"],
+plt.legend(labels=["DT-HER", "HGG+EBP", "HER"],
            loc='lower left', )
 # plt.legend(labels=legend_list)
 plt.show()
-
 # logs.close()

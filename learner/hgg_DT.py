@@ -242,10 +242,7 @@ class HGGLearner_DT:
         if args.forced_hgg_dt_step_size is None:
             # if forced is not given, take optimal step size
             if args.env == "FetchPickAndPlace-v1" or args.env == "FetchReach-v1" or args.env == "FetchPush-v1":
-                if args.goal == "obstacle":
-                    step_size = 0.02
-                else:
-                    step_size = 0.01
+                step_size = 0.01
             elif args.env == "FetchSlide-v1":
                 step_size = 0.015
         else:
