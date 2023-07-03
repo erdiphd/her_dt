@@ -24,7 +24,7 @@ class GridWorldEnv(gym.Env):
             # self.obstacle_cell_2 = [13, 7]
         elif env == "slide":
             # FetchSlide
-            # the obstacle should be hardcoded at [11, 10], but with 14, 8 it has better performance
+            # the obstacle should be hardcoded at [11, 10], but with [14, 8] it has better performance
             self.obstacle_cell_1 = [11, 10]
         self.obstacle_is_on = obstacle_is_on
 
