@@ -24,8 +24,9 @@ class GridWorldEnv(gym.Env):
             # self.obstacle_cell_2 = [13, 7]
         elif env == "slide":
             # FetchSlide
-            # the obstacle should be hardcoded at [11, 10], but with [14, 8] it has better performance
-            self.obstacle_cell_1 = [11, 10]
+            self.obstacle_cell_1 = [11, 7]
+            self.obstacle_cell_2 = [11, 8]
+            self.obstacle_cell_3 = [11, 9]
         self.obstacle_is_on = obstacle_is_on
 
         if obstacle_is_on is True and dimensions == 3:
@@ -142,10 +143,13 @@ class GridWorldEnv(gym.Env):
         # check if obstacle test is turned on
         if self.obstacle_is_on is True:
             # check if agent_position and obstacle position intersect
+            if self.env == "slide":
+                if np.array_equal(self._agent_location, self.obstacle_cell_1) or np.array_equal(self._agent_location, self.obstacle_cell_2) or np.array_equal(self._agent_location, self.obstacle_cell_3):
+                    collision_occurred = True
             if self.env == "push":
                 if np.array_equal(self._agent_location, self.obstacle_cell_1) or np.array_equal(self._agent_location, self.obstacle_cell_2):
                     collision_occurred = True
-            if self.env == "slide" or self.env == "pick":
+            if self.env == "pick":
                 if np.array_equal(self._agent_location, self.obstacle_cell_1):
                     collision_occurred = True
         # An episode is done iff the agent has reached the target
