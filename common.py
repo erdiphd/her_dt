@@ -45,7 +45,7 @@ def get_args():
 
     parser.add_argument('--epochs', help='number of epochs', type=np.int32, default=20)
     parser.add_argument('--cycles', help='number of cycles per epoch', type=np.int32, default=20)
-    parser.add_argument('--episodes', help='number of episodes per cycle', type=np.int32, default=50)
+    parser.add_argument('--episodes', help='number of episodes per cycle', type=np.int32, default=1)
     parser.add_argument('--timesteps', help='number of timesteps per episode', type=np.int32,
                         default=(50 if args.env[:5] == 'Fetch' else 100))
     parser.add_argument('--train_batches', help='number of batches to train per episode', type=np.int32, default=20)
@@ -65,7 +65,7 @@ def get_args():
     parser.add_argument('--hgg_L', help='Lipschitz constant', type=np.float32, default=5.0)
     parser.add_argument('--hgg_pool_size', help='size of achieved trajectories pool', type=np.int32, default=1000)
     parser.add_argument('--forced_hgg_dt_step_size', help='step size between intermediate goals', type=np.float32,
-                        default=None)
+                        default=0.15)
     parser.add_argument('--c', help='c parameter to measure success basing on Q function', type=np.float32, default=-1)
     parser.add_argument('--save_acc', help='save successful rate', type=str2bool, default=True)
 

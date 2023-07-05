@@ -40,16 +40,75 @@ if __name__ == '__main__':
             current_arm_position.append(initial_goals[i][2])
             list_of_current_arm_position.append(current_arm_position)
 
-#         list_of_phenotypes_first_part = []
-#         for i in range(args.episodes):
-#             list_of_phenotypes_first_part.append(""" """)
-#
-#         for i in [0, 1, 5, 7, 8, 9, 10, 22, 26, 28, 30, 33, 34, 36, 38, 42]:
-#             list_of_phenotypes_first_part[i] = """if _in_1 < 9.0:
-#     out=1
-#
-# else:
-#     out=1"""
+        list_of_phenotypes_first_part = []
+        for i in range(args.episodes):
+            list_of_phenotypes_first_part.append(""" """)
+
+        for i in [0]:
+            list_of_phenotypes_first_part[i] = """if _in_1 > 0.0:
+    if _in_1 < 5.0:
+        if _in_0 < 7.0:
+            out=0
+            
+        else:
+            out=3
+            
+        
+    else:
+        if _in_0 > 11.0:
+            out=3
+            
+        else:
+            if _in_1 < 14.0:
+                out=1
+                
+            else:
+                if _in_0 > 17.0:
+                    if _in_1 > 18.0:
+                        if _in_1 < 6.0:
+                            out=3
+                            
+                        else:
+                            out=1
+                            
+                        
+                    else:
+                        if _in_1 < 8.0:
+                            if _in_0 < 7.0:
+                                out=0
+                                
+                            else:
+                                out=3
+                                
+                            
+                        else:
+                            out=1
+                            
+                        
+                    
+                else:
+                    if _in_1 < 9.0:
+                        if _in_0 > 11.0:
+                            out=3
+                            
+                        else:
+                            out=1
+                            
+                        
+                    else:
+                        out=0
+                        
+                    
+                
+            
+        
+    
+else:
+    if _in_1 < 14.0:
+        out=0
+        
+    else:
+        out=1"""
 #
 #         for i in [2, 4, 18, 27, 29, 39, 47, 49]:
 #             list_of_phenotypes_first_part[i] = """if _in_0 < 14.0:
@@ -132,7 +191,7 @@ if __name__ == '__main__':
 # else:
 #     out=1"""
 #
-#         list_of_phenotypes = list_of_phenotypes_first_part
+        list_of_phenotypes = list_of_phenotypes_first_part
 
 
 

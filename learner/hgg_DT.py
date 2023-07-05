@@ -311,7 +311,7 @@ class HGGLearner_DT:
                 upscaled_arm_position = []
                 upscaled_goal = []
                 initial_goals[0] = [0.99, 0.69, 0.4142]
-                desired_goals[0] = [1.29, 1.09, 0.4142]
+                desired_goals[0] = [1.19, 1.09, 0.4142]
                 # Compute upscaled arm and goal position
                 # Upscale and ceil, because values are in float
                 for i in range(2):
@@ -347,11 +347,11 @@ class HGGLearner_DT:
                         # working here with 2D DT, use sparse reward, 200 episode length for complex tasks
                         # the obstacle is further away from the desired goal than with FetchPush.
                         # => Use 200 episode length with dense reward
-                        phenotype = dt_4.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
-                                            dimensions=2,
-                                            reward_type="dense", obstacle_is_on=True, env="slide")
+                        # phenotype = dt_4.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
+                        #                     dimensions=2,
+                        #                     reward_type="dense", obstacle_is_on=True, env="slide")
                         print("Phenotype number " + str(j) + " generated")
-                        list_of_phenotypes.append(phenotype)
+                        # list_of_phenotypes.append(phenotype)
                         list_of_arm.append(upscaled_arm_position)
                         list_of_goal.append(upscaled_goal)
                         list_of_third_coordinate.append(third_coordinate)
@@ -652,6 +652,7 @@ class HGGLearner_DT:
                             # give FetchPush freedom with x coordinate
                             list_for_clip_upper[0] = 2
                         else:
+                            # clip if its near goal
                             if list_of_arm[i][0] > list_of_goal[i][0]:
                                 list_for_clip_upper[0] = list_of_arm[i][0] / 10
                             if list_of_arm[i][0] <= list_of_goal[i][0]:
@@ -667,6 +668,7 @@ class HGGLearner_DT:
                             # give FetchPush freedom with x coordinate
                             list_for_clip_lower[0] = 1
                         else:
+                            # clip if its near goal
                             if list_of_arm[i][0] < list_of_goal[i][0]:
                                 list_for_clip_lower[0] = list_of_arm[i][0] / 10
                             if list_of_arm[i][0] >= list_of_goal[i][0]:
@@ -1008,7 +1010,14 @@ class HGGLearner_DT:
                             list_for_clip_upper[0] = list_of_goal[i][0] / 10
 
                         # give FetchSlide freedom in y coordinate
-                        list_for_clip_upper[1] = 2
+                        if tmp_arm[1] != tmp_goal[1]:
+                            list_for_clip_upper[1] = 2
+                        else:
+                            # clip if its near goal
+                            if list_of_arm[i][1] > list_of_goal[i][1]:
+                                list_for_clip_upper[1] = list_of_arm[i][1] / 10
+                            if list_of_arm[i][1] <= list_of_goal[i][1]:
+                                list_for_clip_upper[1] = list_of_goal[i][1] / 10
 
                         # lower bound
                         if list_of_arm[i][0] < list_of_goal[i][0]:
@@ -1017,7 +1026,14 @@ class HGGLearner_DT:
                             list_for_clip_lower[0] = list_of_goal[i][0] / 10
 
                         # give FetchSlide freedom in y coordinate
-                        list_for_clip_lower[1] = 0
+                        if tmp_arm[1] != tmp_goal[1]:
+                            list_for_clip_lower[1] = 0
+                        else:
+                            # clip if its near goal
+                            if list_of_arm[i][1] > list_of_goal[i][1]:
+                                list_for_clip_upper[1] = list_of_arm[i][1] / 10
+                            if list_of_arm[i][1] <= list_of_goal[i][1]:
+                                list_for_clip_upper[1] = list_of_goal[i][1] / 10
 
                         # third coordinate remains the same here
                         list_for_clip_upper[2] = desired_goals[i][2]
