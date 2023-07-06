@@ -58,7 +58,7 @@ neural_network_option = 'compare_nn'
 
 # HGG_DT
 file_list = []
-path = "/home/vlaffo/Desktop/thesis results/" + "obstacle test/" + robotic_task +"/HGG-DT/current/"
+path = "/home/vlaffo/Desktop/thesis results/" + "obstacle test/" + robotic_task +"/HGG-DT/2 cell centered after change/"
 
 for (dirpath, dirnames, filenames) in walk(path):
     file_list.append(path + filenames[0])
@@ -71,7 +71,7 @@ plot_graphs(file_list, 'red')
 
 # HGG
 file_list = []
-path = "/home/vlaffo/Desktop/thesis results/" + "obstacle test/" + robotic_task +"/HGG/"
+path = "/home/vlaffo/Desktop/thesis results/" + "obstacle test/" + robotic_task +"/HGG/2 cell centered/"
 
 for (dirpath, dirnames, filenames) in walk(path):
     file_list.append(path + filenames[0])
@@ -83,7 +83,7 @@ plot_graphs(file_list, 'blue')
 
 # HER
 file_list = []
-path = "/home/vlaffo/Desktop/thesis results/" + "obstacle test/" + robotic_task +"/HER/"
+path = "/home/vlaffo/Desktop/thesis results/" + "obstacle test/" + robotic_task +"/HER/2 cell centered/"
 
 for (dirpath, dirnames, filenames) in walk(path):
     file_list.append(path + filenames[0])

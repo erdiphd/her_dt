@@ -1,6 +1,9 @@
-# Hindsight Goal Generation (HGG)
+# Decision Tree based - Hindsight Experience Replay (DT-HER)
 
-This is a TensorFlow implementation for our paper [Exploration via Hindsight Goal Generation](http://arxiv.org/abs/1906.04279) accepted by NeurIPS 2019.
+This is the implementation for our paper "Generating Curriculum with Decision Tree under the Sparse Reward".
+
+Also contains a TensorFlow implementation for the paper [Exploration via Hindsight Goal Generation](http://arxiv.org/abs/1906.04279) accepted by NeurIPS 2019.
+
 
 
 ## Requirements
@@ -12,13 +15,15 @@ This is a TensorFlow implementation for our paper [Exploration via Hindsight Goa
 
 ## Running Commands
 
-Run the following commands to reproduce our main results shown in section 5.1.
+Run the following commands to reproduce our results shown in section 6.2.
 
 ```bash
-python train.py --tag='HGG_fetch_push' --env=FetchPush-v1
-python train.py --tag='HGG_fetch_pick' --env=FetchPickAndPlace-v1
-python train.py --tag='HGG_hand_block' --env=HandManipulateBlock-v0
-python train.py --tag='HGG_hand_egg' --env=HandManipulateEgg-v0
+python train.py --tag='DT-HER_fetch_push' --learn=dt-her --env=FetchPush-v1 --goal=interval
+python train.py --tag='DT-HER_fetch_slide' --learn=dt-her --env=FetchSlide-v1 --goal=interval
+python train.py --tag='DT-HER_fetch_reach' --learn=dt-her --env=FetchReach-v1 --goal=interval
+python train.py --tag='DT-HER_fetch_pick' --learn=dt-her --env=FetchPickAndPlace-v1 --goal=interval
 
-python train.py --tag='HGG_fetch_push_with_obstacle' --env=FetchPush-v1 --goal=obstacle
+python train.py --tag='DT-HER_fetch_push_with_obstacle' --learn=dt-her --env=FetchPush-v1 --goal=obstacle
+python train.py --tag='DT-HER_fetch_slide_with_obstacle' --learn=dt-her --env=FetchSlide-v1 --goal=obstacle
+python train.py --tag='DT-HER_fetch_pick_with_obstacle' --learn=dt-her --env=FetchPickAndPlace-v1 --goal=obstacle
 ```

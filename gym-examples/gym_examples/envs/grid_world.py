@@ -11,8 +11,12 @@ class GridWorldEnv(gym.Env):
     def __init__(self, size, agent_location, target_location, dimensions, reward_type, obstacle_is_on, env):
         self.dimensions = dimensions
         self.reward_type = reward_type
-        # for FetchPickAndPlace and FetchPush: obstacle pos = 1.20 0.7 0.44
-        # for FetchSlide = 1.1 1.0 0.44
+        """
+        Obstacle positions:
+        FetchPush: 1.25 0.7 0.44 -> size: 0.1 0.025 0.04
+        FetchSlide: 1.1 0.8 0.44 -> size: 0.025 0.2 0.05
+        FetchPickAndPlace: 1.20 0.7 0.44 -> size: 0.05 0.025 0.04
+        """
         self.env = env
         if env == "push":
             # FetchPush
@@ -21,7 +25,6 @@ class GridWorldEnv(gym.Env):
         elif env == "pick":
             # FetchPickAndPlace
             self.obstacle_cell_1 = [12, 7]
-            # self.obstacle_cell_2 = [13, 7]
         elif env == "slide":
             # FetchSlide
             self.obstacle_cell_1 = [11, 7]
