@@ -69,6 +69,8 @@ def get_args():
                         default=None)
     parser.add_argument('--c', help='c parameter to measure success basing on Q function', type=np.float32, default=-1)
     parser.add_argument('--save_acc', help='save successful rate', type=str2bool, default=True)
+    parser.add_argument('--nth_intermediate_goal', help='choose how many goals forwards should the second '
+                                                        'intermediate goal be', type=int, default=1)
 
     sub_folder_name = time.strftime('%Y%m%d%H%M%S') + "_" + uuid.uuid4().__str__()[:5]
     parser.add_argument('--log_subfolder_name', help='log subfolder name', type=str, default=sub_folder_name)
