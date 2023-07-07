@@ -11,7 +11,7 @@ class Tester:
 
 		self.info = []
 		if args.save_acc:
-			make_dir('log/accs', clear=False)
+			make_dir('log/' + args.log_subfolder_name + '/accs', clear=False)
 			self.test_rollouts = 100
 
 			self.env_List = []
@@ -52,7 +52,7 @@ class Tester:
 		if self.args.save_acc:
 			for key, acc_info in self.acc_record.items():
 				log_folder = 'accs'
-				if self.args.tag!='': log_folder = log_folder+'/'+self.args.tag
+				if self.args.tag!='': log_folder = self.args.log_subfolder_name + log_folder+'/'+self.args.tag
 				self.args.logger.save_npz(acc_info, key, log_folder)
 
 	def final_summary(self):

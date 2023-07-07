@@ -8,7 +8,7 @@ import numpy as np
 import tensorflow as tf
 from termcolor import colored
 from beautifultable import BeautifulTable
-
+import uuid
 def str2bool(value):
 	if isinstance(value, bool):
 	   return value
@@ -53,11 +53,13 @@ def load_npz_info(file_path):
 class Logger:
 	def __init__(self, name):
 		make_dir('log',clear=False)
-		make_dir('log/text',clear=False)
+		self.sub_folder_name =  name
+		make_dir('log/'+self.sub_folder_name,clear=False)
+		make_dir('log/'+self.sub_folder_name + '/text',clear=False)
 		if name is None: self.name = time.strftime('%Y-%m-%d-%H:%M:%S')
 		else: self.name = name + time.strftime('-(%Y-%m-%d-%H:%M:%S)')
 
-		log_file = 'log/text/'+self.name+'.log'
+		log_file = 'log/' + self.sub_folder_name + '/text/res.log'
 		self.logger = logging.getLogger(log_file)
 		self.logger.setLevel(logging.DEBUG)
 
@@ -94,8 +96,8 @@ class Logger:
 			self.counts[key] = 0
 
 	def summary_init(self, graph, sess):
-		make_dir('log/board',clear=False)
-		self.summary_writer = SummaryWriter(graph, sess, 'log/board/'+self.name)
+		make_dir('log/' + self.sub_folder_name + '/board',clear=False)
+		self.summary_writer = SummaryWriter(graph, sess, 'log/' + self.sub_folder_name + '/board/')
 
 	def summary_setup(self):
 		self.summary_writer.setup()
@@ -175,13 +177,12 @@ class Logger:
 		print(table_c)
 
 	def save_npz(self, info, info_name, folder, subfolder=''):
-		make_dir('log/'+folder,clear=False)
-		make_dir('log/'+folder+'/'+self.name,clear=False)
+		make_dir('log/' + self.sub_folder_name + "/"  +folder,clear=False)
 		if subfolder!='':
-			make_dir('log/'+folder+'/'+self.name+'/'+subfolder,clear=False)
-			save_path = 'log/'+folder+'/'+self.name+'/'+subfolder
+			make_dir('log/'  + self.sub_folder_name + '/' +folder+'/'+subfolder,clear=False)
+			save_path = 'log/'  + self.sub_folder_name + '/' +folder+'/'+subfolder
 		else:
-			save_path = 'log/'+folder+'/'+self.name
+			save_path = 'log/' + self.sub_folder_name + '/' +folder
 		np.savez(save_path+'/'+info_name+'.npz',info=info)
 
 class SummaryWriter:

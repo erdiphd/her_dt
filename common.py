@@ -6,14 +6,15 @@ from algorithm import create_agent
 from learner import create_learner, learner_collection
 from test import Tester
 from algorithm.replay_buffer import ReplayBuffer_Episodic, goal_based_process
-
+import uuid
+import time
 
 def get_args():
     parser = get_arg_parser()
 
     parser.add_argument('--tag', help='terminal tag in logger', type=str, default='')
     parser.add_argument('--alg', help='backend algorithm', type=str, default='ddpg', choices=['ddpg', 'ddpg2'])
-    parser.add_argument('--learn', help='type of training method', type=str, default='dt-her',
+    parser.add_argument('--learn', help='type of training method', type=str, default='normal',
                         choices=learner_collection.keys())
 
     parser.add_argument('--env', help='gym env id', type=str, default='FetchSlide-v1', choices=Robotics_envs_id)
@@ -69,13 +70,16 @@ def get_args():
     parser.add_argument('--c', help='c parameter to measure success basing on Q function', type=np.float32, default=-1)
     parser.add_argument('--save_acc', help='save successful rate', type=str2bool, default=True)
 
+    sub_folder_name = time.strftime('%Y%m%d%H%M%S') + "_" + uuid.uuid4().__str__()[:5]
+    parser.add_argument('--log_subfolder_name', help='log subfolder name', type=str, default=sub_folder_name)
+
     args = parser.parse_args()
     args.goal_based = (args.env in Robotics_envs_id)
     args.clip_return_l, args.clip_return_r = clip_return_range(args)
 
     logger_name = args.alg + '-' + args.env + '-' + args.learn
     if args.tag != '': logger_name = args.tag + '-' + logger_name
-    args.logger = get_logger(logger_name)
+    args.logger = get_logger(sub_folder_name)
 
     for key, value in args.__dict__.items():
         if key != 'logger':
