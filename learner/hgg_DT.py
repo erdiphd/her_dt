@@ -1054,7 +1054,7 @@ class HGGLearner_DT:
                     # checking for the end goal to be reached
                     goal_reached_1[i] = True
             sum_q_vector_1 = 0
-            # check if at least one mean_q is small enough. feedback_positive is set here
+            # check if at least one mean_q is small enough.
             for i in range(args.episodes):
                 # learner feedback basing on Q function values
                 if len(achieved_value) != 0:
