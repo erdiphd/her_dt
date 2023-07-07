@@ -27,3 +27,12 @@ python train.py --tag='DT-HER_fetch_push_with_obstacle' --learn=dt-her --env=Fet
 python train.py --tag='DT-HER_fetch_slide_with_obstacle' --learn=dt-her --env=FetchSlide-v1 --goal=obstacle
 python train.py --tag='DT-HER_fetch_pick_with_obstacle' --learn=dt-her --env=FetchPickAndPlace-v1 --goal=obstacle
 ```
+
+If you are running the trainings for the first time, you need to install the grid environment first:
+
+```bash
+cd gym-examples/
+pip install -e .
+```
+Otherwise, you will get the "ModuleNotFoundError: No module named 'gym_examples'" error.
+
