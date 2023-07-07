@@ -349,13 +349,9 @@ class HGGLearner_DT:
 
                 if args.env == "FetchPush-v1" and args.goal != "obstacle":
                     # working here with 2D DT, 100 episode length for simpler tasks
-                    # some desired goals require dense
-                    reward_type = "sparse"
-                    if j in [3, 6, 13, 15, 24, 46] or j in [19, 43] or j in [16, 32]:
-                        reward_type = "dense"
                     phenotype = dt_2.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
                                           dimensions=2,
-                                          reward_type=reward_type, obstacle_is_on=False, env="push")
+                                          reward_type="dense", obstacle_is_on=False, env="push")
                     print("Phenotype number " + str(j) + " generated")
                     list_of_phenotypes.append(phenotype)
                     list_of_arm.append(upscaled_arm_position)
@@ -401,15 +397,11 @@ class HGGLearner_DT:
                 third_coordinate = initial_goals[j][2]
 
                 if (args.env == "FetchPickAndPlace-v1" or args.env == "FetchReach-v1") and args.goal != "obstacle":
-
                     # generate current DT only once for every start-goal pair
-                    # working here with 2D DT, choose reward based on tasks
-                    reward_type = "sparse"
-                    if j in [3, 6, 13, 15, 24, 46] or j in [19, 43] or j in [16, 32]:
-                        reward_type = "dense"
+                    # working here with 2D DT
                     phenotype = dt_2.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
                                           dimensions=2,
-                                          reward_type=reward_type, obstacle_is_on=False, env="pick")
+                                          reward_type="dense", obstacle_is_on=False, env="pick")
                     print("Phenotype part 1 number " + str(j) + " generated")
                     list_of_phenotypes_first_part.append(phenotype)
                     list_of_arm_first_part.append(upscaled_arm_position)
@@ -819,7 +811,7 @@ class HGGLearner_DT:
                             info = agent.train(buffer.sample_batch())
                             args.logger.add_dict(info)
                         agent.target_update()
-        if args.env == "FetchSlide-v1" and args.goal == "obstacle":
+        elif args.env == "FetchSlide-v1" and args.goal == "obstacle":
             # Q function values
             achieved_value = []
             if self.achieved_trajectory_pool.counter != 0:
