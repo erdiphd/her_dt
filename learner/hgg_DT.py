@@ -470,10 +470,14 @@ class HGGLearner_DT:
 
     def get_q_value(self, agent):
         # Q function values
-        if self.obs_container:
-            feed_dict = {agent.raw_obs_ph: np.array(self.obs_container)}
-            value = agent.sess.run(agent.q_pi, feed_dict)[:, 0]
-            mean_q = value.mean()
+        mean_q = 0
+        # at first episode, obs_container is not initialized yet
+        if hasattr(agent, 'obs_container'):
+            # check if it's not empty
+            if self.obs_container:
+                feed_dict = {agent.raw_obs_ph: np.array(self.obs_container)}
+                value = agent.sess.run(agent.q_pi, feed_dict)[:, 0]
+                mean_q = value.mean()
         else:
             mean_q = 0
 
