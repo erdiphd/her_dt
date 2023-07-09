@@ -256,9 +256,9 @@ class HGGLearner_DT:
         if args.forced_hgg_dt_step_size is None:
             # if forced is not given, take optimal step size
             if args.env == "FetchPickAndPlace-v1" or args.env == "FetchReach-v1" or args.env == "FetchPush-v1":
-                step_size = 0.01
+                step_size = 0.02
             elif args.env == "FetchSlide-v1":
-                step_size = 0.015
+                step_size = 0.03
         else:
             step_size = args.forced_hgg_dt_step_size
 
@@ -377,7 +377,7 @@ class HGGLearner_DT:
                                                 agent_goal=upscaled_goal,
                                                 dimensions=2,
                                                 reward_type="dense", obstacle_is_on=True, env="push")
-                        print("Phenotype part 1 number " + str(j) + " generated")
+                        print("Phenotype number " + str(j) + " generated")
                         list_of_phenotypes.append(phenotype)
                         list_of_arm.append(upscaled_arm_position)
                         list_of_goal.append(upscaled_goal)
@@ -387,7 +387,7 @@ class HGGLearner_DT:
                         phenotype = dt_3.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
                                               dimensions=2,
                                               reward_type="dense", obstacle_is_on=True, env="push")
-                        print("Phenotype part 1 number " + str(j) + " generated")
+                        print("Phenotype number " + str(j) + " generated")
                         list_of_phenotypes.append(phenotype)
                         list_of_arm.append(upscaled_arm_position)
                         list_of_goal.append(upscaled_goal)
@@ -848,11 +848,11 @@ class HGGLearner_DT:
                 tmp_goal_1 = []
                 tmp_goal_2 = []
                 for j in range(len(list_of_current_arm_position[i])):
-                    # round, to prevent phantom decimal points like 0.7000000000000001
-                    tmp_arm.append(round(list_of_current_arm_position[i][j], 10))
+                    # trunc to 6 digits make it possible to recognize when goal is reached
+                    tmp_arm.append(math.trunc(list_of_current_arm_position[i][j] * 1000000) / 1000000)
                     tmp_goal_1.append(current_goal_1[j])
                     tmp_goal_2.append(current_goal_2[j])
-                tmp_goal_2[2] = desired_goals[i][2]
+                tmp_goal_2[2] = math.trunc(desired_goals[i][2] * 1000000) / 1000000
 
                 if tmp_arm[1] == tmp_goal_2[1]:
                     y_coordinate_reached[i] = True
