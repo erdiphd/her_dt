@@ -55,8 +55,7 @@ if __name__ == '__main__':
                                                              list_of_third_coordinate, list_of_current_arm_position,
                                                              list_of_goal_first_part, list_of_arm_first_part,
                                                              list_of_phenotypes_first_part, list_of_arm_second_part,
-                                                             list_of_goal_second_part, list_of_phenotypes_second_part,
-                                                             cycle)
+                                                             list_of_goal_second_part, list_of_phenotypes_second_part)
 
                 tester.cycle_summary()
 

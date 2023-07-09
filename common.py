@@ -17,13 +17,13 @@ def get_args():
     parser.add_argument('--learn', help='type of training method', type=str, default='dt-her',
                         choices=learner_collection.keys())
 
-    parser.add_argument('--env', help='gym env id', type=str, default='FetchPush-v1', choices=Robotics_envs_id)
+    parser.add_argument('--env', help='gym env id', type=str, default='FetchPickAndPlace-v1', choices=Robotics_envs_id)
     args, _ = parser.parse_known_args()
     if args.env == 'HandReach-v0':
         parser.add_argument('--goal', help='method of goal generation', type=str, default='reach',
                             choices=['vanilla', 'reach'])
     else:
-        parser.add_argument('--goal', help='method of goal generation', type=str, default='interval',
+        parser.add_argument('--goal', help='method of goal generation', type=str, default='obstacle',
                             choices=['vanilla', 'fixobj', 'interval', 'obstacle'])
         if args.env[:5] == 'Fetch':
             parser.add_argument('--init_offset', help='initial offset in fetch environments', type=np.float32,

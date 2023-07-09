@@ -16,9 +16,9 @@ def plot_graphs(file_list, color='r'):
         logs.seek(0)
         log_file = logs.read()
         # if file_list[0] == "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HGG-DT/her_result1-ddpg-FetchPush-v1-dt-her-(2023-06-27-16_29_25).log" or file_list[0] == "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HGG/her_result1-ddpg-FetchPush-v1-hgg-(2023-06-27-09_23_52).log" or file_list[0] == "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HER/her_result1-ddpg-FetchPush-v1-normal-(2023-06-27-09_23_29).log":
-        success_rates = [(m.start(0), m.end(0)) for m in re.finditer('Success/obstacle', log_file)]
+        # success_rates = [(m.start(0), m.end(0)) for m in re.finditer('Success/obstacle', log_file)]
         # else:
-        # success_rates = [(m.start(0), m.end(0)) for m in re.finditer('Success/interval', log_file)]
+        success_rates = [(m.start(0), m.end(0)) for m in re.finditer('Success/interval', log_file)]
 
         # print(success_rates)
 
@@ -51,57 +51,70 @@ def plot_graphs(file_list, color='r'):
     legend_list.append(label_text)
 
 
-robotic_task = 'FetchSlide'
+robotic_task = 'FetchPush'
 xdata = 200 * np.arange(100)
 
 neural_network_option = 'compare_nn'
 
 # HGG_DT
-file_list = []
-path = "/home/vlaffo/Desktop/thesis results/" + "obstacle test/" + robotic_task +"/HGG-DT/2 cell centered after change/"
 
-for (dirpath, dirnames, filenames) in walk(path):
-    file_list.append(path + filenames[0])
-    file_list.append(path + filenames[1])
-    file_list.append(path + filenames[2])
-    file_list.append(path + filenames[3])
-    file_list.append(path + filenames[4])
-
-plot_graphs(file_list, 'red')
-
-# HGG
-file_list = []
-path = "/home/vlaffo/Desktop/thesis results/" + "obstacle test/" + robotic_task +"/HGG/2 cell centered/"
-
-for (dirpath, dirnames, filenames) in walk(path):
-    file_list.append(path + filenames[0])
-    file_list.append(path + filenames[1])
-    file_list.append(path + filenames[2])
-    file_list.append(path + filenames[3])
-    file_list.append(path + filenames[4])
+file_list = ['/home/vlaffo/Desktop/thesis results/comparing hyperparameter/1.log']
 plot_graphs(file_list, 'blue')
 
-# HER
-file_list = []
-path = "/home/vlaffo/Desktop/thesis results/" + "obstacle test/" + robotic_task +"/HER/2 cell centered/"
+file_list = ['/home/vlaffo/Desktop/thesis results/comparing hyperparameter/2.log']
+plot_graphs(file_list, 'red')
 
-for (dirpath, dirnames, filenames) in walk(path):
-    file_list.append(path + filenames[0])
-    file_list.append(path + filenames[1])
-    file_list.append(path + filenames[2])
-    file_list.append(path + filenames[3])
-    file_list.append(path + filenames[4])
-
+file_list = ['/home/vlaffo/Desktop/thesis results/comparing hyperparameter/3.log']
 plot_graphs(file_list, 'green')
+
+
+
+# file_list = []
+# path = "/home/vlaffo/Desktop/thesis results/" + "obstacle test/" + robotic_task +"/HGG-DT/2 cell centered after change/"
+#
+# for (dirpath, dirnames, filenames) in walk(path):
+#     file_list.append(path + filenames[0])
+#     file_list.append(path + filenames[1])
+#     file_list.append(path + filenames[2])
+#     file_list.append(path + filenames[3])
+#     file_list.append(path + filenames[4])
+#
+# plot_graphs(file_list, 'red')
+#
+# # HGG
+# file_list = []
+# path = "/home/vlaffo/Desktop/thesis results/" + "obstacle test/" + robotic_task +"/HGG/2 cell centered/"
+#
+# for (dirpath, dirnames, filenames) in walk(path):
+#     file_list.append(path + filenames[0])
+#     file_list.append(path + filenames[1])
+#     file_list.append(path + filenames[2])
+#     file_list.append(path + filenames[3])
+#     file_list.append(path + filenames[4])
+# plot_graphs(file_list, 'blue')
+#
+# # HER
+# file_list = []
+# path = "/home/vlaffo/Desktop/thesis results/" + "obstacle test/" + robotic_task +"/HER/2 cell centered/"
+#
+# for (dirpath, dirnames, filenames) in walk(path):
+#     file_list.append(path + filenames[0])
+#     file_list.append(path + filenames[1])
+#     file_list.append(path + filenames[2])
+#     file_list.append(path + filenames[3])
+#     file_list.append(path + filenames[4])
+#
+# plot_graphs(file_list, 'green')
 
 
 sns.tsplot(time=xdata, data=np.ones(len(xdata)), color="b", linestyle="-")
 
 plt.ylabel("Success Rate", fontsize=15)
 plt.xlabel("Episode ", fontsize=15, labelpad=4)
-plt.title(robotic_task + " + obstacle", fontsize=16)
+# plt.title(robotic_task + " + obstacle", fontsize=16)
+plt.title(robotic_task, fontsize=16)
 
-plt.legend(labels=["DT-HER", "HGG+EBP", "HER"],
+plt.legend(labels=["1", "2", "3"],
            loc='lower left', )
 # plt.legend(labels=legend_list)
 plt.show()
