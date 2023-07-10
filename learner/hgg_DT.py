@@ -873,7 +873,7 @@ class HGGLearner_DT:
                     tmp_arm.append(round(math.trunc(list_of_current_arm_position[i][j] * 1000000) / 1000000, 5))
                     tmp_goal_1.append(current_goal_1[j])
                     tmp_goal_2.append(current_goal_2[j])
-                tmp_goal_2[2] = math.trunc(desired_goals[i][2] * 1000000) / 1000000
+                tmp_goal_2[2] = round(math.trunc(desired_goals[i][2] * 1000000) / 1000000, 5)
 
                 if tmp_arm[1] == tmp_goal_2[1]:
                     y_coordinate_reached[i] = True
