@@ -15,6 +15,14 @@ if __name__ == '__main__':
             list_of_goal_first_part, list_of_arm_first_part, list_of_phenotypes_first_part, list_of_arm_second_part, \
             list_of_goal_second_part, list_of_phenotypes_second_part = learner.get_phenotype(args)
 
+        decision_tree_file = open("log/" + args.log_subfolder_name + "/DT.txt", "w")
+
+        for number_e, current_dt in enumerate(list_of_phenotypes):
+            header_text_dt = f"--------------- Decison tree{number_e}--------------\n"
+            decision_tree_file.writelines(header_text_dt + current_dt)
+
+        decision_tree_file.close()
+
         args.logger.summary_init(agent.graph, agent.sess)
 
         # Progress info
