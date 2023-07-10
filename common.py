@@ -66,7 +66,7 @@ def get_args():
     parser.add_argument('--hgg_L', help='Lipschitz constant', type=np.float32, default=5.0)
     parser.add_argument('--hgg_pool_size', help='size of achieved trajectories pool', type=np.int32, default=1000)
     parser.add_argument('--forced_hgg_dt_step_size', help='step size between intermediate goals', type=np.float32,
-                        default=0.2)
+                        default=None)
     parser.add_argument('--c', help='c parameter to measure success basing on Q function', type=np.float32, default=-1)
     parser.add_argument('--save_acc', help='save successful rate', type=str2bool, default=True)
     parser.add_argument('--nth_intermediate_goal', help='choose how many goals forwards should the second '

@@ -323,7 +323,6 @@ class HGGLearner_DT:
                 # rewrite coordinates and put them into big lists
                 upscaled_arm_position = []
                 upscaled_goal = []
-
                 # Compute upscaled arm and goal position
                 # Upscale and ceil, because values are in float
                 for i in range(2):
@@ -870,7 +869,8 @@ class HGGLearner_DT:
                 tmp_goal_2 = []
                 for j in range(len(list_of_current_arm_position[i])):
                     # trunc to 6 digits make it possible to recognize when goal is reached
-                    tmp_arm.append(math.trunc(list_of_current_arm_position[i][j] * 1000000) / 1000000)
+                    # round to prevent 0.899999 instead of 0.9
+                    tmp_arm.append(round(math.trunc(list_of_current_arm_position[i][j] * 1000000) / 1000000, 5))
                     tmp_goal_1.append(current_goal_1[j])
                     tmp_goal_2.append(current_goal_2[j])
                 tmp_goal_2[2] = math.trunc(desired_goals[i][2] * 1000000) / 1000000

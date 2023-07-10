@@ -45,34 +45,103 @@ if __name__ == '__main__':
         args.logger.summary_setup()
 
 #         list_of_phenotypes_first_part = []
-#         list_of_phenotypes_first_part.append("""if _in_0 > 2.0:
-#     if _in_1 > 17.0:
-#         out=2
-#
-#     else:
-#         out=1
-#
-#
-# else:
-#     out=3""")
-#
-#         list_of_phenotypes_second_part = []
-#         list_of_phenotypes_second_part.append("""if _in_2 > 8.0:
-#     if _in_1 < 10.0:
-#         out=1
-#
-#     else:
-#         if _in_0 > 14.0:
-#             out=0
+#         list_of_phenotypes_first_part.append("""if _in_1 < 9.0:
+#     if _in_1 > 11.0:
+#         if _in_1 > 1.0:
+#             out=2
 #
 #         else:
 #             out=3
 #
 #
+#     else:
+#         if _in_0 < 4.0:
+#             out=1
+#
+#         else:
+#             if _in_0 < 6.0:
+#                 if _in_0 > 5.0:
+#                     out=2
+#
+#                 else:
+#                     out=1
+#
+#
+#             else:
+#                 if _in_0 < 4.0:
+#                     if _in_0 < 18.0:
+#                         out=0
+#
+#                     else:
+#                         if _in_0 < 0.0:
+#                             if _in_0 > 4.0:
+#                                 out=3
+#
+#                             else:
+#                                 if _in_0 < 18.0:
+#                                     if _in_0 > 17.0:
+#                                         out=3
+#
+#                                     else:
+#                                         if _in_1 > 3.0:
+#                                             out=0
+#
+#                                         else:
+#                                             out=3
+#
+#
+#
+#                                 else:
+#                                     out=0
+#
+#
+#
+#                         else:
+#                             out=3
+#
+#
+#
+#                 else:
+#                     out=1
+#
+#
+#
+#
 #
 # else:
-#     if _in_1 < 0.0:
-#         out=0
+#     if _in_0 > 0.0:
+#         if _in_1 < 3.0:
+#             out=2
+#
+#         else:
+#             if _in_1 > 6.0:
+#                 out=0
+#
+#             else:
+#                 out=0
+#
+#
+#
+#     else:
+#         out=0""")
+#
+#         list_of_phenotypes_second_part = []
+#         list_of_phenotypes_second_part.append("""if _in_1 > 4.0:
+#     if _in_2 < 11.0:
+#         out=4
+#
+#     else:
+#         out=5
+#
+#
+# else:
+#     if _in_2 > 19.0:
+#         if _in_0 < 4.0:
+#             out=0
+#
+#         else:
+#             out=5
+#
 #
 #     else:
 #         out=4""")
