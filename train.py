@@ -44,6 +44,39 @@ if __name__ == '__main__':
 
         args.logger.summary_setup()
 
+#         list_of_phenotypes_first_part = []
+#         list_of_phenotypes_first_part.append("""if _in_0 > 2.0:
+#     if _in_1 > 17.0:
+#         out=2
+#
+#     else:
+#         out=1
+#
+#
+# else:
+#     out=3""")
+#
+#         list_of_phenotypes_second_part = []
+#         list_of_phenotypes_second_part.append("""if _in_2 > 8.0:
+#     if _in_1 < 10.0:
+#         out=1
+#
+#     else:
+#         if _in_0 > 14.0:
+#             out=0
+#
+#         else:
+#             out=3
+#
+#
+#
+# else:
+#     if _in_1 < 0.0:
+#         out=0
+#
+#     else:
+#         out=4""")
+
         for epoch in range(args.epochs):
             for cycle in range(args.cycles):
                 args.logger.tabular_clear()

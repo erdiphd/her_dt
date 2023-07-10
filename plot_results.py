@@ -51,21 +51,30 @@ def plot_graphs(file_list, color='r'):
     legend_list.append(label_text)
 
 
-robotic_task = 'FetchReach'
-xdata = 50 * np.arange(100)
+robotic_task = 'FetchPush'
+xdata = 200 * np.arange(100)
 
 neural_network_option = 'compare_nn'
 
 # HGG_DT
 
-file_list = ['/home/vlaffo/Desktop/thesis results/FetchReach/HGG-DT/ddpg-FetchReach-v1-hgg_dt-(2023-06-11-19 42 25).log']
-plot_graphs(file_list, 'blue')
+file_list = ['/home/vlaffo/Desktop/thesis results/comparing hyperparameter/1.log']
+plot_graphs(file_list, 'purple')
 
-file_list = ['/home/vlaffo/Desktop/thesis results/FetchReach/HGG-DT/ddpg-FetchReach-v1-hgg_dt-(2023-06-11-19 42 25).log']
+file_list = ['/home/vlaffo/Desktop/thesis results/comparing hyperparameter/2.log']
 plot_graphs(file_list, 'red')
 
-file_list = ['/home/vlaffo/Desktop/thesis results/FetchReach/HGG-DT/ddpg-FetchReach-v1-hgg_dt-(2023-06-11-19 42 25).log']
+file_list = ['/home/vlaffo/Desktop/thesis results/comparing hyperparameter/3.log']
 plot_graphs(file_list, 'green')
+
+# file_list = ['/home/vlaffo/Desktop/HGG logs/ddpg-FetchPush-v1-hgg_dt-0.015 step.log']
+# plot_graphs(file_list, 'orange')
+#
+# file_list = ['/home/vlaffo/Desktop/HGG logs/ddpg-FetchPush-v1-hgg_dt-0.0125 step.log']
+# plot_graphs(file_list, 'purple')
+#
+# file_list = ['/home/vlaffo/Desktop/HGG logs/ddpg-FetchPush-v1-hgg_dt-0.00825 step.log']
+# plot_graphs(file_list, 'yellow')
 
 
 
@@ -114,7 +123,7 @@ plt.xlabel("Episode ", fontsize=15, labelpad=4)
 # plt.title(robotic_task + " + obstacle", fontsize=16)
 plt.title(robotic_task, fontsize=16)
 
-plt.legend(labels=["0.01 step", "0.02 step", "0.03 step", "0.04 step", "0.015 step"],
+plt.legend(labels=["1", "0.04 step", "0.06 step", "0.03 step", "0.025 step", "0.0165 step"],
            loc='lower left', )
 # plt.legend(labels=legend_list)
 plt.show()

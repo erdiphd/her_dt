@@ -10,6 +10,7 @@ from ge_q_dts import simple_test_orthogonal as dt
 from ge_q_dts import simple_test_orthogonal_2 as dt_2
 from ge_q_dts import simple_test_orthogonal_3 as dt_3
 from ge_q_dts import simple_test_orthogonal_3_2 as dt_3_2
+from ge_q_dts import simple_test_orthogonal_3_3 as dt_3_3
 from ge_q_dts import simple_test_orthogonal_4 as dt_4
 import ast
 import copy
@@ -371,7 +372,18 @@ class HGGLearner_DT:
                 elif args.goal == "obstacle" and args.env == "FetchPush-v1":
                     # if we are working with obstacles, use other file with larger number of generations
                     # + only dense function
-                    if upscaled_arm_position[0] != upscaled_goal[0]:
+                    if upscaled_arm_position[0] > upscaled_goal[0]:
+                        # HARD TASKS: 13, 6 -> 12, 6; 400 episode length
+                        phenotype = dt_3_3.main(grid_size=20, agent_start=upscaled_arm_position,
+                                                agent_goal=upscaled_goal,
+                                                dimensions=2,
+                                                reward_type="dense", obstacle_is_on=True, env="push")
+                        print("Phenotype number " + str(j) + " generated")
+                        list_of_phenotypes.append(phenotype)
+                        list_of_arm.append(upscaled_arm_position)
+                        list_of_goal.append(upscaled_goal)
+                        list_of_third_coordinate.append(third_coordinate)
+                    elif upscaled_arm_position[0] != upscaled_goal[0]:
                         # HARD TASKS, 300 episode length (more complex DT)
                         phenotype = dt_3_2.main(grid_size=20, agent_start=upscaled_arm_position,
                                                 agent_goal=upscaled_goal,
@@ -419,9 +431,19 @@ class HGGLearner_DT:
                     list_of_goal_first_part.append(upscaled_goal)
                     list_of_third_coordinate.append(third_coordinate)
                 elif args.env == "FetchPickAndPlace-v1" and args.goal == "obstacle":
-                    if upscaled_arm_position[0] != upscaled_goal[0]:
+                    if upscaled_arm_position[0] > upscaled_goal[0]:
+                        # HARD TASKS: 13, 6 -> 12, 6 (the path is not straight); 400 episode length
+                        phenotype = dt_3_3.main(grid_size=20, agent_start=upscaled_arm_position,
+                                                agent_goal=upscaled_goal,
+                                                dimensions=2,
+                                                reward_type="dense", obstacle_is_on=True, env="pick")
+                        print("Phenotype part 1 number " + str(j) + " generated")
+                        list_of_phenotypes_first_part.append(phenotype)
+                        list_of_arm_first_part.append(upscaled_arm_position)
+                        list_of_goal_first_part.append(upscaled_goal)
+                        list_of_third_coordinate.append(third_coordinate)
+                    elif upscaled_arm_position[0] != upscaled_goal[0]:
                         # HARD TASKS: 13, 6 -> 12, 6 (the path is not straight); 300 episode length
-                        # same here as for FetchPush, xy of FetchPickAndPlace == xy of FetchPush
                         phenotype = dt_3_2.main(grid_size=20, agent_start=upscaled_arm_position,
                                                 agent_goal=upscaled_goal,
                                                 dimensions=2,
@@ -432,7 +454,6 @@ class HGGLearner_DT:
                         list_of_goal_first_part.append(upscaled_goal)
                         list_of_third_coordinate.append(third_coordinate)
                     else:
-                        # same here as for FetchPush, xy of FetchPickAndPlace == xy of FetchPush
                         phenotype = dt_3.main(grid_size=20, agent_start=upscaled_arm_position, agent_goal=upscaled_goal,
                                               dimensions=2,
                                               reward_type="dense", obstacle_is_on=True, env="pick")

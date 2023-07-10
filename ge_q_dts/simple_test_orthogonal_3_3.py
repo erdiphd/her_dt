@@ -45,9 +45,9 @@ parser.add_argument("--df", default=0.9, type=float, help="The discount factor u
 parser.add_argument("--eps", default=0.05, type=float, help="Epsilon parameter for the epsilon greedy Q-learning")
 parser.add_argument("--input_space", default=2, type=int, help="Number of inputs given to the agent")
 parser.add_argument("--num_episodes", default=50, type=int, help="Number of episodes that the agent faces in the fitness evaluation phase")
-parser.add_argument("--episode_len", default=100, type=int, help="The max length of an episode in timesteps")
+parser.add_argument("--episode_len", default=400, type=int, help="The max length of an episode in timesteps")
 parser.add_argument("--lambda_", default=50, type=int, help="Population size")
-parser.add_argument("--generations", default=40, type=int, help="Number of generations")
+parser.add_argument("--generations", default=200, type=int, help="Number of generations")
 parser.add_argument("--cxp", default=0.5, type=float, help="Crossover probability")
 parser.add_argument("--mp", default=0.5, type=float, help="Mutation probability")
 parser.add_argument("--mutation", default="function-tools.mutUniformInt#low-0#up-40000#indpb-0.1", type=string_to_dict, help="Mutation operator. String in the format function-value#function_param_-value_1... The operators from the DEAP library can be used by setting the function to 'function-tools.<operator_name>'. Default: Uniform Int Mutation")
@@ -121,7 +121,7 @@ parser.add_argument('--save_acc', help='save successful rate', type=bool, defaul
 # Setup of the logging
 
 date = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-logdir = "ge_q_dts/logs/gym/{}_{}".format(date, "".join(np.random.choice(list(string.ascii_lowercase), size=8)))
+logdir = "ge_q_dts/logs/gym/{}_{}".format(date, "".join(np.random.choice(list(string.ascii_lowercase), size=12)))
 logfile = os.path.join(logdir, "log.txt")
 os.makedirs(logdir)
 
