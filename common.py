@@ -23,7 +23,7 @@ def get_args():
         parser.add_argument('--goal', help='method of goal generation', type=str, default='reach',
                             choices=['vanilla', 'reach'])
     else:
-        parser.add_argument('--goal', help='method of goal generation', type=str, default='interval',
+        parser.add_argument('--goal', help='method of goal generation', type=str, default='obstacle',
                             choices=['vanilla', 'fixobj', 'interval', 'obstacle'])
         if args.env[:5] == 'Fetch':
             parser.add_argument('--init_offset', help='initial offset in fetch environments', type=np.float32,
