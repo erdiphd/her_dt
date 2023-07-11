@@ -59,7 +59,7 @@ neural_network_option = 'compare_nn'
 # HGG_DT
 
 file_list = ['/home/vlaffo/Desktop/thesis results/comparing hyperparameter/1.log']
-plot_graphs(file_list, 'purple')
+plot_graphs(file_list, 'blue')
 
 file_list = ['/home/vlaffo/Desktop/thesis results/comparing hyperparameter/2.log']
 plot_graphs(file_list, 'red')
@@ -123,7 +123,7 @@ plt.xlabel("Episode ", fontsize=15, labelpad=4)
 # plt.title(robotic_task + " + obstacle", fontsize=16)
 plt.title(robotic_task, fontsize=16)
 
-plt.legend(labels=["1", "0.04 step", "0.06 step", "0.03 step", "0.025 step", "0.0165 step"],
+plt.legend(labels=["1", "2", "3"],
            loc='lower left', )
 # plt.legend(labels=legend_list)
 plt.show()

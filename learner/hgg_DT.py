@@ -256,10 +256,12 @@ class HGGLearner_DT:
         step_size = 0
         if args.forced_hgg_dt_step_size is None:
             # if forced is not given, take optimal step size
-            if args.env == "FetchPickAndPlace-v1" or args.env == "FetchReach-v1" or args.env == "FetchPush-v1":
-                step_size = 0.02
+            if args.env == "FetchPickAndPlace-v1":
+                step_size = 0.01
+            elif args.env == "FetchReach-v1" or args.env == "FetchPush-v1":
+                step_size = 0.01
             elif args.env == "FetchSlide-v1":
-                step_size = 0.03
+                step_size = 0.015
         else:
             step_size = args.forced_hgg_dt_step_size
 
@@ -503,7 +505,7 @@ class HGGLearner_DT:
         # Q function values
         mean_q = 0
         # at first episode, obs_container is not initialized yet
-        if hasattr(agent, 'obs_container'):
+        if hasattr(self, 'obs_container'):
             # check if it's not empty
             if self.obs_container:
                 feed_dict = {agent.raw_obs_ph: np.array(self.obs_container)}
@@ -511,6 +513,8 @@ class HGGLearner_DT:
                 mean_q = value.mean()
         else:
             mean_q = 0
+
+        print("mean q: " + str(mean_q))
 
         return abs(self.args.c - self.clip(mean_q, -1, 0))
 

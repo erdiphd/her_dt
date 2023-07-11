@@ -36,6 +36,137 @@ if __name__ == '__main__':
 
         decision_tree_file.close()
 
+#         list_of_phenotypes_first_part = []
+#         for i in range(args.episodes):
+#             list_of_phenotypes_first_part.append(""" """)
+#
+#         list_of_phenotypes_second_part = []
+#         for i in range(args.episodes):
+#             list_of_phenotypes_second_part.append(""" """)
+#
+#         list1 = [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+#                  24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 37, 38, 39, 41, 42, 43, 44, 45, 46, 47, ]
+#         list2 = [1, 11, 36, 40, 48]
+#         list3 = [49]
+#
+#         for i in list1:
+#             list_of_phenotypes_first_part[i] = """if _in_0 > 2.0:
+#     if _in_1 > 17.0:
+#         out=2
+#
+#     else:
+#         out=1
+#
+#
+# else:
+#     out=3"""
+#
+#         for i in list2:
+#             list_of_phenotypes_first_part[i] = """if _in_0 < 13.0:
+#     if _in_0 < 18.0:
+#         out=0
+#
+#     else:
+#         if _in_1 < 19.0:
+#             out=1
+#
+#         else:
+#             if _in_1 > 5.0:
+#                 if _in_0 < 17.0:
+#                     if _in_1 < 11.0:
+#                         out=2
+#
+#                     else:
+#                         out=3
+#
+#
+#                 else:
+#                     if _in_0 > 5.0:
+#                         out=3
+#
+#                     else:
+#                         out=3
+#
+#
+#
+#             else:
+#                 out=1
+#
+#
+#
+#
+# else:
+#     out=1"""
+#
+#         for i in list3:
+#             list_of_phenotypes_first_part[i] = """if _in_0 > 11.0:
+#     if _in_1 < 17.0:
+#         if _in_1 > 7.0:
+#             out=1
+#
+#         else:
+#             if _in_0 > 17.0:
+#                 out=3
+#
+#             else:
+#                 if _in_0 > 4.0:
+#                     out=2
+#
+#                 else:
+#                     if _in_0 > 1.0:
+#                         out=1
+#
+#                     else:
+#                         out=3
+#
+#
+#
+#
+#
+#     else:
+#         out=2
+#
+#
+# else:
+#     if _in_0 > 11.0:
+#         out=3
+#
+#     else:
+#         if _in_1 < 3.0:
+#             out=3
+#
+#         else:
+#             if _in_1 > 8.0:
+#                 out=0
+#
+#             else:
+#                 if _in_1 > 14.0:
+#                     out=0
+#
+#                 else:
+#                     out=1"""
+#
+#         for i in range(args.episodes):
+#             list_of_phenotypes_second_part[i] = """if _in_1 > 4.0:
+#     if _in_2 < 11.0:
+#         out=4
+#
+#     else:
+#         out=5
+#
+#
+# else:
+#     if _in_2 > 19.0:
+#         if _in_0 < 4.0:
+#             out=0
+#
+#         else:
+#             out=5
+#
+#
+#     else:
+#         out=4"""
+
         args.logger.summary_init(agent.graph, agent.sess)
 
         # Progress info
@@ -62,6 +193,8 @@ if __name__ == '__main__':
                 current_arm_position.append(math.ceil(initial_goals[i][j] * 10) / 10)
             current_arm_position.append(initial_goals[i][2])
             list_of_current_arm_position.append(current_arm_position)
+
+
 
         args.logger.summary_setup()
 
