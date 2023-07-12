@@ -58,14 +58,15 @@ neural_network_option = 'compare_nn'
 
 # HGG_DT
 
-file_list = ['/home/vlaffo/Desktop/thesis results/comparing hyperparameter/1.log']
-plot_graphs(file_list, 'blue')
+file_list = ['/home/vlaffo/Desktop/thesis results/comparing hyperparameter/res1.log']
+plot_graphs(file_list, 'green')
 
-file_list = ['/home/vlaffo/Desktop/thesis results/comparing hyperparameter/2.log']
+file_list = ['/home/vlaffo/Desktop/thesis results/feedback push/no feedback.log']
 plot_graphs(file_list, 'red')
 
-file_list = ['/home/vlaffo/Desktop/thesis results/comparing hyperparameter/3.log']
-plot_graphs(file_list, 'green')
+# file_list = ['/home/vlaffo/Desktop/thesis results/comparing hyperparameter/res3.log']
+# plot_graphs(file_list, 'purple')
+
 
 # file_list = ['/home/vlaffo/Desktop/HGG logs/ddpg-FetchPush-v1-hgg_dt-0.015 step.log']
 # plot_graphs(file_list, 'orange')
@@ -123,7 +124,7 @@ plt.xlabel("Episode ", fontsize=15, labelpad=4)
 # plt.title(robotic_task + " + obstacle", fontsize=16)
 plt.title(robotic_task, fontsize=16)
 
-plt.legend(labels=["1", "2", "3"],
+plt.legend(labels=["w/ feedback", "w/o feedback"],
            loc='lower left', )
 # plt.legend(labels=legend_list)
 plt.show()

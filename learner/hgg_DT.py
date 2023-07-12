@@ -204,7 +204,7 @@ class HGGLearner_DT:
         variables = {}  # {"out": None, "leaf": None}
         for idx, i in enumerate(input):
             variables["_in_{}".format(idx)] = i
-
+        # wrap the DT into a function
         return self.exec_with_return("def func(): \n" + phenotype + "    return out \nfunc()", variables)
 
     def get_intermediate_goal(self, args, phenotype, current_arm_position, third_coordinate, feedback,
@@ -224,7 +224,7 @@ class HGGLearner_DT:
         upscaled_arm_position = []
         if turnaround is not None:
             # this should prevent the agent from stopping 1 action before the goal.
-            # We have to do this because the DT is not trained on float or 100X upscale
+            # We have to do this because the DT is not trained on float
             if args.env == "FetchSlide-v1" and args.goal == "obstacle":
                 if not turnaround:
                     upscaled_arm_position = np.array(current_arm_position) * 10
@@ -433,7 +433,7 @@ class HGGLearner_DT:
                     list_of_third_coordinate.append(third_coordinate)
                 elif args.env == "FetchPickAndPlace-v1" and args.goal == "obstacle":
                     if upscaled_arm_position[0] > upscaled_goal[0]:
-                        # HARD TASKS: 13, 6 -> 12, 6 (the path is not straight); 400 episode length
+                        # HARD TASKS: 13, 6 -> 12, 6 (the going backwards); 400 episode length
                         phenotype = dt_3_3.main(grid_size=20, agent_start=upscaled_arm_position,
                                                 agent_goal=upscaled_goal,
                                                 dimensions=2,
@@ -949,11 +949,12 @@ class HGGLearner_DT:
 
                         nth_intermediate_goal = intermediate_goal_1.copy()
                         for k in range(args.nth_intermediate_goal):
-                            nth_intermediate_goal = np.array(self.get_intermediate_goal(args, list_of_phenotypes_first_part[i],
-                                                                                        nth_intermediate_goal.copy(),
-                                                                                        list_of_third_coordinate[i],
-                                                                                        feedback,
-                                                                                        y_coordinate_reached[i]))
+                            nth_intermediate_goal = np.array(
+                                self.get_intermediate_goal(args, list_of_phenotypes_first_part[i],
+                                                           nth_intermediate_goal.copy(),
+                                                           list_of_third_coordinate[i],
+                                                           feedback,
+                                                           y_coordinate_reached[i]))
                         # upper bound
                         # fill list_for_clip using first part
                         # allow the goal to move freely in the x coordinate to avoid obstacles
@@ -999,11 +1000,12 @@ class HGGLearner_DT:
                                                        1 - feedback, None))
                         nth_intermediate_goal = intermediate_goal_1.copy()
                         for k in range(args.nth_intermediate_goal):
-                            nth_intermediate_goal = np.array(self.get_intermediate_goal(args, list_of_phenotypes_second_part[i],
-                                                                                        nth_intermediate_goal.copy(),
-                                                                                        list_of_third_coordinate[i],
-                                                                                        feedback,
-                                                                                        None))
+                            nth_intermediate_goal = np.array(
+                                self.get_intermediate_goal(args, list_of_phenotypes_second_part[i],
+                                                           nth_intermediate_goal.copy(),
+                                                           list_of_third_coordinate[i],
+                                                           feedback,
+                                                           None))
 
                         # fill list_for_clip using second part
                         # first two coordinates should not be clipped
