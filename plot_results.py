@@ -18,7 +18,7 @@ def plot_graphs(file_list, color='r'):
         # if file_list[0] == "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HGG-DT/her_result1-ddpg-FetchPush-v1-dt-her-(2023-06-27-16_29_25).log" or file_list[0] == "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HGG/her_result1-ddpg-FetchPush-v1-hgg-(2023-06-27-09_23_52).log" or file_list[0] == "/home/vlaffo/Desktop/thesis results/obstacle test/FetchPush/HER/her_result1-ddpg-FetchPush-v1-normal-(2023-06-27-09_23_29).log":
         # success_rates = [(m.start(0), m.end(0)) for m in re.finditer('Success/obstacle', log_file)]
         # else:
-        success_rates = [(m.start(0), m.end(0)) for m in re.finditer('Success/interval', log_file)]
+        success_rates = [(m.start(0), m.end(0)) for m in re.finditer('Success/obstacle', log_file)]
 
         # print(success_rates)
 
@@ -51,17 +51,17 @@ def plot_graphs(file_list, color='r'):
     legend_list.append(label_text)
 
 
-robotic_task = 'FetchPush'
+robotic_task = 'FetchPickAndPlace'
 xdata = 200 * np.arange(100)
 
 neural_network_option = 'compare_nn'
 
 # HGG_DT
 
-file_list = ['/home/vlaffo/Desktop/thesis results/comparing hyperparameter/res1.log']
+file_list = ['/home/vlaffo/Desktop/redo pick feedback comparison/her_result1-ddpg-FetchPickAndPlace-v1-dt-her-(2023-06-29-08 47 27).log']
 plot_graphs(file_list, 'green')
 
-file_list = ['/home/vlaffo/Desktop/thesis results/feedback push/no feedback.log']
+file_list = ['/home/vlaffo/Desktop/redo pick feedback comparison/pick without feedback.log']
 plot_graphs(file_list, 'red')
 
 # file_list = ['/home/vlaffo/Desktop/thesis results/comparing hyperparameter/res3.log']

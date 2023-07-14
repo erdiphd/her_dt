@@ -802,7 +802,7 @@ class HGGLearner_DT:
                                                                                     nth_intermediate_goal.copy(),
                                                                                     list_of_third_coordinate[i],
                                                                                     feedback,
-                                                                                    y_coordinate_reached[i]))
+                                                                                    x_coordinate_reached[i]))
                         all_forloop_goals.append(nth_intermediate_goal.copy())
                     # fill list_for_clip using first part
                     # upper bound
@@ -972,7 +972,7 @@ class HGGLearner_DT:
                         nth_intermediate_goal = intermediate_goal_1.copy()
                         all_forloop_goals = []
                         for k in range(args.nth_intermediate_goal):
-                            nth_intermediate_goal = np.array(self.get_intermediate_goal(args, list_of_phenotypes[i],
+                            nth_intermediate_goal = np.array(self.get_intermediate_goal(args, list_of_phenotypes_first_part[i],
                                                                                         nth_intermediate_goal.copy(),
                                                                                         list_of_third_coordinate[i],
                                                                                         feedback,
@@ -1028,11 +1028,11 @@ class HGGLearner_DT:
                         nth_intermediate_goal = intermediate_goal_1.copy()
                         all_forloop_goals = []
                         for k in range(args.nth_intermediate_goal):
-                            nth_intermediate_goal = np.array(self.get_intermediate_goal(args, list_of_phenotypes[i],
+                            nth_intermediate_goal = np.array(self.get_intermediate_goal(args, list_of_phenotypes_second_part[i],
                                                                                         nth_intermediate_goal.copy(),
                                                                                         list_of_third_coordinate[i],
                                                                                         feedback,
-                                                                                        y_coordinate_reached[i]))
+                                                                                        None))
                             all_forloop_goals.append(nth_intermediate_goal.copy())
 
                         # fill list_for_clip using second part
