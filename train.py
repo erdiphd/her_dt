@@ -20,18 +20,18 @@ if __name__ == '__main__':
         if not list_of_phenotypes:
             decision_tree_file.writelines("--------------- Beginning of first part ---------------")
             for number_e, current_dt in enumerate(list_of_phenotypes_first_part):
-                header_text_dt = f"--------------- Decision tree{number_e}--------------\n"
+                header_text_dt = "f--------------- Decision tree{number_e}--------------\n"
                 decision_tree_file.writelines(header_text_dt + current_dt)
             decision_tree_file.writelines("--------------- End of first part ---------------")
             decision_tree_file.writelines("--------------- Beginning of second part ---------------")
             for number_e, current_dt in enumerate(list_of_phenotypes_second_part):
-                header_text_dt = f"--------------- Decision tree{number_e}--------------\n"
+                header_text_dt = "f--------------- Decision tree{number_e}--------------\n"
                 decision_tree_file.writelines(header_text_dt + current_dt)
             decision_tree_file.writelines("--------------- End of second part ---------------")
 
         else:
             for number_e, current_dt in enumerate(list_of_phenotypes):
-                header_text_dt = f"--------------- Decision tree{number_e}--------------\n"
+                header_text_dt = "f--------------- Decision tree{number_e}--------------\n"
                 decision_tree_file.writelines(header_text_dt + current_dt)
 
         decision_tree_file.close()
